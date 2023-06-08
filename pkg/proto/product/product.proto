@@ -1,0 +1,106 @@
+/**
+ * 产品服务
+ */
+syntax = "proto3";
+
+package product;
+
+option go_package = "./proto;product";
+
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+import "common/req.proto";
+import "common/type.proto";
+
+// 产品服务接口定义
+service Product {
+  /// 获取产品三级分类树
+  rpc CategoryTree(google.protobuf.Empty) returns (CategoryReply);
+  /// sku商品搜索
+  rpc SkuSearch(SearchReq) returns (SearchReply);
+  /// sku商品列表
+  rpc SkuList(SkuListReq) returns (SkuListReply);
+  /// sku商品详情
+  rpc SkuDetail(common.SkuIDReq) returns (SkuReply);
+  /// sku销售属性
+  rpc GetSkuSaleAttrs(common.SkuIDReq) returns (SkuSaleAttrReply);
+  /// ---- 以下内部调用 ----
+  /// sku信息
+  rpc GetSkuByID(common.SkuIDReq) returns (SkuInfoInternal);
+  /// 商品评价
+  rpc SpuComment(CommentReq) returns (google.protobuf.Empty);
+}
+
+// ---- 请求结构 ----
+
+// 商品列表请求结构
+message SkuListReq {
+  int64 cat_id = 1; /// 分类
+  int32 page = 2;  /// 分页
+}
+
+// 搜索请求结构
+message SearchReq {
+  string keyword = 1; /// 关键字
+  int64 cat_id = 2; /// 分类id
+  int32 field = 3; /// 排序字段
+  int32 order = 4; /// 排序类型 0=asc 1=desc
+  bool has_stock = 5; // 是否有库存
+  int32 price_s = 6; /// 价格区间起始
+  int32 price_e = 7; /// 价格区间止
+  repeated int64 brand_id = 8; /// 品牌,多选
+  repeated SearchAttrs attrs = 9; /// 属性  eg: 1_桌子,椅子
+  int32 page = 10; /// 分页
+}
+
+// 搜索规格结构
+message SearchAttrs {
+  int64 id = 1; /// 规格名id
+  repeated string values = 2; /// 规格值列表
+}
+
+// ---- 内部请求 ----
+// 评论请求结构
+message CommentReq {
+  repeated int64 sku_ids = 1 [(validate.rules).repeated.min_items = 1]; /// sku_id列表
+  int64 order_id = 2 [(validate.rules).int64.gt = 0]; /// 订单id
+  int32 star = 3 [(validate.rules).int32.gt = 0]; /// 星级
+  string content = 4 [(validate.rules).string = {min_len: 5, max_len: 500}]; /// 评价内容
+  string resources = 5; /// 评价资源
+}
+
+// ---- 响应结构 ----
+
+// 产品分类
+message CategoryReply {
+  repeated common.Category data = 1;
+}
+
+// 商品详情
+message SkuReply {
+  common.Sku data = 1;
+}
+
+// 产品列表响应结构
+message SkuListReply {
+  repeated common.SkuEs data = 1; /// 产品列表
+}
+
+// 搜索结构
+message SearchReply {
+  repeated common.SkuEs data = 1;  /// 搜索商品
+  repeated common.BrandEs brands = 2;  /// 当前查询到的结果锁涉及到的品牌
+  repeated common.AttrEs attrs = 3; /// 当前查询到的结果锁涉及到的所有属性
+  repeated common.CatEs cats = 4; /// 当前查询到的结果锁涉及到的所有分类
+}
+
+// sku销售属性
+message SkuSaleAttrReply {
+  common.SkuSaleAttr data = 1;
+}
+
+// ---- 内部响应 ----
+// sku商品信息响应结构
+message SkuInfoInternal {
+  common.SkuBase sku = 1;
+}

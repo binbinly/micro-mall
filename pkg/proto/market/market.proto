@@ -1,0 +1,100 @@
+/**
+ * 营销服务
+ */
+syntax = "proto3";
+
+package market;
+
+option go_package = "./proto;market";
+
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+import "common/req.proto";
+import "common/type.proto";
+
+// 营销服务接口定义
+service Market {
+  /// 获取首页配置数据
+  rpc GetHomeData(google.protobuf.Empty) returns (HomeDataReply);
+  /// 获取首页分类下配置数据
+  rpc GetHomeCatData(CatIDReq) returns (AppSettingReply);
+  /// 获取公告列表
+  rpc GetNoticeList(common.PageReq) returns (NoticeReply);
+  /// 获取搜索页配置数据
+  rpc GetSearchData(google.protobuf.Empty) returns (SearchReply);
+  /// 获取支付配置
+  rpc GetPayConfig(google.protobuf.Empty) returns (PayReply);
+  /// 商品可以领取的优惠券列表
+  rpc GetCouponList(common.SkuIDReq) returns (CouponListReply);
+  /// 我的优惠券列表
+  rpc GetMyCouponList(google.protobuf.Empty) returns (CouponListReply);
+  /// 领取优惠券
+  rpc CouponDraw(CouponIDReq) returns (google.protobuf.Empty);
+  /// ---- 以下内部调用 ----
+  /// 使用优惠券
+  rpc CouponUsed(CouponUsedReq) returns (google.protobuf.Empty);
+  /// 获取优惠券详情
+  rpc GetCouponInfo(CouponIDReq) returns (CouponInternal);
+}
+
+// ---- 请求结构 ----
+
+// 分类id
+message CatIDReq {
+  int64 id = 1;
+}
+
+// 优惠券请求结构
+message CouponIDReq {
+  int64 id = 1 [(validate.rules).int64.gt = 0]; /// 优惠券id
+}
+
+// 优惠券使用请求结构
+message CouponUsedReq {
+  int64 coupon_id = 2; /// 优惠券id
+  int64 order_id = 3; /// 订单id
+}
+
+// ---- 响应结构 ----
+
+// 首页分类数据
+message HomeCatDataReply {
+  repeated common.AppSetting data = 1; /// 分类下配置页面数据
+}
+
+// 首页数据
+message HomeDataReply {
+  repeated common.HomeData data = 1;
+}
+
+// 页面配置列表
+message AppSettingReply {
+  repeated common.AppSetting data = 1;
+}
+
+// 公告列表
+message NoticeReply{
+  repeated common.Notice data = 1; /// 公告列表
+}
+
+// 搜索页配置
+message SearchReply{
+  repeated common.AppSetting data = 1; /// 搜索页配置数据
+  repeated string hot = 2;  /// 搜索热词
+}
+
+// 支付配置
+message PayReply{
+  repeated common.Pay data = 1;
+}
+
+// 优惠券列表
+message CouponListReply {
+  repeated common.Coupon data = 1;
+}
+
+// ---- 内部响应 ----
+// 优惠券详情
+message CouponInternal {
+  common.Coupon coupon = 1;
+}

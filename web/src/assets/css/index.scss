@@ -1,0 +1,70 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './icon.css';
+@import './common.scss';
+
+html,
+body .app {
+  color: #333333;
+  font-family: Arial, Helvetica, 'STHeiti STXihei', 'Microsoft YaHei', Tohoma, sans-serif;
+  background-color: $background-color;
+}
+
+.app-container {
+  padding-bottom: 50px;
+}
+
+/* 主色调 */
+/* 主背景颜色（橙色）*/
+.main-bg-color{ background-color: #FD6801; }
+/* 主点击背景颜色（淡橙色）*/
+.main-bg-hover-color{ background-color: rgba(253,104,1,0.85); }
+/* 主字体颜色（橙色）*/
+.main-text-color{color: #FD6801;}
+/* 主边框颜色 */
+.main-border-color{ border-color: #F1F1F1; }
+
+.input-border-color{
+  border-color: #FD6801;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+}
+.text-inline {
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-inline-3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.wrapper-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+}
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.van-nav-bar .van-icon {
+  color: #0e151d;
+}
+
+.van-nav-bar__text {
+  color: #0e151d;
+}
+.van-divider {
+  margin: 4px;
+}

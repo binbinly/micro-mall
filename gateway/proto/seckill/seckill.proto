@@ -1,0 +1,85 @@
+/**
+ * 秒杀服务
+ */
+syntax = "proto3";
+
+package seckill;
+
+option go_package = "./proto;gateway";
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "common/type.proto";
+import "common/req.proto";
+
+//秒杀服务接口定义
+service Seckill {
+  //秒杀
+  rpc Kill(KillReq) returns (KillReply){
+    option (google.api.http) = {
+      post: "/v1/seckill/submit"
+      body: "*"
+    };
+  };
+  //获取所有秒杀场次
+  rpc GetSessionAll(google.protobuf.Empty) returns (SessionsReply){
+    option (google.api.http) = {
+      get: "/v1/seckill/sessions"
+    };
+  };
+  //获取场次下所有秒杀商品
+  rpc GetSkusList(SessionIdReq) returns (SkusReply){
+    option (google.api.http) = {
+      get: "/v1/seckill/skus/{session_id}"
+    };
+  };
+  //获取商品秒杀详情
+  rpc GetSkuByID(common.SkuIDReq) returns (SkuReply){
+    option (google.api.http) = {
+      get: "/v1/seckill/detail/{id}"
+    };
+  };
+}
+
+// 秒杀请求结构
+message KillReq {
+  int64 sku_id = 1 [(validate.rules).int64.gt = 0];
+  int64 address_id = 2 [(validate.rules).int64.gt = 0];
+  int64 num = 3 [(validate.rules).int64.gt = 0];
+  string key = 4 [(validate.rules).string.len = 32];
+}
+
+// 场次id
+message SessionIdReq {
+  int64 session_id = 1 [(validate.rules).int64.gt = 0]; /// 场次id
+}
+
+//秒杀响应结构
+message KillReply {
+  int32 code = 2;
+  string message = 3;
+  string data = 1; /// 订单号
+}
+
+//秒杀场次响应结构
+message SessionsReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.Session data = 1;
+}
+
+//秒杀商品列表
+message SkusReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.KillSku data = 1;
+}
+
+//秒杀商品信息
+message SkuReply {
+  int32 code = 2;
+  string message = 3;
+  common.KillSku data = 1;
+}
+

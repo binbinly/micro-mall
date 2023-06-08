@@ -1,0 +1,345 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "seckill/seckill.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Seckill"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/seckill/detail/{id}": {
+      "get": {
+        "summary": "获取商品秒杀详情",
+        "operationId": "Seckill_GetSkuByID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/seckillSkuReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "/ sku_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Seckill"
+        ]
+      }
+    },
+    "/v1/seckill/sessions": {
+      "get": {
+        "summary": "获取所有秒杀场次",
+        "operationId": "Seckill_GetSessionAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/seckillSessionsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Seckill"
+        ]
+      }
+    },
+    "/v1/seckill/skus/{sessionId}": {
+      "get": {
+        "summary": "获取场次下所有秒杀商品",
+        "operationId": "Seckill_GetSkusList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/seckillSkusReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "sessionId",
+            "description": "/ 场次id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Seckill"
+        ]
+      }
+    },
+    "/v1/seckill/submit": {
+      "post": {
+        "summary": "秒杀",
+        "operationId": "Seckill_Kill",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/seckillKillReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/seckillKillReq"
+            }
+          }
+        ],
+        "tags": [
+          "Seckill"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "commonKillSku": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/商品id"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "/秒杀价格"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/秒杀数量"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/个人限购"
+        },
+        "originalPrice": {
+          "type": "number",
+          "format": "double",
+          "title": "/原价"
+        },
+        "title": {
+          "type": "string",
+          "title": "/标题"
+        },
+        "cover": {
+          "type": "string",
+          "title": "/封面"
+        },
+        "key": {
+          "type": "string",
+          "title": "/加密key"
+        },
+        "open": {
+          "type": "boolean",
+          "title": "/ 是否正在秒杀"
+        },
+        "startAt": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 秒杀开始时间"
+        }
+      },
+      "title": "秒杀商品信息"
+    },
+    "commonSession": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 场次id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 场次名"
+        },
+        "open": {
+          "type": "boolean",
+          "title": "/ 是否正在秒杀"
+        },
+        "skus": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonKillSku"
+          },
+          "title": "/ 所有秒杀商品"
+        }
+      },
+      "title": "秒杀场次信息"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "seckillKillReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string",
+          "title": "/ 订单号"
+        }
+      },
+      "title": "秒杀响应结构"
+    },
+    "seckillKillReq": {
+      "type": "object",
+      "properties": {
+        "skuId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "addressId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "num": {
+          "type": "string",
+          "format": "int64"
+        },
+        "key": {
+          "type": "string"
+        }
+      },
+      "title": "秒杀请求结构"
+    },
+    "seckillSessionsReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSession"
+          }
+        }
+      },
+      "title": "秒杀场次响应结构"
+    },
+    "seckillSkuReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/commonKillSku"
+        }
+      },
+      "title": "秒杀商品信息"
+    },
+    "seckillSkusReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonKillSku"
+          }
+        }
+      },
+      "title": "秒杀商品列表"
+    }
+  }
+}

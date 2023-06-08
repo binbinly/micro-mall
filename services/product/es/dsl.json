@@ -1,0 +1,122 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "skuTitle": "桌子"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "term": {
+            "catId": 953
+          }
+        },
+        {
+          "terms": {
+            "brandId": [
+              347,
+              348
+            ]
+          }
+        },
+        {
+          "nested": {
+            "path": "attrs",
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "term": {
+                      "attrs.attrId": {
+                        "value": 26
+                      }
+                    }
+                  },
+                  {
+                    "terms": {
+                      "attrs.attrValue": [
+                        "艺美嘉",
+                        "摩登奢居"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "term": {
+            "hasStock": false
+          }
+        },
+        {
+          "range": {
+            "skuPrice": {
+              "gte": 10,
+              "lte": 200000
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "skuPrice": {
+        "order": "asc"
+      }
+    }
+  ],
+  "from": 0,
+  "size": 20,
+  "highlight": {
+    "fields": {"skuTitle": {}},
+    "pre_tags": "<b style='color:red;'>",
+    "post_tags": "</b>"
+  },
+  "aggs": {
+    "brand_agg": {
+      "terms": {
+        "field": "brandId",
+        "size": 10
+      }
+    },
+    "cat_agg":{
+      "terms": {
+        "field": "catId",
+        "size": 10
+      }
+    },
+    "attr_agg":{
+      "nested": {
+        "path": "attrs"
+      },
+      "aggs": {
+        "attr_id_agg": {
+          "terms": {
+            "field": "attrs.attrId",
+            "size": 10
+          },
+          "aggs": {
+            "attr_name_agg":{
+              "terms": {
+                "field": "attrs.attrName",
+                "size": 10
+              }
+            },
+            "attr_value_agg": {
+              "terms": {
+                "field": "attrs.attrValue",
+                "size": 10
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

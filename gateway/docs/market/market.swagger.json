@@ -1,0 +1,655 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "market/market.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Market"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/app/home": {
+      "get": {
+        "summary": "/ 获取首页配置数据",
+        "operationId": "Market_GetHomeData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/marketHomeDataReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Market"
+        ]
+      }
+    },
+    "/v1/app/home_cat/{catId}": {
+      "get": {
+        "summary": "/ 获取首页分类下配置数据",
+        "operationId": "Market_GetHomeCatData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/marketAppSettingReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "catId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Market"
+        ]
+      }
+    },
+    "/v1/app/notice": {
+      "get": {
+        "summary": "/ 获取公告列表",
+        "operationId": "Market_GetNoticeList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/marketNoticeReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "description": "/ 第几页",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Market"
+        ]
+      }
+    },
+    "/v1/app/notice/{page}": {
+      "get": {
+        "summary": "/ 获取公告列表",
+        "operationId": "Market_GetNoticeList2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/marketNoticeReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "description": "/ 第几页",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Market"
+        ]
+      }
+    },
+    "/v1/app/pay_list": {
+      "get": {
+        "summary": "/ 获取支付配置",
+        "operationId": "Market_GetPayConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/marketPayReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Market"
+        ]
+      }
+    },
+    "/v1/app/search": {
+      "get": {
+        "summary": "/ 获取搜索页配置数据",
+        "operationId": "Market_GetSearchData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/marketSearchReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Market"
+        ]
+      }
+    },
+    "/v1/coupon/draw": {
+      "post": {
+        "summary": "/ 领取优惠券",
+        "operationId": "Market_CouponDraw",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/marketCouponReq"
+            }
+          }
+        ],
+        "tags": [
+          "Market"
+        ]
+      }
+    },
+    "/v1/coupon/list/{skuId}": {
+      "get": {
+        "summary": "/ 商品可以领取的优惠券列表",
+        "operationId": "Market_GetCouponList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/marketCouponListReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "skuId",
+            "description": "/ sku_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Market"
+        ]
+      }
+    },
+    "/v1/coupon/my": {
+      "get": {
+        "summary": "/ 我的优惠券列表",
+        "operationId": "Market_GetMyCouponList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/marketCouponListReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Market"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "marketAppSetting": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 配置类型"
+        },
+        "images": {
+          "$ref": "#/definitions/marketSettingImages"
+        },
+        "navs": {
+          "$ref": "#/definitions/marketSettingNavs"
+        },
+        "ads": {
+          "$ref": "#/definitions/marketSettingAds"
+        },
+        "product": {
+          "$ref": "#/definitions/marketSettingProduct"
+        }
+      },
+      "title": "页面配置数据结构"
+    },
+    "marketAppSettingReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 状态码"
+        },
+        "message": {
+          "type": "string",
+          "title": "/ 消息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/marketAppSetting"
+          }
+        }
+      },
+      "title": "页面配置列表"
+    },
+    "marketCoupon": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 优惠券id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 优惠券名称"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 优惠券面值"
+        },
+        "minPoint": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 使用门槛"
+        },
+        "startAt": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 有效开始时间"
+        },
+        "endAt": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 有效结束时间"
+        },
+        "note": {
+          "type": "string",
+          "title": "/ 描述"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 状态"
+        }
+      },
+      "title": "优惠券结构"
+    },
+    "marketCouponListReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 状态码"
+        },
+        "message": {
+          "type": "string",
+          "title": "/ 消息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/marketCoupon"
+          }
+        }
+      },
+      "title": "优惠券列表"
+    },
+    "marketCouponReq": {
+      "type": "object",
+      "properties": {
+        "couponId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 优惠券id"
+        }
+      },
+      "title": "优惠券请求结构"
+    },
+    "marketHomeDataItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 分类id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 分类名"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/marketAppSetting"
+          },
+          "title": "/ 分类下配置页面数据"
+        }
+      },
+      "title": "首页数据"
+    },
+    "marketHomeDataReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 状态码"
+        },
+        "message": {
+          "type": "string",
+          "title": "/ 消息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/marketHomeDataItem"
+          }
+        }
+      },
+      "title": "首页数据"
+    },
+    "marketNotice": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 公告id"
+        },
+        "title": {
+          "type": "string",
+          "title": "/ 公告标题"
+        },
+        "content": {
+          "type": "string",
+          "title": "/ 公告内容"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 公告创建时间"
+        }
+      },
+      "title": "公告结构"
+    },
+    "marketNoticeReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 状态码"
+        },
+        "message": {
+          "type": "string",
+          "title": "/ 消息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/marketNotice"
+          },
+          "title": "/ 公告列表"
+        }
+      },
+      "title": "公告列表"
+    },
+    "marketPayItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 支付id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 支付名称"
+        },
+        "address": {
+          "type": "string",
+          "title": "/ 支付地址"
+        }
+      },
+      "title": "支付配置"
+    },
+    "marketPayReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 状态码"
+        },
+        "message": {
+          "type": "string",
+          "title": "/ 消息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/marketPayItem"
+          }
+        }
+      },
+      "title": "支付配置"
+    },
+    "marketSearchReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 状态码"
+        },
+        "message": {
+          "type": "string",
+          "title": "/ 消息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/marketAppSetting"
+          },
+          "title": "/ 搜索页配置数据"
+        },
+        "hot": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "/ 搜索热词"
+        }
+      },
+      "title": "搜索页配置"
+    },
+    "marketSettingAds": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "标题"
+        },
+        "cover": {
+          "type": "string",
+          "title": "广告图"
+        }
+      },
+      "title": "单图广告结构"
+    },
+    "marketSettingImages": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "页面配置类型\n图片组结构"
+    },
+    "marketSettingNav": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "标题"
+        },
+        "icon": {
+          "type": "string",
+          "title": "icon"
+        }
+      },
+      "title": "图标结构"
+    },
+    "marketSettingNavs": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/marketSettingNav"
+          }
+        }
+      },
+      "title": "图标组"
+    },
+    "marketSettingProduct": {
+      "type": "object",
+      "properties": {
+        "router": {
+          "type": "string",
+          "title": "路由"
+        }
+      },
+      "title": "产品列表"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

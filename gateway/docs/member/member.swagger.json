@@ -1,0 +1,751 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "member/member.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Member"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/address/add": {
+      "post": {
+        "summary": "/ 添加收货地址",
+        "operationId": "Member_AddressAdd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/memberAddressIDReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/memberAddressAddReq"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/address/del": {
+      "post": {
+        "summary": "/ 删除收货地址",
+        "operationId": "Member_AddressDel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/memberAddressIDReq"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/address/edit": {
+      "post": {
+        "summary": "/ 修改收货地址",
+        "operationId": "Member_AddressEdit",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/commonAddress"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/address/list": {
+      "get": {
+        "summary": "/ 收货地址列表",
+        "operationId": "Member_GetAddressList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/memberAddressReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/member/edit": {
+      "post": {
+        "summary": "/ 修改会员信息",
+        "operationId": "Member_MemberEdit",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/memberMemberEditReq"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/member/edit_pwd": {
+      "post": {
+        "summary": "/ 修改密码",
+        "operationId": "Member_MemberPwdEdit",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/memberPwdEditReq"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/member/login": {
+      "post": {
+        "summary": "/ 用户名密码登录",
+        "operationId": "Member_Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/memberMemberTokenReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/memberLoginReq"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/member/logout": {
+      "get": {
+        "summary": "/ 登出",
+        "operationId": "Member_Logout",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/member/phone_login": {
+      "post": {
+        "summary": "/ 手机号登录",
+        "operationId": "Member_PhoneLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/memberMemberTokenReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/memberPhoneLoginReq"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/member/profile": {
+      "get": {
+        "summary": "/ 获取会员信息",
+        "operationId": "Member_MemberProfile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/memberMemberReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/member/reg": {
+      "post": {
+        "summary": "/ 注册",
+        "operationId": "Member_Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/memberRegisterReq"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    },
+    "/v1/send_code": {
+      "post": {
+        "summary": "/ 发送短信验证码",
+        "operationId": "Member_SendCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/memberCodeReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/memberPhoneReq"
+            }
+          }
+        ],
+        "tags": [
+          "Member"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "commonAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 主键"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 收货人"
+        },
+        "phone": {
+          "type": "string",
+          "title": "/ 收货人手机号"
+        },
+        "province": {
+          "type": "string",
+          "title": "/ 省"
+        },
+        "city": {
+          "type": "string",
+          "title": "/ 市"
+        },
+        "county": {
+          "type": "string",
+          "title": "/ 区/县"
+        },
+        "detail": {
+          "type": "string",
+          "title": "/ 详细地址"
+        },
+        "areaCode": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 地区码"
+        },
+        "isDefault": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 是否设置默认地址"
+        }
+      },
+      "title": "收货地址结构"
+    },
+    "commonMember": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 用户id"
+        },
+        "username": {
+          "type": "string",
+          "title": "/ 用户名"
+        },
+        "nickname": {
+          "type": "string",
+          "title": "/ 昵称"
+        },
+        "sign": {
+          "type": "string",
+          "title": "/ 用户签名"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "/ 用户头像"
+        },
+        "area": {
+          "type": "string",
+          "title": "/ 地区信息"
+        },
+        "phone": {
+          "type": "string",
+          "title": "/ 手机号"
+        }
+      },
+      "title": "会员基础信息"
+    },
+    "commonMemberToken": {
+      "type": "object",
+      "properties": {
+        "member": {
+          "$ref": "#/definitions/commonMember",
+          "title": "/ 会员信息"
+        },
+        "token": {
+          "type": "string",
+          "title": "/ 令牌"
+        }
+      },
+      "title": "用户令牌信息"
+    },
+    "memberAddressAddReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "/ 收货人"
+        },
+        "phone": {
+          "type": "string",
+          "title": "/ 收货人手机号"
+        },
+        "province": {
+          "type": "string",
+          "title": "/ 省"
+        },
+        "city": {
+          "type": "string",
+          "title": "/ 市"
+        },
+        "county": {
+          "type": "string",
+          "title": "/ 区/县"
+        },
+        "detail": {
+          "type": "string",
+          "title": "/ 详细地址"
+        },
+        "areaCode": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 地区码"
+        },
+        "isDefault": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 是否设置默认地址"
+        }
+      },
+      "title": "添加地址结构"
+    },
+    "memberAddressIDReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 收货地址id"
+        }
+      },
+      "title": "收货地址id结构"
+    },
+    "memberAddressIDReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 收货地址id"
+        }
+      },
+      "title": "收货地址id结构"
+    },
+    "memberAddressReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonAddress"
+          }
+        }
+      },
+      "title": "收货地址列表响应"
+    },
+    "memberCodeReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string",
+          "title": "/ 验证码"
+        }
+      },
+      "title": "发送短信响应结构"
+    },
+    "memberLoginReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "/ 用户名"
+        },
+        "password": {
+          "type": "string",
+          "title": "/ 密码"
+        }
+      },
+      "title": "登录请求结构"
+    },
+    "memberMemberEditReq": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "sign": {
+          "type": "string"
+        }
+      },
+      "title": "会员信息修改请求结构"
+    },
+    "memberMemberReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/commonMember"
+        }
+      },
+      "title": "会员信息响应结构"
+    },
+    "memberMemberTokenReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/commonMemberToken"
+        }
+      },
+      "title": "登录成功令牌会员信息"
+    },
+    "memberPhoneLoginReq": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "title": "/ 手机号"
+        },
+        "code": {
+          "type": "string",
+          "title": "/ 验证码"
+        }
+      },
+      "title": "手机号登录请求结构"
+    },
+    "memberPhoneReq": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "title": "/ 手机号"
+        }
+      },
+      "title": "手机号请求结构"
+    },
+    "memberPwdEditReq": {
+      "type": "object",
+      "properties": {
+        "oldPassword": {
+          "type": "string",
+          "title": "/ 原密码"
+        },
+        "password": {
+          "type": "string",
+          "title": "/ 密码"
+        },
+        "confirmPassword": {
+          "type": "string",
+          "title": "/ 确认密码"
+        }
+      },
+      "title": "修改密码请求"
+    },
+    "memberRegisterReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "/ 用户名"
+        },
+        "phone": {
+          "type": "string",
+          "title": "/ 手机号"
+        },
+        "code": {
+          "type": "string",
+          "title": "/ 验证码"
+        },
+        "password": {
+          "type": "string",
+          "title": "/ 密码"
+        },
+        "confirmPassword": {
+          "type": "string",
+          "title": "/ 确认密码"
+        }
+      },
+      "title": "注册请求结构"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

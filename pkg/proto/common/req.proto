@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "pkg/proto/common;common";
+
+import "validate/validate.proto";
+
+// ---- 请求结构 ----
+
+// sku_id 请求结构
+message SkuIDReq {
+  int64 id = 1 [(validate.rules).int64.gt = 0]; /// sku_id
+}
+
+// 分页结构
+message PageReq {
+  int32 page = 1; /// 第几页
+}

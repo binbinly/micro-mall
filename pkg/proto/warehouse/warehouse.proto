@@ -1,0 +1,58 @@
+/**
+ * 仓储服务,spu,sku库存管理
+ */
+syntax = "proto3";
+
+package warehouse;
+
+option go_package = "./proto;warehouse";
+
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+import "common/req.proto";
+
+/**
+ * 仓储服务接口定义
+ */
+service Warehouse {
+	/// 获取sku的库存数量
+	rpc GetSkuStock(common.SkuIDReq) returns (SkuStockReply);
+	/// 批量获取sku的库存数量
+	rpc BatchSkusStock(SkusReq) returns (SkusStockReply);
+	/// 锁定sku库存
+	rpc SKuStockLock(SkuStockLockReq) returns (google.protobuf.Empty);
+	/// 解锁sku库存
+	rpc SkuStockUnlock(SkuStockUnlockReq) returns (google.protobuf.Empty);
+}
+
+// 多个sku id
+message SkusReq {
+	repeated int64 ids = 1 [(validate.rules).repeated.min_items = 1]; /// sku ids
+}
+
+// 锁定库存请求结构
+message SkuStockLockReq {
+	int64 order_id = 1 [(validate.rules).int64.gt = 0]; /// 订单id
+	string order_no = 2 [(validate.rules).string.min_len = 3];  /// 订单号
+	string consignee = 3 [(validate.rules).string.min_len = 2]; ///  收货人
+	string phone = 4 [(validate.rules).string.min_len = 3]; /// 收货人手机号
+	string address = 5 [(validate.rules).string.min_len = 3]; /// 收货地址
+	string note = 6;  // 订单备注
+	map<int64, int32> sku_nums = 7 [(validate.rules).map.min_pairs = 1]; /// sku_id => 锁库存数量
+}
+
+// 解锁库存请求结构
+message SkuStockUnlockReq {
+	int64 order_id = 1 [(validate.rules).int64.gt = 0]; /// 订单id
+	bool finish = 2; /// 订单是否已完成
+}
+
+// 库存数量响应结构
+message SkuStockReply {
+	int32 num = 1; /// 库存数量
+}
+
+// 多sku库存数量,map结构
+message SkusStockReply {
+	map<int64, int32> sku_nums = 1; /// sku_id => 库存数量
+}

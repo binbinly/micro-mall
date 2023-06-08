@@ -1,0 +1,334 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "cart/cart.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Cart"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/cart/add": {
+      "post": {
+        "summary": "/ 添加购物车",
+        "operationId": "Cart_AddCart",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cartAddReq"
+            }
+          }
+        ],
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/v1/cart/clear": {
+      "get": {
+        "summary": "/ 清空购物车",
+        "operationId": "Cart_ClearCart",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/v1/cart/del": {
+      "post": {
+        "summary": "/ 批量删除购物车",
+        "operationId": "Cart_BatchDelCart",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/commonSkuIDReq"
+            }
+          }
+        ],
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/v1/cart/edit": {
+      "post": {
+        "summary": "/ 更新购物车",
+        "operationId": "Cart_EditCart",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cartEditReq"
+            }
+          }
+        ],
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/v1/cart/edit_num": {
+      "post": {
+        "summary": "/ 更新购物车数量",
+        "operationId": "Cart_EditCartNum",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cartAddReq"
+            }
+          }
+        ],
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/v1/cart/list": {
+      "get": {
+        "summary": "/ 我的购物车",
+        "operationId": "Cart_MyCart",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/cartCartsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Cart"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "cartAddReq": {
+      "type": "object",
+      "properties": {
+        "skuId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ sku_id"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 数量"
+        }
+      },
+      "title": "添加购物车请求结构"
+    },
+    "cartCartsReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonCart"
+          }
+        }
+      },
+      "title": "购物车列表"
+    },
+    "cartEditReq": {
+      "type": "object",
+      "properties": {
+        "oldSkuId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 修改前商品id"
+        },
+        "newSkuId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 修改后商品id"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 数量"
+        }
+      },
+      "title": "修改购物车购微项请求结构"
+    },
+    "commonCart": {
+      "type": "object",
+      "properties": {
+        "skuId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ sku_id"
+        },
+        "title": {
+          "type": "string",
+          "title": "/ 商品标题"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 商品价格"
+        },
+        "cover": {
+          "type": "string",
+          "title": "/ 商品封面"
+        },
+        "skuAttr": {
+          "type": "string",
+          "title": "/ 商品销售属性"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 数量"
+        }
+      },
+      "title": "购物车结构"
+    },
+    "commonSkuIDReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ sku_id"
+        }
+      },
+      "title": "sku_id 请求结构"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

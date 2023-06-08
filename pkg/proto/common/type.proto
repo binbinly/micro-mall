@@ -1,0 +1,325 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "pkg/proto/common;common";
+
+// ---- 基础数据结构定义 ----
+
+// 这里避免使用 int64 否则序列号后类型为 string, see: https://protobuf.dev/programming-guides/proto3/#json
+
+// 购物车结构
+message Cart {
+  int32 sku_id = 1; /// sku_id
+  string title = 2; /// 商品标题
+  double price = 3; /// 商品价格
+  string cover = 4; /// 商品封面
+  string sku_attr = 5;  /// 商品销售属性
+  int32 num = 7;  /// 数量
+}
+
+// 用户令牌信息
+message MemberToken{
+  Member member = 1; /// 会员信息
+  string token = 2;   /// 令牌
+}
+
+// 会员基础信息
+message Member{
+  int32 id = 1;         /// 用户id
+  string username = 2;  /// 用户名
+  string nickname = 3;  /// 昵称
+  string sign = 4;      /// 用户签名
+  string avatar = 5;    /// 用户头像
+  string area = 6;      /// 地区信息
+  string phone = 7;     /// 手机号
+}
+
+// 收货地址结构
+message Address {
+  int32 id = 1; /// 主键
+  string name = 3;  /// 收货人
+  string phone = 4; /// 收货人手机号
+  string province = 5;  /// 省
+  string city = 6;  /// 市
+  string county = 7;  /// 区/县
+  string detail = 8; /// 详细地址
+  int32 area_code = 9;  /// 地区码
+  int32 is_default = 10; /// 是否设置默认地址
+}
+
+// 订单详情结构
+message Order {
+  int32 id = 1; /// 订单id
+  string order_no = 2;  /// 订单号
+  string note = 3;  /// 订单会员备注
+  double total_amount = 4; /// 订单总价
+  double amount = 5;  /// 订单金额
+  double coupon_amount = 6; /// 优惠券优惠金额
+  double freight_amount = 7;  /// 运费
+  double pay_amount = 8;  /// 支付金额
+  int32 pay_type = 9; /// 支付类型
+  int32 pay_at = 10;  /// 支付时间
+  int32 create_at = 11; /// 订单创建时间
+  int32 status = 12;  /// 订单状态
+  string trade_no = 13; /// 支付交易流水号
+  string delivery_company = 14; /// 物流公司
+  string delivery_no = 15;  /// 物流单号
+  int32 integration = 16; /// 所获积分
+  int32 growth = 17;  /// 所获得成长值
+  int32 delivery_at = 18; ///发货时间
+  int32 receive_at = 19; ///确认收货时间
+  int32 comment_at = 20; ///评价时间
+  OrderAddress address = 21; ///收货地址信息
+  repeated OrderSku items = 22; /// 订单对应的商品列表
+}
+
+// 订单列表结构
+message OrderList {
+  int32 id = 1; /// 订单id
+  string order_no = 2;  /// 订单号
+  double amount = 3;  /// 订单金额
+  int32 status = 4; /// 订单状态
+  int32 time = 5; /// 创建时间
+  repeated OrderSku items = 6; /// 订单对应的商品列表
+}
+
+//订单商品信息
+message OrderSku {
+  int32 sku_id = 1; /// sku_id
+  string title = 2; /// 商品标题
+  string cover = 3; /// 封面图
+  double price = 4; /// 价格
+  int32 num = 5;  /// 数量
+  string attr_value = 6; /// 销售属性值
+}
+
+//收货地址信息
+message OrderAddress {
+  string name = 1; /// 收货人
+  string phone = 2; /// 收货人手机号
+  string area = 3;  /// 地区
+  string detail = 4;  /// 详细地址
+}
+
+// 秒杀场次信息
+message Session {
+  int32 id = 1; /// 场次id
+  string name = 2;  /// 场次名
+  bool open = 3;  /// 是否正在秒杀
+  repeated KillSku skus = 4; /// 所有秒杀商品
+}
+
+// 秒杀商品信息
+message KillSku {
+  int32 id = 1; ///商品id
+  double price = 2; ///秒杀价格
+  int32 count = 3; ///秒杀数量
+  int32 limit = 4; ///个人限购
+  double original_price = 5; ///原价
+  string title = 6; ///标题
+  string cover = 7; ///封面
+  string key = 8; ///加密key
+  bool open = 9; /// 是否正在秒杀
+  int32 start_at = 10; /// 秒杀开始时间
+}
+
+// 首页数据结构
+message HomeData {
+  int32 id = 1; /// 分类id
+  string name = 2;  /// 分类名
+  repeated AppSetting list = 3; /// 分类下配置页面数据
+}
+
+// 优惠券结构
+message Coupon {
+  int32 id = 1; /// 优惠券id
+  string name = 2;  /// 优惠券名称
+  double amount = 3; /// 优惠券面值
+  double min_point = 4;  /// 使用门槛
+  int32 start_at = 5; /// 有效开始时间
+  int32 end_at = 6; /// 有效结束时间
+  string note = 7;  /// 描述
+  int32 status = 8; /// 状态
+}
+
+// 公告结构
+message Notice{
+  int32 id = 1; /// 公告id
+  string title = 2; /// 公告标题
+  string content = 3;   /// 公告内容
+  int32 created_at = 4; /// 公告创建时间
+}
+
+// 页面配置数据结构
+message AppSetting {
+  int32 type = 1; /// 配置类型
+  oneof data {
+    SettingImages images = 2;
+    SettingNavs navs = 3;
+    SettingAds ads = 4;
+    SettingProduct product = 5;
+  }
+}
+
+// 支付配置
+message Pay {
+  int32 id = 1;   /// 支付id
+  string name = 2;  /// 支付名称
+  string address = 3; /// 支付地址
+}
+
+// 页面配置类型
+
+// 图片组结构
+message SettingImages {
+  repeated string list = 1;
+}
+
+// 图标结构
+message SettingNav {
+  string title = 1; // 标题
+  string icon = 2;  // icon
+}
+
+// 图标组
+message SettingNavs {
+  repeated SettingNav list = 1;
+}
+
+// 单图广告结构
+message SettingAds {
+  string title = 1; // 标题
+  string cover = 2; // 广告图
+}
+
+// 产品列表
+message SettingProduct {
+  string router = 1; // 路由
+}
+
+// es中sku结构
+message SkuEs {
+  int32 id = 1;   /// sku_id
+  string title = 2; /// 商品标题
+  double price = 3;  /// 价格
+  string cover = 4; /// 封面
+  int32 sale_count = 5; /// 销量
+  bool has_stock = 6; /// 是否有库存
+}
+
+// es中品牌结构
+message BrandEs {
+  int32 id = 1;   /// 品牌id
+  string name = 2;  /// 品牌名
+  string logo = 3; /// 品牌logo
+}
+
+// es中属性结构
+message AttrEs {
+  int32 id = 1;    /// 属性id
+  string name = 2; /// 属性名
+  repeated string values = 3;  /// 属性值
+}
+
+// es中分类结构
+message CatEs {
+  int32 id = 1; /// 分类id
+  string name = 2;  /// 分类名
+}
+
+// 产品分类结构
+message Category {
+  int32 id = 1; /// 分类id
+  int32 parent_id = 2;  /// 父id
+  int32 sort = 4; /// 排序值
+  string name = 3;  /// 分类名
+  repeated Category child = 5; /// 下级分类列表
+}
+
+// 商品详情结构
+message Sku {
+  int32 id = 1; /// sku_id
+  int32 spu_id = 2; /// spu_id
+  int32 cat_id = 3; /// 分类id
+  int32 brand_id = 4; /// 品牌id
+  string title = 5; /// 商品标题
+  string desc = 6;  /// 描述
+  string cover = 7; /// 封面图
+  string subtitle = 8;  /// 副标题
+  double price = 9; /// 价格
+  int32 sale_count = 10;  /// 销量
+  int32 stock = 11; /// 库存
+  bool is_many = 12; /// 是否多规格
+  repeated Skus skus = 13;  /// spu下所有sku商品
+  repeated Attrs attrs = 14;  /// 当前sku对应spu规格属性
+  repeated SaleAttrs sale_attrs = 15;  ///当前sku下的销售属性
+  repeated string banners = 16;  /// sku图集
+  repeated string mains = 17;  /// spu介绍
+}
+
+// sku销售属性结构
+message SkuSaleAttr {
+  int32 id = 1; /// sku_id
+  bool is_many = 2; /// 是否多规格
+  repeated Skus skus = 11;  /// spu下所有sku商品
+  repeated SaleAttrs sale_attrs = 13;  ///当前sku下的销售属性
+}
+
+// sku商品基础信息
+message SkuBase {
+  int64 id = 1; /// sku_id
+  int64 spu_id = 2; /// spu_id
+  int64 cat_id = 3; /// 分类id
+  int64 brand_id = 4; /// 品牌id
+  string title = 5; /// 商品标题
+  string desc = 6;  /// 描述
+  string cover = 7; /// 封面图
+  string subtitle = 8;  /// 副标题
+  int64 price = 9; /// 价格
+  int64 sale_count = 10;  /// 销量
+  string attr_value = 11; /// 销售属性值
+}
+
+// 属性分组以及分组下规格属性结构
+message Attrs {
+  int32 group_id = 1; /// 规格属性分组id
+  string group_name = 2;  /// 规格属性分组名
+  repeated Attr items = 3;  /// 分组下所有规格属性
+}
+
+// 属性结构
+message Attr {
+  int32 id = 1; /// 属性id
+  string name = 2;  /// 属性名
+  string value = 3; /// 属性值
+}
+
+// spu下所有sku
+message Skus {
+  int32 sku_id = 1; /// sku_id
+  double price = 2; /// 价格
+  int32 stock = 3;  /// 库存
+  repeated SkuAttr attrs = 4; /// 对应的销售属性
+}
+
+// sku属性结构
+message SkuAttr {
+  int32 attr_id = 1;  /// 属性id
+  int32 value_id = 2; /// 属性值id
+  string attr_name = 3; /// 属性名
+  string value_name = 4;  /// 属性值
+}
+
+// sku下所有销售属性结构
+message SaleAttrs {
+  int32 attr_id = 1;  /// 销售属性id
+  string attr_name = 2; /// 销售属性名
+  repeated SkuValue values = 3; /// 属性值列表
+}
+
+// 规格值结构
+message SkuValue {
+  int32 id = 1; /// 属性值id
+  string name = 2;  /// 属性名
+}

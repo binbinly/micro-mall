@@ -1,0 +1,147 @@
+/**
+ * 营销服务
+ */
+syntax = "proto3";
+
+package market;
+
+option go_package = "./proto;market";
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "common/type.proto";
+import "common/req.proto";
+
+// 营销服务接口给定义
+service Market {
+  /// 获取首页配置数据
+  rpc GetHomeData(google.protobuf.Empty) returns (HomeDataReply){
+    option (google.api.http) = {
+      get: "/v1/app/home"
+    };
+  };
+  /// 获取首页分类下配置数据
+  rpc GetHomeCatData(CatReq) returns (AppSettingReply){
+    option (google.api.http) = {
+      get: "/v1/app/home_cat/{cat_id}"
+    };
+  };
+  /// 获取公告列表
+  rpc GetNoticeList(common.PageReq) returns (NoticeReply){
+    option (google.api.http) = {
+      get: "/v1/app/notice"
+      additional_bindings {
+        get: "/v1/app/notice/{page}"
+      }
+    };
+  };
+  /// 获取搜索页配置数据
+  rpc GetSearchData(google.protobuf.Empty) returns (SearchReply){
+    option (google.api.http) = {
+      get: "/v1/app/search"
+    };
+  };
+  /// 获取支付配置
+  rpc GetPayConfig(google.protobuf.Empty) returns (PayReply){
+    option (google.api.http) = {
+      get: "/v1/app/pay_list"
+    };
+  };
+  /// 商品可以领取的优惠券列表
+  rpc GetCouponList(common.SkuIDReq) returns (CouponListReply){
+    option (google.api.http) = {
+      get: "/v1/coupon/list/{sku_id}"
+    };
+  };
+  /// 我的优惠券列表
+  rpc GetMyCouponList(google.protobuf.Empty) returns (CouponListReply){
+    option (google.api.http) = {
+      get: "/v1/coupon/my"
+    };
+  };
+  /// 领取优惠券
+  rpc CouponDraw(CouponReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/coupon/draw"
+      body: "*"
+    };
+  };
+}
+
+// ---- 请求结构 ----
+
+// 分类id
+message CatReq {
+  int64 cat_id = 1;
+}
+
+// 优惠券请求结构
+message CouponReq {
+  int64 coupon_id = 1 [(validate.rules).int64.gt = 0]; /// 优惠券id
+}
+
+// 优惠券使用请求结构
+message CouponUsedReq {
+  int64 user_id = 1; /// 用户id
+  int64 coupon_id = 2; /// 优惠券id
+  int64 order_id = 3; /// 订单id
+}
+
+// 优惠券详情请求结构
+message CouponInfoReq {
+  int64 user_id = 1; /// 用户id
+  int64 coupon_id = 2; /// 会员优惠券id
+}
+
+// ---- 响应结构 ----
+
+// 首页分类数据
+message HomeCatDataReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.AppSetting data = 1; /// 分类下配置页面数据
+}
+
+// 首页数据
+message HomeDataReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.HomeData data = 1;
+}
+
+// 页面配置列表
+message AppSettingReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.AppSetting data = 1;
+}
+
+// 公告列表
+message NoticeReply{
+  int32 code = 2;
+  string message = 3;
+  repeated common.Notice data = 1; /// 公告列表
+}
+
+// 搜索页配置
+message SearchReply{
+  int32 code = 3;
+  string message = 4;
+  repeated common.AppSetting data = 1; /// 搜索页配置数据
+  repeated string hot = 2;  /// 搜索热词
+}
+
+// 支付配置
+message PayReply{
+  int32 code = 2;
+  string message = 3;
+  repeated common.Pay data = 1;
+}
+
+// 优惠券列表
+message CouponListReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.Coupon data = 1;
+}

@@ -1,0 +1,119 @@
+/**
+ * 产品服务
+ */
+syntax = "proto3";
+
+package product;
+
+option go_package = "./proto;gateway";
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "common/type.proto";
+import "common/req.proto";
+
+// 产品服务接口定义
+service Product {
+  /// 获取产品三级分类树
+  rpc CategoryTree(google.protobuf.Empty) returns (CategoryReply){
+    option (google.api.http) = {
+      get: "/v1/product/cat"
+    };
+  };
+  /// sku商品搜索
+  rpc SkuSearch(SearchReq) returns (SearchReply){
+    option (google.api.http) = {
+      post: "/v1/product/search"
+      body: "*"
+    };
+  };
+  /// sku商品列表
+  rpc SkuList(SkuListReq) returns (SkuListReply){
+    option (google.api.http) = {
+      get: "/v1/product/list"
+      additional_bindings {
+        get: "/v1/product/list/cat/{cat_id}/p/{page}"
+      }
+    };
+  };
+  /// sku商品详情
+  rpc SkuDetail(common.SkuIDReq) returns (SkuReply){
+    option (google.api.http) = {
+      get: "/v1/product/detail/{id}"
+    };
+  };
+  /// sku销售属性
+  rpc GetSkuSaleAttrs(common.SkuIDReq) returns (SkuSaleAttrReply){
+    option (google.api.http) = {
+      get: "/v1/product/attr/{id}"
+    };
+  };
+}
+
+// ---- 请求结构 ----
+
+// 商品列表请求结构
+message SkuListReq {
+  int64 cat_id = 1; // 分类
+  int32 page = 2;  // 分页
+}
+
+// 搜索请求结构
+message SearchReq {
+  string keyword = 1; /// 关键字
+  int64 cat_id = 2; /// 分类id
+  int32 field = 3; /// 排序字段
+  int32 order = 4; /// 排序类型 0=asc 1=desc
+  bool has_stock = 5; // 是否有库存
+  int32 price_s = 6; /// 价格区间起始
+  int32 price_e = 7; /// 价格区间止
+  repeated int64 brand_id = 8; /// 品牌,多选
+  repeated SearchAttrs attrs = 9; /// 规格属性
+  int32 page = 10; /// 分页
+}
+
+// 搜索规格结构
+message SearchAttrs {
+  int64 id = 1; // 规格名id
+  repeated string values = 2; // 规格值列表
+}
+
+// ---- 响应结构 ----
+
+// 产品分类
+message CategoryReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.Category data = 1;
+}
+
+// 商品详情
+message SkuReply {
+  int32 code = 2;
+  string message = 3;
+  common.Sku data = 1;
+}
+
+// 产品列表响应结构
+message SkuListReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.SkuEs data = 1; /// 产品列表
+}
+
+// 搜索结构
+message SearchReply {
+  int32 code = 5;     /// 状态码
+  string message = 6; /// 消息
+  repeated common.SkuEs data = 1;  /// 搜索商品
+  repeated common.BrandEs brands = 2;  /// 当前查询到的结果锁涉及到的品牌
+  repeated common.AttrEs attrs = 3; /// 当前查询到的结果锁涉及到的所有属性
+  repeated common.CatEs cats = 4; /// 当前查询到的结果锁涉及到的所有分类
+}
+
+// sku销售属性
+message SkuSaleAttrReply {
+  int32 code = 2;
+  string message = 3;
+  common.SkuSaleAttr data = 1;
+}

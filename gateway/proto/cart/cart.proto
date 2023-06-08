@@ -1,0 +1,82 @@
+/**
+ * 购物车服务
+ */
+syntax = "proto3";
+
+package cart;
+
+option go_package = "./proto;gateway";
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "common/type.proto";
+import "common/req.proto";
+
+// 购物车服务接口给定义
+service Cart {
+  /// 添加购物车
+  rpc AddCart(AddReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/cart/add"
+      body: "*"
+    };
+  };
+  /// 更新购物车
+  rpc EditCart(EditReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/cart/edit"
+      body: "*"
+    };
+  };
+  /// 更新购物车数量
+  rpc EditCartNum(AddReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/cart/edit_num"
+      body: "*"
+    };
+  };
+  /// 批量删除购物车
+  rpc BatchDelCart(common.SkuIDReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/cart/del"
+      body: "*"
+    };
+  };
+  /// 清空购物车
+  rpc ClearCart(google.protobuf.Empty) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      get: "/v1/cart/clear"
+    };
+  };
+  /// 我的购物车
+  rpc MyCart(google.protobuf.Empty) returns (CartsReply){
+    option (google.api.http) = {
+      get: "/v1/cart/list"
+    };
+  };
+}
+
+// ---- 请求结构 ----
+
+// 添加购物车请求结构
+message AddReq {
+  int64 sku_id = 2 [(validate.rules).int64.gt = 0]; /// sku_id
+  int32 num = 3 [(validate.rules).int32.gt = 0]; /// 数量
+}
+
+// 修改购物车购微项请求结构
+message EditReq {
+  int64 old_sku_id = 2 [(validate.rules).int64.gt = 0]; /// 修改前商品id
+  int64 new_sku_id = 3 [(validate.rules).int64.gt = 0]; /// 修改后商品id
+  int32 num = 4 [(validate.rules).int32.gt = 0];  /// 数量
+}
+
+// ---- 响应结构 ----
+
+// 购物车列表
+message CartsReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.Cart data = 1;
+}

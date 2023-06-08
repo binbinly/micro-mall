@@ -1,0 +1,161 @@
+/**
+ * 订单服务
+ */
+syntax = "proto3";
+
+package order;
+
+option go_package = "./proto;gateway";
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "common/type.proto";
+
+/**
+ * 订单服务接口定义
+ */
+service Order {
+  /// 从购物车提交订单
+  rpc SubmitOrder(SubmitReq) returns (OrderIDReply){
+    option (google.api.http) = {
+      post: "/v1/order/submit"
+      body: "*"
+    };
+  };
+  /// 商品直接提交订单
+  rpc SubmitSkuOrder(SkuSubmitReq) returns (OrderIDReply){
+    option (google.api.http) = {
+      post: "/v1/order/sku_submit"
+      body: "*"
+    };
+  };
+  /// 订单详情
+  rpc OrderDetail(OrderIDReq) returns (OrderInfoReply){
+    option (google.api.http) = {
+      get: "/v1/order/detail/{order_id}"
+    };
+  };
+  /// 订单取消
+  rpc OrderCancel(OrderIDReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/order/cancel"
+      body: "*"
+    };
+  };
+  /// 订单列表
+  rpc OrderList(ListReq) returns (ListReply){
+    option (google.api.http) = {
+      get: "/v1/order/list"
+      additional_bindings {
+        get: "/v1/order/list/status/{status}/p/{page}"
+      }
+    };
+  };
+  /// 订单支付成功回调
+  rpc OrderPayNotify(PayNotifyReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/order/notify"
+      body: "*"
+    };
+  };
+  /// 订单退款
+  rpc OrderRefund(RefundReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/order/refund"
+      body: "*"
+    };
+  };
+  /// 订单确认收货
+  rpc OrderConfirmReceipt(OrderIDReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/order/receipt"
+      body: "*"
+    };
+  };
+  /// 订单评价
+  rpc OrderComment(CommentReq) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      post: "/v1/order/comment"
+      body: "*"
+    };
+  };
+}
+
+// ---- 请求结构 ----
+
+//购物车提交订单请求结构
+message SubmitReq {
+  repeated int64 sku_ids = 1 [(validate.rules).repeated.min_items = 1]; /// 购物车sku_id列表
+  int64 address_id = 2 [(validate.rules).int64.gt = 0]; /// 收货地址id
+  int64 coupon_id = 3;  /// 优惠券id
+  string note = 4;  /// 用户备注
+}
+
+//商品直接提交订单请求结构
+message SkuSubmitReq {
+  int64 sku_id = 1 [(validate.rules).int64.gt = 0]; /// sku_id
+  int64 address_id = 2 [(validate.rules).int64.gt = 0]; /// 收货地址id
+  int64 coupon_id = 3;  /// 优惠券id
+  string note = 4;  /// 用户备注
+  int32 num = 5 [(validate.rules).int32.gt = 0]; /// 购买数量
+}
+
+//订单列表请求结构
+message ListReq {
+  int32 status = 1; /// 订单状态
+  int32 page = 2; /// 订单页码
+}
+
+//支付回调请求结构
+message PayNotifyReq {
+  int64 pay_amount = 1 [(validate.rules).int64.gt = 0]; ///支付金额
+  int64 pay_type = 2 [(validate.rules).int64.gt = 0]; ///支付类型
+  string order_no = 3 [(validate.rules).string = {min_len: 16, max_len: 30}];  ///订单号
+  string trade_no = 4 [(validate.rules).string = {min_len: 16, max_len: 64}];  ///交易号
+  string trans_hash = 5; ///交易hash
+}
+
+//申请退款请求结构
+message RefundReq {
+  int64 order_id = 1 [(validate.rules).int64.gt = 0]; ///订单id
+  string content = 2 [(validate.rules).string = {min_len: 5, max_len: 255}]; ///理由
+}
+
+//评价请求结构
+message CommentReq {
+  int32 star = 1 [(validate.rules).int32.gt = 0]; ///评分
+  int64 order_id = 2 [(validate.rules).int64.gt = 0];  ///订单id
+  string content = 3 [(validate.rules).string = {min_len: 5, max_len: 255}]; ///评价内容
+  string resources = 4; ///评论资源
+  repeated int64 sku_ids = 5 [(validate.rules).repeated.min_items = 1]; /// 评价商品
+}
+
+//订单id结构
+message OrderIDReq {
+  int64 order_id = 1 [(validate.rules).int64.gt = 0]; ///订单id
+}
+
+// ---- 响应结构 ----
+
+// 订单列表响应结构
+message ListReply {
+  int32 code = 2;
+  string message = 3;
+  repeated common.OrderList data = 1;
+}
+
+// 订单id结构
+message OrderIDReply {
+  int32 code = 2;
+  string message = 3;
+  int64 data = 1; ///订单id
+}
+
+// 订单详情响应
+message OrderInfoReply {
+  int32 code = 2;   
+  string message = 3; 
+  common.Order data = 1;
+}
+

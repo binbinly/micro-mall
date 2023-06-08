@@ -1,0 +1,185 @@
+# yaml 配置
+# 官方文档：https://docs.docker.com/compose/compose-file/
+version: "3.7"
+
+services:
+  frontend:
+    container_name: mall_frontend
+    build: web1111/.
+    image: mall/frontend:latest
+    restart: on-failure
+    volumes:
+      - /var/log/nginx:/var/log/nginx
+    ports:
+      - 80:80
+    command: nginx -g 'daemon off';
+
+  admin:
+    container_name: mall_admin
+    build: admin/.
+    image: mall/admin:latest
+    restart: on-failure
+    ports:
+      - 8000:8000
+    networks:
+      - mall
+    command: --host 0.0.0.0 -q
+
+  gateway:
+    container_name: mall_gateway
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    image: mall/gateway:latest
+    restart: on-failure
+    ports:
+      - 9520:9520
+    networks:
+      - mall
+    command: server -c ./gateway/docker.yaml
+
+  market:
+    container_name: mall_market
+    build:
+      context: .
+      dockerfile: market/Dockerfile
+    image: mall/market:latest
+    restart: on-failure
+    ports:
+      - 52000:52000
+    networks:
+      - mall
+    environment:
+      MICRO_DFS_ENDPOINT: "http://192.168.8.76:9000"
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+  member:
+    container_name: mall_member
+    build:
+      context: .
+      dockerfile: member/Dockerfile
+    image: mall/member:latest
+    restart: on-failure
+    ports:
+      - 53000:53000
+    networks:
+      - mall
+    environment:
+      MICRO_DFS_ENDPOINT: "http://192.168.8.76:9000"
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+  order:
+    container_name: mall_order
+    build:
+      context: .
+      dockerfile: order/Dockerfile
+    image: mall/order:latest
+    restart: on-failure
+    ports:
+      - 54000:54000
+    networks:
+      - mall
+    environment:
+      MICRO_DFS_ENDPOINT: "http://192.168.8.76:9000"
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+  product:
+    container_name: mall_product
+    build:
+      context: .
+      dockerfile: product/Dockerfile
+    image: mall/product:latest
+    restart: on-failure
+    ports:
+      - 55000:55000
+    networks:
+      - mall
+    environment:
+      MICRO_DFS_ENDPOINT: "http://192.168.8.76:9000"
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+  seckill:
+    container_name: mall_seckill
+    build:
+      context: .
+      dockerfile: seckill/Dockerfile
+    image: mall/seckill:latest
+    restart: on-failure
+    ports:
+      - 56000:56000
+    networks:
+      - mall
+    environment:
+      MICRO_DFS_ENDPOINT: "http://192.168.8.76:9000"
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+  cart:
+    container_name: mall_cart
+    build:
+      context: .
+      dockerfile: cart/Dockerfile
+    image: mall/cart:latest
+    restart: on-failure
+    ports:
+      - 51000:51000
+    networks:
+      - mall
+    environment:
+      MICRO_DFS_ENDPOINT: "http://192.168.8.76:9000"
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+  center:
+    container_name: mall_center
+    build:
+      context: .
+      dockerfile: center/Dockerfile
+    image: mall/center:latest
+    restart: on-failure
+    ports:
+      - 50200:50200
+    networks:
+      - mall
+    environment:
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+  third:
+    container_name: mall_third
+    build:
+      context: .
+      dockerfile: third-party/Dockerfile
+    image: mall/third:latest
+    restart: on-failure
+    ports:
+      - 50100:50100
+    networks:
+      - mall
+    environment:
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+  warehouse:
+    container_name: mall_warehouse
+    build:
+      context: .
+      dockerfile: warehouse/Dockerfile
+    image: mall/warehouse:latest
+    restart: on-failure
+    ports:
+      - 50000:50000
+    networks:
+      - mall
+    environment:
+      MICRO_REGISTRY_ADDRESS: "consul:8500"
+      MICRO_TRACER_ADDRESS: "http://jaeger:14268/api/traces"
+
+
+networks:
+  mall:
+    driver: "bridge"

@@ -1,0 +1,173 @@
+# yaml 配置
+# 官方文档：https://docs.docker.com/compose/compose-file/
+version: "3.7"
+
+services:
+  consul:
+    container_name: consul_containar
+    image: consul:latest
+    restart: on-failure
+    volumes:
+      - consul_data:/consul/data
+      - ./deploy/docker/consul/config:/consul/config
+    ports:
+      - 8500:8500
+    networks:
+      - mall
+    command: agent -server -bind=0.0.0.0 -client=0.0.0.0 -node=consul_Server1 -bootstrap-expect=1 -ui
+
+  db:
+    container_name: mysql_container
+    image: mysql:5.7
+    restart: on-failure
+    ports:
+      - 3306:3306
+    expose:
+      - "3306"
+    # 参考：https://hub.docker.com/_/Mysql?tab=description&page=1&ordering=last_updated
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+    # 解决外部无法访问 for mysql
+    command: [
+        '--character-set-server=utf8',
+        '--collation-server=utf8_unicode_ci',
+        '--default-authentication-plugin=mysql_native_password'
+    ]
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1" ]   # 用于健康检查的指令
+      timeout: 20s  # 超时时间
+      retries: 10   # 重试次数
+      start_period: 40s # 启动多久后开始检查
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./deploy/docker/mysql/my.cnf:/etc/my.cnf
+      - ./deploy/database/:/docker-entrypoint-initdb.d/
+    networks:
+      - mall
+
+  elastic:
+    container_name: es_container
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.2
+    restart: on-failure
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - mall
+
+  redis:
+    container_name: redis_container
+    image: redis:latest
+    restart: on-failure
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/var/lib/redis
+      - ./deploy/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    # 优先使用命令行参数，期次是redis.conf中的参数
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      - mall
+
+  rabbitmq:
+    container_name: rabbitmq_container
+    image: rabbitmq:3.9-management
+    restart: on-failure
+    ports:
+      - 15672:15672
+      - 5672:5672
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=rabbitcookie
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq
+    networks:
+      - mall
+
+  prometheus:
+    container_name: prometheus_container
+    image: prom/prometheus
+    restart: on-failure
+    volumes:
+      - ./deploy/docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:Z
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=20d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    networks:
+      - mall
+
+  node_exporter:
+    container_name: node_exporter_container
+    restart: on-failure
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+    networks:
+      - mall
+
+  grafana:
+    container_name: grafana_container
+    restart: on-failure
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - mall
+
+  jaeger:
+    container_name: jaeger_container
+    image: jaegertracing/all-in-one:latest
+    restart: on-failure
+    ports:
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 14250:14250
+    networks:
+      - mall
+
+  # 配置参考：https://docs.min.io/docs/minio-docker-quickstart-guide.html
+  minio:
+    container_name: minio_container
+    image: minio/minio
+    restart: on-failure
+    environment:
+      - MINIO_ROOT_USER=K3AVR09Y7WH8JQPG
+      - MINIO_ROOT_PASSWORD=h1LnvfuEWUqZ3GiKDAOs2SMBz9JYjVabR0N5XkQeFP6Hlc4wptTm8Igoyr7dCx
+    ports:
+      - 9000:9000
+    volumes:
+      - minio_data:/data
+    command: server /data
+    networks:
+      - mall
+
+
+networks:
+  mall:
+    driver: "bridge"
+
+volumes:
+  mysql_data:
+  redis_data:
+  consul_data:
+  minio_data:
+  elastic_data:
+  rabbit_data:

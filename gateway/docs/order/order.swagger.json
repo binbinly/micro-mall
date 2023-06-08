@@ -1,0 +1,805 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "order/order.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Order"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/order/cancel": {
+      "post": {
+        "summary": "/ 订单取消",
+        "operationId": "Order_OrderCancel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderOrderIDReq"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/comment": {
+      "post": {
+        "summary": "/ 订单评价",
+        "operationId": "Order_OrderComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderCommentReq"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/detail/{orderId}": {
+      "get": {
+        "summary": "/ 订单详情",
+        "operationId": "Order_OrderDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderOrderInfoReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderId",
+            "description": "/订单id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/list": {
+      "get": {
+        "summary": "/ 订单列表",
+        "operationId": "Order_OrderList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderListReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "status",
+            "description": "/ 订单状态",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "description": "/ 订单页码",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/list/status/{status}/p/{page}": {
+      "get": {
+        "summary": "/ 订单列表",
+        "operationId": "Order_OrderList2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderListReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "status",
+            "description": "/ 订单状态",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "description": "/ 订单页码",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/notify": {
+      "post": {
+        "summary": "/ 订单支付成功回调",
+        "operationId": "Order_OrderPayNotify",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderPayNotifyReq"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/receipt": {
+      "post": {
+        "summary": "/ 订单确认收货",
+        "operationId": "Order_OrderConfirmReceipt",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderOrderIDReq"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/refund": {
+      "post": {
+        "summary": "/ 订单退款",
+        "operationId": "Order_OrderRefund",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderRefundReq"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/sku_submit": {
+      "post": {
+        "summary": "/ 商品直接提交订单",
+        "operationId": "Order_SubmitSkuOrder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderOrderIDReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderSkuSubmitReq"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/v1/order/submit": {
+      "post": {
+        "summary": "/ 从购物车提交订单",
+        "operationId": "Order_SubmitOrder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderOrderIDReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderSubmitReq"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "commonOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 订单id"
+        },
+        "orderNo": {
+          "type": "string",
+          "title": "/ 订单号"
+        },
+        "note": {
+          "type": "string",
+          "title": "/ 订单会员备注"
+        },
+        "totalAmount": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 订单总价"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 订单金额"
+        },
+        "couponAmount": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 优惠券优惠金额"
+        },
+        "freightAmount": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 运费"
+        },
+        "payAmount": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 支付金额"
+        },
+        "payType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 支付类型"
+        },
+        "payAt": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 支付时间"
+        },
+        "createAt": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 订单创建时间"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 订单状态"
+        },
+        "tradeNo": {
+          "type": "string",
+          "title": "/ 支付交易流水号"
+        },
+        "deliveryCompany": {
+          "type": "string",
+          "title": "/ 物流公司"
+        },
+        "deliveryNo": {
+          "type": "string",
+          "title": "/ 物流单号"
+        },
+        "integration": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 所获积分"
+        },
+        "growth": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 所获得成长值"
+        },
+        "deliveryAt": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/发货时间"
+        },
+        "receiveAt": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/确认收货时间"
+        },
+        "commentAt": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/评价时间"
+        },
+        "address": {
+          "$ref": "#/definitions/commonOrderAddress",
+          "title": "/收货地址信息"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrderSku"
+          },
+          "title": "/ 订单对应的商品列表"
+        }
+      },
+      "title": "订单详情结构"
+    },
+    "commonOrderAddress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "/ 收货人"
+        },
+        "phone": {
+          "type": "string",
+          "title": "/ 收货人手机号"
+        },
+        "area": {
+          "type": "string",
+          "title": "/ 地区"
+        },
+        "detail": {
+          "type": "string",
+          "title": "/ 详细地址"
+        }
+      },
+      "title": "收货地址信息"
+    },
+    "commonOrderList": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 订单id"
+        },
+        "orderNo": {
+          "type": "string",
+          "title": "/ 订单号"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 订单金额"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 订单状态"
+        },
+        "time": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 创建时间"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrderSku"
+          },
+          "title": "/ 订单对应的商品列表"
+        }
+      },
+      "title": "订单列表结构"
+    },
+    "commonOrderSku": {
+      "type": "object",
+      "properties": {
+        "skuId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ sku_id"
+        },
+        "title": {
+          "type": "string",
+          "title": "/ 商品标题"
+        },
+        "cover": {
+          "type": "string",
+          "title": "/ 封面图"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 价格"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 数量"
+        },
+        "attrValue": {
+          "type": "string",
+          "title": "/ 销售属性值"
+        }
+      },
+      "title": "订单商品信息"
+    },
+    "orderCommentReq": {
+      "type": "object",
+      "properties": {
+        "star": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/评分"
+        },
+        "orderId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/订单id"
+        },
+        "content": {
+          "type": "string",
+          "title": "/评价内容"
+        },
+        "resources": {
+          "type": "string",
+          "title": "/评论资源"
+        },
+        "skuIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "title": "/ 评价商品"
+        }
+      },
+      "title": "评价请求结构"
+    },
+    "orderListReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrderList"
+          }
+        }
+      },
+      "title": "订单列表响应结构"
+    },
+    "orderOrderIDReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string",
+          "format": "int64",
+          "title": "/订单id"
+        }
+      },
+      "title": "订单id结构"
+    },
+    "orderOrderIDReq": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/订单id"
+        }
+      },
+      "title": "订单id结构"
+    },
+    "orderOrderInfoReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/commonOrder"
+        }
+      },
+      "title": "订单详情响应"
+    },
+    "orderPayNotifyReq": {
+      "type": "object",
+      "properties": {
+        "payAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "/支付金额"
+        },
+        "payType": {
+          "type": "string",
+          "format": "int64",
+          "title": "/支付类型"
+        },
+        "orderNo": {
+          "type": "string",
+          "title": "/订单号"
+        },
+        "tradeNo": {
+          "type": "string",
+          "title": "/交易号"
+        },
+        "transHash": {
+          "type": "string",
+          "title": "/交易hash"
+        }
+      },
+      "title": "支付回调请求结构"
+    },
+    "orderRefundReq": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/订单id"
+        },
+        "content": {
+          "type": "string",
+          "title": "/理由"
+        }
+      },
+      "title": "申请退款请求结构"
+    },
+    "orderSkuSubmitReq": {
+      "type": "object",
+      "properties": {
+        "skuId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ sku_id"
+        },
+        "addressId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 收货地址id"
+        },
+        "couponId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 优惠券id"
+        },
+        "note": {
+          "type": "string",
+          "title": "/ 用户备注"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 购买数量"
+        }
+      },
+      "title": "商品直接提交订单请求结构"
+    },
+    "orderSubmitReq": {
+      "type": "object",
+      "properties": {
+        "skuIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "title": "/ 购物车sku_id列表"
+        },
+        "addressId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 收货地址id"
+        },
+        "couponId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 优惠券id"
+        },
+        "note": {
+          "type": "string",
+          "title": "/ 用户备注"
+        }
+      },
+      "title": "购物车提交订单请求结构"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

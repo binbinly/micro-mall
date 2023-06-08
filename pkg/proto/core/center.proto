@@ -1,0 +1,91 @@
+/**
+ * 用户中心服务
+ */
+syntax = "proto3";
+
+package center;
+
+option go_package = "./proto;core";
+
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+/**
+ * 用户中心服务接口定义
+ */
+service Center {
+	/// 用户注册
+	rpc Register(RegisterReq) returns (RegisterReply);
+	/// 用户名密码登录
+	rpc Login(LoginReq) returns (UserReply);
+	/// 手机号登录
+	rpc PhoneLogin(PhoneReq) returns (UserReply);
+	/// 修改用户信息
+	rpc Edit(EditReq) returns (google.protobuf.Empty);
+	/// 修改密码
+	rpc EditPwd(EditPwdReq) returns (google.protobuf.Empty);
+	/// 获取用户信息
+	rpc Info(google.protobuf.Empty) returns (UserInfo);
+	/// 用户登出
+	rpc Logout(google.protobuf.Empty) returns (google.protobuf.Empty);
+}
+
+// ---- 请求结构 ----
+
+// 注册请求结构
+message RegisterReq {
+	string username = 1 [(validate.rules).string = {min_len: 4, max_len: 20}]; /// 用户名
+	string password = 2 [(validate.rules).string = {min_len: 6, max_len: 20}]; /// 密码
+	int64 phone = 3 [(validate.rules).int64.gt = 0];     /// 手机号
+}
+
+// 用户名登录请求结构
+message LoginReq {
+	string username = 1 [(validate.rules).string = {min_len: 4, max_len: 20}]; /// 用户名
+	string password = 2 [(validate.rules).string = {min_len: 6, max_len: 20}]; /// 密码
+}
+
+// 手机号登录请求结构
+message PhoneReq {
+	int64 phone = 1 [(validate.rules).int64.gt = 0];  /// 手机号
+}
+
+// 用户信息修改请求结构
+message EditReq {
+	bytes content = 2 [(validate.rules).bytes.min_len = 3];  /// json信息体
+}
+
+// 用户密码修改请求结构
+message EditPwdReq {
+	string old_pwd = 2 [(validate.rules).string = {min_len: 6, max_len: 20}]; /// 原密码
+	string pwd = 3 [(validate.rules).string = {min_len: 6, max_len: 20}];   /// 新密码
+}
+
+// ---- 响应结构 ----
+
+// 注册响应结构
+message RegisterReply {
+	int64 id = 1; /// 用户id
+}
+
+// 用户令牌信息
+message UserReply{
+	UserInfo user = 1;
+	string token = 2;   /// 令牌
+}
+
+// 用户信息
+message UserInfo{
+	int64 id = 1;         /// 用户id
+	string username = 2;  /// 用户名
+	string nickname = 3;  /// 昵称
+	int64 phone = 4;      /// 手机号
+	string email = 5;     /// 邮箱
+	string avatar = 7;    /// 用户头像
+	enum Gender {
+		MALE = 0;     /// 男
+		FEMALE = 1;   /// 女
+		SECRET = 2;   /// 保密
+	}
+	Gender gender = 9;    /// 性别
+}

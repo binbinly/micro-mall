@@ -1,0 +1,837 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "product/product.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Product"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/product/attr/{id}": {
+      "get": {
+        "summary": "/ sku销售属性",
+        "operationId": "Product_GetSkuSaleAttrs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/productSkuSaleAttrReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "/ sku_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/v1/product/cat": {
+      "get": {
+        "summary": "/ 获取产品三级分类树",
+        "operationId": "Product_CategoryTree",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/productCategoryReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/v1/product/detail/{id}": {
+      "get": {
+        "summary": "/ sku商品详情",
+        "operationId": "Product_SkuDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/productSkuReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "/ sku_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/v1/product/list": {
+      "get": {
+        "summary": "/ sku商品列表",
+        "operationId": "Product_SkuList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/productSkuListReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "catId",
+            "description": "分类",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "description": "分页",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/v1/product/list/cat/{catId}/p/{page}": {
+      "get": {
+        "summary": "/ sku商品列表",
+        "operationId": "Product_SkuList2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/productSkuListReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "catId",
+            "description": "分类",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "description": "分页",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/v1/product/search": {
+      "post": {
+        "summary": "/ sku商品搜索",
+        "operationId": "Product_SkuSearch",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/productSearchReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/productSearchReq"
+            }
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "commonAttr": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 属性id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 属性名"
+        },
+        "value": {
+          "type": "string",
+          "title": "/ 属性值"
+        }
+      },
+      "title": "属性结构"
+    },
+    "commonAttrEs": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 属性id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 属性名"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "/ 属性值"
+        }
+      },
+      "title": "es中属性结构"
+    },
+    "commonAttrs": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 规格属性分组id"
+        },
+        "groupName": {
+          "type": "string",
+          "title": "/ 规格属性分组名"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonAttr"
+          },
+          "title": "/ 分组下所有规格属性"
+        }
+      },
+      "title": "属性分组以及分组下规格属性结构"
+    },
+    "commonBrandEs": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 品牌id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 品牌名"
+        },
+        "logo": {
+          "type": "string",
+          "title": "/ 品牌logo"
+        }
+      },
+      "title": "es中品牌结构"
+    },
+    "commonCatEs": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 分类id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 分类名"
+        }
+      },
+      "title": "es中分类结构"
+    },
+    "commonCategory": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 分类id"
+        },
+        "parentId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 父id"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 排序值"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 分类名"
+        },
+        "child": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonCategory"
+          },
+          "title": "/ 下级分类列表"
+        }
+      },
+      "title": "产品分类结构"
+    },
+    "commonSaleAttrs": {
+      "type": "object",
+      "properties": {
+        "attrId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 销售属性id"
+        },
+        "attrName": {
+          "type": "string",
+          "title": "/ 销售属性名"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSkuValue"
+          },
+          "title": "/ 属性值列表"
+        }
+      },
+      "title": "sku下所有销售属性结构"
+    },
+    "commonSku": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ sku_id"
+        },
+        "spuId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ spu_id"
+        },
+        "catId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 分类id"
+        },
+        "brandId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 品牌id"
+        },
+        "title": {
+          "type": "string",
+          "title": "/ 商品标题"
+        },
+        "desc": {
+          "type": "string",
+          "title": "/ 描述"
+        },
+        "cover": {
+          "type": "string",
+          "title": "/ 封面图"
+        },
+        "subtitle": {
+          "type": "string",
+          "title": "/ 副标题"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 价格"
+        },
+        "saleCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 销量"
+        },
+        "stock": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 库存"
+        },
+        "isMany": {
+          "type": "boolean",
+          "title": "/ 是否多规格"
+        },
+        "skus": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSkus"
+          },
+          "title": "/ spu下所有sku商品"
+        },
+        "attrs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonAttrs"
+          },
+          "title": "/ 当前sku对应spu规格属性"
+        },
+        "saleAttrs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSaleAttrs"
+          },
+          "title": "/当前sku下的销售属性"
+        },
+        "banners": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "/ sku图集"
+        },
+        "mains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "/ spu介绍"
+        }
+      },
+      "title": "商品详情结构"
+    },
+    "commonSkuAttr": {
+      "type": "object",
+      "properties": {
+        "attrId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 属性id"
+        },
+        "valueId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 属性值id"
+        },
+        "attrName": {
+          "type": "string",
+          "title": "/ 属性名"
+        },
+        "valueName": {
+          "type": "string",
+          "title": "/ 属性值"
+        }
+      },
+      "title": "sku属性结构"
+    },
+    "commonSkuEs": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ sku_id"
+        },
+        "title": {
+          "type": "string",
+          "title": "/ 商品标题"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 价格"
+        },
+        "cover": {
+          "type": "string",
+          "title": "/ 封面"
+        },
+        "saleCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 销量"
+        },
+        "hasStock": {
+          "type": "boolean",
+          "title": "/ 是否有库存"
+        }
+      },
+      "title": "es中sku结构"
+    },
+    "commonSkuSaleAttr": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ sku_id"
+        },
+        "isMany": {
+          "type": "boolean",
+          "title": "/ 是否多规格"
+        },
+        "skus": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSkus"
+          },
+          "title": "/ spu下所有sku商品"
+        },
+        "saleAttrs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSaleAttrs"
+          },
+          "title": "/当前sku下的销售属性"
+        }
+      },
+      "title": "sku销售属性结构"
+    },
+    "commonSkuValue": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 属性值id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 属性名"
+        }
+      },
+      "title": "规格值结构"
+    },
+    "commonSkus": {
+      "type": "object",
+      "properties": {
+        "skuId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ sku_id"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "/ 价格"
+        },
+        "stock": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 库存"
+        },
+        "attrs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSkuAttr"
+          },
+          "title": "/ 对应的销售属性"
+        }
+      },
+      "title": "spu下所有sku"
+    },
+    "productCategoryReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonCategory"
+          }
+        }
+      },
+      "title": "产品分类"
+    },
+    "productSearchAttrs": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "规格名id"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "规格值列表"
+        }
+      },
+      "title": "搜索规格结构"
+    },
+    "productSearchReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 状态码"
+        },
+        "message": {
+          "type": "string",
+          "title": "/ 消息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSkuEs"
+          },
+          "title": "/ 搜索商品"
+        },
+        "brands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonBrandEs"
+          },
+          "title": "/ 当前查询到的结果锁涉及到的品牌"
+        },
+        "attrs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonAttrEs"
+          },
+          "title": "/ 当前查询到的结果锁涉及到的所有属性"
+        },
+        "cats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonCatEs"
+          },
+          "title": "/ 当前查询到的结果锁涉及到的所有分类"
+        }
+      },
+      "title": "搜索结构"
+    },
+    "productSearchReq": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "title": "/ 关键字"
+        },
+        "catId": {
+          "type": "string",
+          "format": "int64",
+          "title": "/ 分类id"
+        },
+        "field": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 排序字段"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 排序类型 0=asc 1=desc"
+        },
+        "hasStock": {
+          "type": "boolean",
+          "title": "是否有库存"
+        },
+        "priceS": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 价格区间起始"
+        },
+        "priceE": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 价格区间止"
+        },
+        "brandId": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "title": "/ 品牌,多选"
+        },
+        "attrs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/productSearchAttrs"
+          },
+          "title": "/ 规格属性"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 分页"
+        }
+      },
+      "title": "搜索请求结构"
+    },
+    "productSkuListReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSkuEs"
+          },
+          "title": "/ 产品列表"
+        }
+      },
+      "title": "产品列表响应结构"
+    },
+    "productSkuReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/commonSku"
+        }
+      },
+      "title": "商品详情"
+    },
+    "productSkuSaleAttrReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/commonSkuSaleAttr"
+        }
+      },
+      "title": "sku销售属性"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
