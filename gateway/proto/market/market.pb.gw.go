@@ -238,14 +238,14 @@ func request_Market_GetCouponList_0(ctx context.Context, marshaler runtime.Marsh
 		_   = err
 	)
 
-	val, ok = pathParams["sku_id"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "sku_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.SkuId, err = runtime.Int64(val)
+	protoReq.Id, err = runtime.Int64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "sku_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := client.GetCouponList(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -264,14 +264,14 @@ func local_request_Market_GetCouponList_0(ctx context.Context, marshaler runtime
 		_   = err
 	)
 
-	val, ok = pathParams["sku_id"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "sku_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.SkuId, err = runtime.Int64(val)
+	protoReq.Id, err = runtime.Int64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "sku_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := server.GetCouponList(ctx, &protoReq)
@@ -495,7 +495,7 @@ func RegisterMarketHandlerServer(ctx context.Context, mux *runtime.ServeMux, ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/GetCouponList", runtime.WithHTTPPathPattern("/v1/coupon/list/{sku_id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/GetCouponList", runtime.WithHTTPPathPattern("/v1/coupon/list/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -741,7 +741,7 @@ func RegisterMarketHandlerClient(ctx context.Context, mux *runtime.ServeMux, cli
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/market.Market/GetCouponList", runtime.WithHTTPPathPattern("/v1/coupon/list/{sku_id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/market.Market/GetCouponList", runtime.WithHTTPPathPattern("/v1/coupon/list/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -817,7 +817,7 @@ var (
 
 	pattern_Market_GetPayConfig_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "app", "pay_list"}, ""))
 
-	pattern_Market_GetCouponList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "coupon", "list", "sku_id"}, ""))
+	pattern_Market_GetCouponList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "coupon", "list", "id"}, ""))
 
 	pattern_Market_GetMyCouponList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "coupon", "my"}, ""))
 

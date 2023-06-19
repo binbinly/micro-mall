@@ -38,6 +38,7 @@
 │   ├── product                     # 产品服务
 │   ├── seckill                     # 秒杀服务
 │   ├── third-party                 # 第三方服务
+│   ├── wallet                      # 钱包服务
 │   ├── warehouse                   # 仓储服务
 ├── deploys                         # 部署相关
 ├── web                             # 前端

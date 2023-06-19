@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"gateway/internal/app"
-	"github.com/binbinly/pkg/config"
+	"gateway/pkg/config"
 
 	"github.com/spf13/cobra"
 )

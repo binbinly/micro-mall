@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/binbinly/pkg/config"
+	"gateway/pkg/config"
 	"github.com/spf13/cobra"
 
 	"gateway/internal/router"

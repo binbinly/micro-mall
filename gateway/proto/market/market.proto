@@ -51,7 +51,7 @@ service Market {
   /// 商品可以领取的优惠券列表
   rpc GetCouponList(common.SkuIDReq) returns (CouponListReply){
     option (google.api.http) = {
-      get: "/v1/coupon/list/{sku_id}"
+      get: "/v1/coupon/list/{id}"
     };
   };
   /// 我的优惠券列表

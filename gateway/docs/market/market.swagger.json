@@ -217,7 +217,7 @@
         ]
       }
     },
-    "/v1/coupon/list/{skuId}": {
+    "/v1/coupon/list/{id}": {
       "get": {
         "summary": "/ 商品可以领取的优惠券列表",
         "operationId": "Market_GetCouponList",
@@ -237,7 +237,7 @@
         },
         "parameters": [
           {
-            "name": "skuId",
+            "name": "id",
             "description": "/ sku_id",
             "in": "path",
             "required": true,
@@ -275,7 +275,7 @@
     }
   },
   "definitions": {
-    "marketAppSetting": {
+    "commonAppSetting": {
       "type": "object",
       "properties": {
         "type": {
@@ -284,48 +284,26 @@
           "title": "/ 配置类型"
         },
         "images": {
-          "$ref": "#/definitions/marketSettingImages"
+          "$ref": "#/definitions/commonSettingImages"
         },
         "navs": {
-          "$ref": "#/definitions/marketSettingNavs"
+          "$ref": "#/definitions/commonSettingNavs"
         },
         "ads": {
-          "$ref": "#/definitions/marketSettingAds"
+          "$ref": "#/definitions/commonSettingAds"
         },
         "product": {
-          "$ref": "#/definitions/marketSettingProduct"
+          "$ref": "#/definitions/commonSettingProduct"
         }
       },
       "title": "页面配置数据结构"
     },
-    "marketAppSettingReply": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32",
-          "title": "/ 状态码"
-        },
-        "message": {
-          "type": "string",
-          "title": "/ 消息"
-        },
-        "data": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/marketAppSetting"
-          }
-        }
-      },
-      "title": "页面配置列表"
-    },
-    "marketCoupon": {
+    "commonCoupon": {
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "/ 优惠券id"
         },
         "name": {
@@ -343,13 +321,13 @@
           "title": "/ 使用门槛"
         },
         "startAt": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "/ 有效开始时间"
         },
         "endAt": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "/ 有效结束时间"
         },
         "note": {
@@ -364,23 +342,170 @@
       },
       "title": "优惠券结构"
     },
-    "marketCouponListReply": {
+    "commonHomeData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 分类id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 分类名"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonAppSetting"
+          },
+          "title": "/ 分类下配置页面数据"
+        }
+      },
+      "title": "首页数据结构"
+    },
+    "commonNotice": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 公告id"
+        },
+        "title": {
+          "type": "string",
+          "title": "/ 公告标题"
+        },
+        "content": {
+          "type": "string",
+          "title": "/ 公告内容"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 公告创建时间"
+        }
+      },
+      "title": "公告结构"
+    },
+    "commonPay": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "/ 支付id"
+        },
+        "name": {
+          "type": "string",
+          "title": "/ 支付名称"
+        },
+        "address": {
+          "type": "string",
+          "title": "/ 支付地址"
+        }
+      },
+      "title": "支付配置"
+    },
+    "commonSettingAds": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "标题"
+        },
+        "cover": {
+          "type": "string",
+          "title": "广告图"
+        }
+      },
+      "title": "单图广告结构"
+    },
+    "commonSettingImages": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "图片组结构"
+    },
+    "commonSettingNav": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "标题"
+        },
+        "icon": {
+          "type": "string",
+          "title": "icon"
+        }
+      },
+      "title": "图标结构"
+    },
+    "commonSettingNavs": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonSettingNav"
+          }
+        }
+      },
+      "title": "图标组"
+    },
+    "commonSettingProduct": {
+      "type": "object",
+      "properties": {
+        "router": {
+          "type": "string",
+          "title": "路由"
+        }
+      },
+      "title": "产品列表"
+    },
+    "marketAppSettingReply": {
       "type": "object",
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32",
-          "title": "/ 状态码"
+          "format": "int32"
         },
         "message": {
-          "type": "string",
-          "title": "/ 消息"
+          "type": "string"
         },
         "data": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/marketCoupon"
+            "$ref": "#/definitions/commonAppSetting"
+          }
+        }
+      },
+      "title": "页面配置列表"
+    },
+    "marketCouponListReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonCoupon"
           }
         }
       },
@@ -397,134 +522,62 @@
       },
       "title": "优惠券请求结构"
     },
-    "marketHomeDataItem": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "/ 分类id"
-        },
-        "name": {
-          "type": "string",
-          "title": "/ 分类名"
-        },
-        "list": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/marketAppSetting"
-          },
-          "title": "/ 分类下配置页面数据"
-        }
-      },
-      "title": "首页数据"
-    },
     "marketHomeDataReply": {
       "type": "object",
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32",
-          "title": "/ 状态码"
+          "format": "int32"
         },
         "message": {
-          "type": "string",
-          "title": "/ 消息"
+          "type": "string"
         },
         "data": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/marketHomeDataItem"
+            "$ref": "#/definitions/commonHomeData"
           }
         }
       },
       "title": "首页数据"
-    },
-    "marketNotice": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "/ 公告id"
-        },
-        "title": {
-          "type": "string",
-          "title": "/ 公告标题"
-        },
-        "content": {
-          "type": "string",
-          "title": "/ 公告内容"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "int64",
-          "title": "/ 公告创建时间"
-        }
-      },
-      "title": "公告结构"
     },
     "marketNoticeReply": {
       "type": "object",
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32",
-          "title": "/ 状态码"
+          "format": "int32"
         },
         "message": {
-          "type": "string",
-          "title": "/ 消息"
+          "type": "string"
         },
         "data": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/marketNotice"
+            "$ref": "#/definitions/commonNotice"
           },
           "title": "/ 公告列表"
         }
       },
       "title": "公告列表"
     },
-    "marketPayItem": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "/ 支付id"
-        },
-        "name": {
-          "type": "string",
-          "title": "/ 支付名称"
-        },
-        "address": {
-          "type": "string",
-          "title": "/ 支付地址"
-        }
-      },
-      "title": "支付配置"
-    },
     "marketPayReply": {
       "type": "object",
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32",
-          "title": "/ 状态码"
+          "format": "int32"
         },
         "message": {
-          "type": "string",
-          "title": "/ 消息"
+          "type": "string"
         },
         "data": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/marketPayItem"
+            "$ref": "#/definitions/commonPay"
           }
         }
       },
@@ -535,18 +588,16 @@
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32",
-          "title": "/ 状态码"
+          "format": "int32"
         },
         "message": {
-          "type": "string",
-          "title": "/ 消息"
+          "type": "string"
         },
         "data": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/marketAppSetting"
+            "$ref": "#/definitions/commonAppSetting"
           },
           "title": "/ 搜索页配置数据"
         },
@@ -559,69 +610,6 @@
         }
       },
       "title": "搜索页配置"
-    },
-    "marketSettingAds": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string",
-          "title": "标题"
-        },
-        "cover": {
-          "type": "string",
-          "title": "广告图"
-        }
-      },
-      "title": "单图广告结构"
-    },
-    "marketSettingImages": {
-      "type": "object",
-      "properties": {
-        "list": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "title": "页面配置类型\n图片组结构"
-    },
-    "marketSettingNav": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string",
-          "title": "标题"
-        },
-        "icon": {
-          "type": "string",
-          "title": "icon"
-        }
-      },
-      "title": "图标结构"
-    },
-    "marketSettingNavs": {
-      "type": "object",
-      "properties": {
-        "list": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/marketSettingNav"
-          }
-        }
-      },
-      "title": "图标组"
-    },
-    "marketSettingProduct": {
-      "type": "object",
-      "properties": {
-        "router": {
-          "type": "string",
-          "title": "路由"
-        }
-      },
-      "title": "产品列表"
     },
     "protobufAny": {
       "type": "object",

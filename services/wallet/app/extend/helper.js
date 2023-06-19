@@ -20,6 +20,14 @@ module.exports = {
     return { address: wallet.address, key: encKey };
   },
 
+  createEtherWallet6() {
+    const privateKey = ethers.randomBytes(32);
+    const key = ethers.toBeHex(ethers.hexlify(privateKey))
+    const wallet = new ethers.Wallet(key);
+    const encKey = this.app.aesEcbEncrypt(key);
+    return { address: wallet.address, key: encKey };
+  },
+
   /**
    * 生成波场钱包
    * @returns
