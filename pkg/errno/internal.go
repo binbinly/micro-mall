@@ -11,6 +11,7 @@ const (
 )
 
 // 内部服务错误定义
+
 // WarehouseReplyErr 仓储服错误响应处理
 func WarehouseReplyErr(err error) error {
 	switch err {

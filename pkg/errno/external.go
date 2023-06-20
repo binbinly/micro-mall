@@ -2,7 +2,6 @@ package errno
 
 import (
 	"go-micro.dev/v4/errors"
-	"google.golang.org/grpc/status"
 )
 
 const (
@@ -17,7 +16,7 @@ const (
 // 对外错误响应定义
 // 全局错误定义
 var (
-	//ErrParamsCheckInvalid 参数验证不通过
+	// ErrParamsCheckInvalid 参数验证不通过
 	ErrParamsCheckInvalid = errors.New(golbalID, "参数非法", 400)
 )
 
@@ -25,12 +24,10 @@ var (
 func MarketReplyErr(err error) error {
 	switch err {
 	case ErrCouponFinished:
-		return status.Error(CouponFinished, "优惠券已领完")
-		//return errors.New(marketID, "优惠券已领完", int32(CouponFinished))
+		return errors.New(marketID, "优惠券已领完", int32(CouponFinished))
 	case ErrCouponReceived:
 		return errors.New(marketID, "优惠券已领取过哦", int32(CouponReceived))
 	case ErrCouponNotFound:
-		//return status.Error(CouponNotFound, "优惠券不存在")
 		return errors.New(marketID, "优惠券不存在", int32(CouponNotFound))
 	}
 	return err

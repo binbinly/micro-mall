@@ -3,7 +3,7 @@ module order
 go 1.18
 
 require (
-	github.com/binbinly/pkg v0.0.0-00010101000000-000000000000
+	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0
 	github.com/go-micro/plugins/v4/broker/rabbitmq v1.2.1
 	github.com/golang/protobuf v1.5.3
 	github.com/pkg/errors v0.9.1
@@ -107,8 +107,4 @@ require (
 	gorm.io/plugin/opentelemetry v0.1.2 // indirect
 )
 
-replace order => ./
-
 replace pkg => ./../../pkg
-
-replace github.com/binbinly/pkg => ./../../../golang-workspace/pkg

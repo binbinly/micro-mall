@@ -3,9 +3,10 @@ module member
 go 1.18
 
 require (
-	github.com/binbinly/pkg v0.0.0-00010101000000-000000000000
+	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0
 	github.com/golang/protobuf v1.5.3
 	github.com/pkg/errors v0.9.1
+	github.com/redis/go-redis/v9 v9.0.4
 	go-micro.dev/v4 v4.10.2
 	gorm.io/gorm v1.25.1
 	pkg v0.0.0-00010101000000-000000000000
@@ -36,6 +37,7 @@ require (
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-micro/cli v1.1.4 // indirect
+	github.com/go-micro/plugins/v4/broker/rabbitmq v1.2.1 // indirect
 	github.com/go-micro/plugins/v4/client/grpc v1.1.0 // indirect
 	github.com/go-micro/plugins/v4/config/encoder/yaml v1.2.0 // indirect
 	github.com/go-micro/plugins/v4/config/source/consul v1.2.0 // indirect
@@ -72,9 +74,9 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/redis/go-redis/extra/rediscmd/v9 v9.0.4 // indirect
 	github.com/redis/go-redis/extra/redisotel/v9 v9.0.4 // indirect
-	github.com/redis/go-redis/v9 v9.0.4 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
+	github.com/streadway/amqp v1.0.0 // indirect
 	github.com/uber/jaeger-client-go v2.29.1+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/urfave/cli/v2 v2.8.1 // indirect
@@ -105,8 +107,4 @@ require (
 	gorm.io/plugin/opentelemetry v0.1.2 // indirect
 )
 
-replace member => ./
-
 replace pkg => ./../../pkg
-
-replace github.com/binbinly/pkg => ./../../../golang-workspace/pkg

@@ -3,14 +3,11 @@ module center
 go 1.18
 
 require (
-	github.com/binbinly/pkg v0.0.0-00010101000000-000000000000
-	github.com/envoyproxy/protoc-gen-validate v1.0.1
+	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0
 	github.com/golang/protobuf v1.5.3
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.0.4
 	github.com/stretchr/testify v1.8.2
-	go-micro.dev/v4 v4.10.2
-	google.golang.org/protobuf v1.30.0
 	gorm.io/gorm v1.25.1
 	pkg v0.0.0-00010101000000-000000000000
 )
@@ -28,6 +25,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
+	github.com/envoyproxy/protoc-gen-validate v1.0.1 // indirect
 	github.com/evanphx/json-patch/v5 v5.5.0 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/felixge/httpsnoop v1.0.1 // indirect
@@ -40,9 +38,11 @@ require (
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-micro/cli v1.1.4 // indirect
+	github.com/go-micro/plugins/v4/broker/rabbitmq v1.2.1 // indirect
 	github.com/go-micro/plugins/v4/client/grpc v1.1.0 // indirect
 	github.com/go-micro/plugins/v4/config/encoder/yaml v1.2.0 // indirect
 	github.com/go-micro/plugins/v4/config/source/consul v1.2.0 // indirect
+	github.com/go-micro/plugins/v4/registry/consul v1.2.0 // indirect
 	github.com/go-micro/plugins/v4/server/grpc v1.2.0 // indirect
 	github.com/go-micro/plugins/v4/wrapper/trace/opentracing v1.2.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
@@ -68,7 +68,8 @@ require (
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/miekg/dns v1.1.49 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
-	github.com/mitchellh/mapstructure v1.3.3 // indirect
+	github.com/mitchellh/hashstructure v1.1.0 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/nxadm/tail v1.4.8 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c // indirect
@@ -78,12 +79,14 @@ require (
 	github.com/redis/go-redis/extra/redisotel/v9 v9.0.4 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
+	github.com/streadway/amqp v1.0.0 // indirect
 	github.com/uber/jaeger-client-go v2.29.1+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/urfave/cli/v2 v2.8.1 // indirect
 	github.com/xanzy/ssh-agent v0.3.1 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	github.com/yuin/gopher-lua v1.1.0 // indirect
+	go-micro.dev/v4 v4.10.2 // indirect
 	go.opentelemetry.io/otel v1.15.1 // indirect
 	go.opentelemetry.io/otel/metric v0.38.1 // indirect
 	go.opentelemetry.io/otel/trace v1.15.1 // indirect
@@ -99,6 +102,7 @@ require (
 	golang.org/x/tools v0.8.0 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
 	google.golang.org/grpc v1.54.0 // indirect
+	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
@@ -108,8 +112,4 @@ require (
 	gorm.io/plugin/opentelemetry v0.1.2 // indirect
 )
 
-replace center => ./
-
 replace pkg => ./../../pkg
-
-replace github.com/binbinly/pkg => ./../../../golang-workspace/pkg

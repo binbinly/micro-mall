@@ -3,14 +3,12 @@ module product
 go 1.18
 
 require (
-	github.com/binbinly/pkg v0.0.0-00010101000000-000000000000
 	github.com/golang/protobuf v1.5.3
 	github.com/olivere/elastic/v7 v7.0.32
 	github.com/pkg/errors v0.9.1
 	go-micro.dev/v4 v4.10.2
 	golang.org/x/sync v0.2.0
 	gorm.io/gorm v1.25.1
-	pkg v0.0.0-00010101000000-000000000000
 )
 
 require (
@@ -20,6 +18,7 @@ require (
 	github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a // indirect
 	github.com/alicebob/miniredis/v2 v2.30.2 // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
+	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0 // indirect
 	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
@@ -108,8 +107,4 @@ require (
 	gorm.io/plugin/opentelemetry v0.1.2 // indirect
 )
 
-replace product => ./
-
 replace pkg => ./../../pkg
-
-replace github.com/binbinly/pkg => ./../../../golang-workspace/pkg

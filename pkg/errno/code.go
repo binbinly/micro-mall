@@ -4,7 +4,6 @@ import "google.golang.org/grpc/codes"
 
 // 中心服错误码定义
 const (
-	//grpc 返回错误code
 	//UserExisted 用户已存在
 	UserExisted codes.Code = 100
 	//UserNotFound 用户不存在
@@ -23,7 +22,6 @@ const (
 
 // 第三方服务错误码定义
 const (
-	//grpc 返回错误code
 	//VerifyCodeRuleMinute 分钟流控
 	VerifyCodeRuleMinute codes.Code = 200
 	//VerifyCodeRuleHour 小时流控
@@ -38,21 +36,18 @@ const (
 
 // 仓储服错误码定义
 const (
-	//grpc 返回错误code
 	//WareInventoryShortage 库存不足
 	WareInventoryShortage codes.Code = 300
 )
 
 // 产品服错误码定义
 const (
-	//grpc 返回错误code
 	//ProductNotFound 产品不存在
 	ProductNotFound codes.Code = 1000
 )
 
 // 秒杀服错误码定义
 const (
-	//grpc 返回错误code
 	//KillTimeInvalid 时间无效
 	KillTimeInvalid codes.Code = 2000
 	//KillKeyNotMatch 随机码不匹配
@@ -69,7 +64,6 @@ const (
 
 // 会员服错误码定义
 const (
-	//grpc 返回错误code
 	//MemberExisted 会员已存在
 	MemberExisted codes.Code = 3000
 	//MemberNotFound 会员不存在
@@ -84,7 +78,6 @@ const (
 
 // 营销服错误码定义
 const (
-	//grpc 返回错误code
 	//CouponNotFound 优惠券不存在
 	CouponNotFound codes.Code = 4000
 	//CouponFinished 优惠券已领完
@@ -95,7 +88,6 @@ const (
 
 // 订单服错误码定义
 const (
-	//grpc 返回错误code
 	//OrderNotFound 订单不存在
 	OrderNotFound codes.Code = 5000
 	//OrderSkuEmpty 提交商品为空
