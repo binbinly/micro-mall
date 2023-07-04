@@ -14,7 +14,7 @@ var commonAttrs = []attribute.KeyValue{
 	attribute.String("local-ip", localIP),
 }
 
-func setClientSpan(ctx context.Context, span trace.Span, m interface{}) {
+func setClientSpan(ctx context.Context, span trace.Span, m any) {
 	attrs := commonAttrs
 	if p, ok := m.(proto.Message); ok {
 		attrs = append(attrs, attribute.Key("send_msg.size").Int(proto.Size(p)))
@@ -23,7 +23,7 @@ func setClientSpan(ctx context.Context, span trace.Span, m interface{}) {
 	span.SetAttributes(attrs...)
 }
 
-func setServerSpan(ctx context.Context, span trace.Span, m interface{}) {
+func setServerSpan(ctx context.Context, span trace.Span, m any) {
 	attrs := commonAttrs
 	if p, ok := m.(proto.Message); ok {
 		attrs = append(attrs, attribute.Key("recv_msg.size").Int(proto.Size(p)))

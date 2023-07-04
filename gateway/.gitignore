@@ -2,6 +2,4 @@
 /.idea
 /.DS_Store
 /.scannerwork/
-go.sum
 .git
-local.yaml

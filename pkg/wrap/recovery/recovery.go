@@ -9,17 +9,17 @@ import (
 )
 
 // RecoveryHandlerFunc is a function that recovers from the panic `p` by returning an `error`.
-type RecoveryHandlerFunc func(p interface{}) (err error)
+type RecoveryHandlerFunc func(p any) (err error)
 
 // RecoveryHandlerFuncContext is a function that recovers from the panic `p` by returning an `error`.
 // The context can be used to extract request scoped metadata and context values.
-type RecoveryHandlerFuncContext func(ctx context.Context, p interface{}) (err error)
+type RecoveryHandlerFuncContext func(ctx context.Context, p any) (err error)
 
 // NewHandlerWrapper 错误捕获
 func NewHandlerWrapper(opts ...Option) server.HandlerWrapper {
 	o := evaluateOptions(opts)
 	return func(fn server.HandlerFunc) server.HandlerFunc {
-		return func(ctx context.Context, req server.Request, rsp interface{}) (err error) {
+		return func(ctx context.Context, req server.Request, rsp any) (err error) {
 			panicked := true
 
 			defer func() {
@@ -34,7 +34,7 @@ func NewHandlerWrapper(opts ...Option) server.HandlerWrapper {
 	}
 }
 
-func recoverFrom(ctx context.Context, p interface{}, r RecoveryHandlerFuncContext) error {
+func recoverFrom(ctx context.Context, p any, r RecoveryHandlerFuncContext) error {
 	if r == nil {
 		return status.Errorf(codes.Internal, "%v", p)
 	}

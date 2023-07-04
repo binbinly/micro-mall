@@ -60,7 +60,7 @@ func (t *Tracer) Start(ctx context.Context, operation string) (context.Context, 
 }
 
 // End finish tracing span
-func (t *Tracer) End(ctx context.Context, span trace.Span, m interface{}, err error) {
+func (t *Tracer) End(ctx context.Context, span trace.Span, m any, err error) {
 	if err != nil {
 		s, _ := status.FromError(err)
 		span.SetStatus(codes.Error, s.Message())

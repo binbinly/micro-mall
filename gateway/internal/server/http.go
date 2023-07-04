@@ -2,7 +2,8 @@ package server
 
 import (
 	"gateway/internal/app"
-	"gateway/pkg/transport/http"
+
+	"github.com/binbinly/pkg/transport/http"
 )
 
 // NewHTTPServer http server

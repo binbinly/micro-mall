@@ -1,7 +1,13 @@
-FROM golang:alpine AS builder
+FROM golang:1.20-alpine as builder
 
-# Set Go env
-ENV CGO_ENABLED=0 GOOS=linux
+# 镜像设置必要的环境变量
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    GOPROXY="https://goproxy.cn,direct" \
+    TZ=Asia/Shanghai
+
 WORKDIR /go/src/warehouse
 
 # Install dependencies

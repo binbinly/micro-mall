@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"github.com/binbinly/pkg/repo"
 	"github.com/pkg/errors"
 	"pkg/errno"
 	"pkg/mysql"
@@ -155,7 +154,7 @@ func (l *logic) SkuStockUnlock(ctx context.Context, orderID int64, finish bool) 
 	}
 	if err = l.repo.UpdateWareTaskStatus(ctx, tx, orderID, status); err != nil {
 		tx.Rollback()
-		if errors.Is(err, repo.ErrRecordNotModified) {
+		if errors.Is(err, mysql.ErrRecordNotModified) {
 			return nil
 		}
 		return errors.Wrapf(err, "[logic.wareSku] update task")

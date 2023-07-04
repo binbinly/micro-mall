@@ -1,6 +1,10 @@
 package mysql
 
-import "gorm.io/gorm"
+import (
+	"errors"
+
+	"gorm.io/gorm"
+)
 
 const (
 	// ReleaseYes 已发布
@@ -19,6 +23,9 @@ const (
 	// StatusError 状态-失败
 	StatusError
 )
+
+// ErrRecordNotModified 记录未修改
+var ErrRecordNotModified = errors.New("record not modified")
 
 // CUT 公共时间字段
 type CUT struct {

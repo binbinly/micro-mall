@@ -14,7 +14,7 @@ type traceWrapper struct {
 	client.Client
 }
 
-func (l *traceWrapper) Call(ctx context.Context, req client.Request, rsp interface{}, opts ...client.CallOption) error {
+func (l *traceWrapper) Call(ctx context.Context, req client.Request, rsp any, opts ...client.CallOption) error {
 	var span trace.Span
 	ctx, span = l.tracer.Start(ctx, req.Method())
 	defer span.End()
@@ -44,7 +44,7 @@ func NewClientWrapper(opts ...Option) client.Wrapper {
 func NewHandlerWrapper(opts ...Option) server.HandlerWrapper {
 	tracer := NewTracer(trace.SpanKindServer, opts...)
 	return func(fn server.HandlerFunc) server.HandlerFunc {
-		return func(ctx context.Context, req server.Request, rsp interface{}) error {
+		return func(ctx context.Context, req server.Request, rsp any) error {
 			var span trace.Span
 			ctx, span = tracer.Start(ctx, req.Endpoint())
 			defer span.End()
@@ -62,11 +62,11 @@ func NewHandlerWrapper(opts ...Option) server.HandlerWrapper {
 }
 
 // Valuer is returns a log value.
-type Valuer func(ctx context.Context) interface{}
+type Valuer func(ctx context.Context) any
 
 // TraceID returns a traceid valuer.
 func TraceID() Valuer {
-	return func(ctx context.Context) interface{} {
+	return func(ctx context.Context) any {
 		if span := trace.SpanContextFromContext(ctx); span.HasTraceID() {
 			return span.TraceID().String()
 		}
@@ -76,7 +76,7 @@ func TraceID() Valuer {
 
 // SpanID returns a spanid valuer.
 func SpanID() Valuer {
-	return func(ctx context.Context) interface{} {
+	return func(ctx context.Context) any {
 		if span := trace.SpanContextFromContext(ctx); span.HasSpanID() {
 			return span.SpanID().String()
 		}

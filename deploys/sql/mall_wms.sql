@@ -1,18 +1,6 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : 192.168.8.76
- Source Server Type    : MySQL
- Source Server Version : 50731
- Source Host           : 192.168.8.76:3306
- Source Schema         : mall_wms
-
- Target Server Type    : MySQL
- Target Server Version : 50731
- File Encoding         : 65001
-
- Date: 22/11/2021 21:51:30
-*/
+-- 创建数据库
+CREATE DATABASE IF NOT EXISTS `mall_wms`;
+USE `mall_wms`;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;

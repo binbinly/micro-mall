@@ -100,4 +100,4 @@ require (
 	gorm.io/plugin/opentelemetry v0.1.2 // indirect
 )
 
-replace github.com/binbinly/pkg => ../../golang-workspace/pkg
+replace github.com/binbinly/pkg => ../../pkg

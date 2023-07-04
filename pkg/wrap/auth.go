@@ -13,7 +13,7 @@ type AuthFunc func(method string) bool
 // Auth 身份验证包装器
 func Auth(authFunc AuthFunc) server.HandlerWrapper {
 	return func(fn server.HandlerFunc) server.HandlerFunc {
-		return func(ctx context.Context, req server.Request, rsp interface{}) error {
+		return func(ctx context.Context, req server.Request, rsp any) error {
 			if authFunc == nil || !authFunc(req.Method()) { // 不需要验证
 				return fn(ctx, req, rsp)
 			}

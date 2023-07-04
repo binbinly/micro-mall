@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"fmt"
-	"github.com/binbinly/pkg/repo"
 	"github.com/redis/go-redis/v9"
 	"pkg/errno"
 	"pkg/mysql"
@@ -89,7 +88,7 @@ func (l *logic) CouponUsed(ctx context.Context, memberID, id, orderID int64) err
 		return errno.ErrCouponNotFound
 	}
 	err = l.repo.SetCouponMemberUsed(ctx, id, memberID, orderID)
-	if errors.Is(err, repo.ErrRecordNotModified) {
+	if errors.Is(err, mysql.ErrRecordNotModified) {
 		return errno.ErrCouponNotFound
 	} else if err != nil {
 		return errors.Wrapf(err, "[logic.coupon] set used id: %v uid: %v, oid: %v", id, memberID, orderID)

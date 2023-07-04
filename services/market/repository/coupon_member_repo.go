@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"github.com/binbinly/pkg/repo"
 	"pkg/mysql"
 	"time"
 
@@ -47,7 +46,7 @@ func (r *Repo) SetCouponMemberUsed(ctx context.Context, id, memberID, orderID in
 		return errors.Wrapf(result.Error, "[repo.couponMember] set used")
 	}
 	if result.RowsAffected == 0 { //没有记录更新
-		return repo.ErrRecordNotModified
+		return mysql.ErrRecordNotModified
 	}
 
 	return nil
