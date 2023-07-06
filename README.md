@@ -82,7 +82,7 @@
 - laravel框架(5.5.*) [laravel文档](https://learnku.com/docs/laravel/5.5/installation/1282)
 - laravel-admin后台框架 [laravel-admin文档](https://laravel-admin.org/)
 
-### 数据填充 - python
+### 商品数据填充 - python
 - [入口](./seed)
 - scrapy框架(latest) [scrapy](https://www.osgeo.cn/scrapy/)
 
@@ -115,17 +115,20 @@
 | consul        | latest | https://github.com/hashicorp/consul                          |
 | protobuf      | latest | https://github.com/protocolbuffers/protobuf                  |
 | minio         | latest | http://docs.minio.org.cn/docs/                               |
-| elasticsearch | 7.14.2 | https://www.elastic.co/cn/downloads/elasticsearch            |
+| elasticsearch | 7.17.7 | https://www.elastic.co/cn/downloads/elasticsearch            |
 | rabbitmq      | 3.9    | https://www.rabbitmq.com/download.html                       |
 
 ### 项目部署
 
 ### 手动编译部署
 
-TIPS: 需要本地安装MySQL数据库和 Redis Consul minio rabbitmq elasticsearch
+>TIPS: 需要本地安装MySQL数据库和 Redis Consul minio rabbitmq elasticsearch
+
 ```bash
 # 下载安装
-git clone 
+git clone https://github.com/binbinly/micro-mall
+
+# 数据库sql文件 deploys/sql.zip
 
 # 进入项目目录
 cd micro-mall

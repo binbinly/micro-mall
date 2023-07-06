@@ -5,7 +5,7 @@ version: "3.7"
 services:
   frontend:
     container_name: mall_frontend
-    build: web1111/.
+    build: web/.
     image: mall/frontend:latest
     restart: on-failure
     volumes:
