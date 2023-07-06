@@ -2,12 +2,13 @@ package resource
 
 import (
 	"encoding/json"
+
 	"github.com/binbinly/pkg/util"
 	"go-micro.dev/v4/logger"
-	"market/config"
-	cpb "pkg/proto/common"
 
+	"market/config"
 	"market/model"
+	cpb "pkg/proto/common"
 )
 
 // AppSettingResource 转换页面配置数据

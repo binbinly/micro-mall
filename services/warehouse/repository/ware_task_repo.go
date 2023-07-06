@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"pkg/mysql"
+	"pkg/dbs"
 
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
@@ -29,7 +29,7 @@ func (r *Repo) UpdateWareTaskStatus(ctx context.Context, tx *gorm.DB, orderID in
 		return errors.Wrapf(result.Error, "[repo.wareTask] update")
 	}
 	if result.RowsAffected == 0 { //没有记录更新
-		return mysql.ErrRecordNotModified
+		return dbs.ErrRecordNotModified
 	}
 
 	return nil

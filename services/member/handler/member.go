@@ -2,16 +2,18 @@ package handler
 
 import (
 	"context"
+	"encoding/json"
+	"strconv"
+
+	"github.com/binbinly/pkg/util/validator"
+	"github.com/golang/protobuf/ptypes/empty"
 	"go-micro.dev/v4/client"
+
+	"member/logic"
 	"member/resource"
 	"pkg/constvar"
 	"pkg/errno"
 	"pkg/handler"
-	"regexp"
-	"strconv"
-
-	"github.com/golang/protobuf/ptypes/empty"
-	"member/logic"
 	cpb "pkg/proto/common"
 	"pkg/proto/core"
 	pb "pkg/proto/member"
@@ -45,7 +47,7 @@ func New(l logic.Logic, c client.Client) *Member {
 // Register 注册
 func (m *Member) Register(ctx context.Context, req *pb.RegisterReq, empty *empty.Empty) error {
 	phone, _ := strconv.ParseInt(req.Phone, 10, 64)
-	if !validateMobile(req.Phone) || phone == 0 {
+	if !validator.RegexMatch(req.Phone, validator.ChineseMobileMatcher) || phone == 0 {
 		return errno.ErrMemberPhoneValid
 	}
 	if req.Password != req.ConfirmPassword {
@@ -95,7 +97,7 @@ func (m *Member) Login(ctx context.Context, req *pb.LoginReq, reply *pb.MemberTo
 	}
 
 	// 本地会员创建
-	if err := m.logic.MemberCreate(ctx, user.User); err != nil {
+	if err = m.logic.MemberCreate(ctx, user.User); err != nil {
 		return err
 	}
 
@@ -106,7 +108,7 @@ func (m *Member) Login(ctx context.Context, req *pb.LoginReq, reply *pb.MemberTo
 // PhoneLogin 手机号登录
 func (m *Member) PhoneLogin(ctx context.Context, req *pb.PhoneLoginReq, reply *pb.MemberTokenReply) error {
 	phone, _ := strconv.ParseInt(req.Phone, 10, 64)
-	if !validateMobile(req.Phone) || phone == 0 {
+	if !validator.RegexMatch(req.Phone, validator.ChineseMobileMatcher) || phone == 0 {
 		return errno.ErrMemberPhoneValid
 	}
 
@@ -155,6 +157,14 @@ func (m *Member) Edit(ctx context.Context, req *pb.EditReq, empty *empty.Empty) 
 		return errno.MemberReplyErr(err)
 	}
 
+	// 更新中心服信息
+	content, _ := json.Marshal(um)
+	if _, err := m.centerService.Edit(ctx, &core.EditReq{
+		Content: content,
+	}); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -162,6 +172,9 @@ func (m *Member) Edit(ctx context.Context, req *pb.EditReq, empty *empty.Empty) 
 func (m *Member) PwdEdit(ctx context.Context, req *pb.PwdEditReq, empty *empty.Empty) error {
 	if req.Password != req.ConfirmPassword {
 		return errno.ErrMemberPasswordNotMatch
+	}
+	if req.Password == req.OldPassword {
+		return nil
 	}
 
 	// 密码只保存在用户中心
@@ -257,13 +270,4 @@ func (m *Member) GetAddressInfo(ctx context.Context, req *pb.AddressIDReq, inter
 	}
 	internal.Address = resource.AddressResource(addr)
 	return nil
-}
-
-// validateMobile cn mobile
-func validateMobile(phone string) bool {
-	// 170、171、165、162、167 排除
-	regular := "^(((13[0-9]{1})|(15[0-9]{1})|(16[1346890]{1})|(17[2-8]{1})|(18[0-9]{1})|(19[0-9]{1})|(14[5-7]{1}))+\\d{8})$"
-
-	reg := regexp.MustCompile(regular)
-	return reg.MatchString(phone)
 }

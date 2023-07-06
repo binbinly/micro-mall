@@ -3,6 +3,7 @@ module cart
 go 1.18
 
 require (
+	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0
 	github.com/golang/protobuf v1.5.3
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.0.4
@@ -17,7 +18,6 @@ require (
 	github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a // indirect
 	github.com/alicebob/miniredis/v2 v2.30.2 // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
-	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0
 	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
@@ -70,7 +70,6 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/redis/go-redis/extra/rediscmd/v9 v9.0.4 // indirect
 	github.com/redis/go-redis/extra/redisotel/v9 v9.0.4 // indirect
-	github.com/rogpeppe/go-internal v1.10.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/streadway/amqp v1.0.0 // indirect
@@ -100,3 +99,5 @@ require (
 )
 
 replace pkg => ./../../pkg
+
+replace github.com/binbinly/pkg => ../../../pkg

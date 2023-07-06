@@ -2,21 +2,19 @@ package main
 
 import (
 	"log"
-	"warehouse/event"
 
+	"github.com/binbinly/pkg/storage/orm"
 	"github.com/binbinly/pkg/storage/redis"
 	"go-micro.dev/v4"
+
 	"pkg/app"
 	"pkg/constvar"
-	"pkg/mysql"
+	pb "pkg/proto/warehouse"
 	"warehouse/cmd"
 	"warehouse/config"
-	"warehouse/logic"
-
-	pb "pkg/proto/warehouse"
+	"warehouse/event"
 	"warehouse/handler"
-
-	"go-micro.dev/v4/logger"
+	"warehouse/logic"
 )
 
 var (
@@ -26,21 +24,6 @@ var (
 func main() {
 	// load config
 	if err := app.LoadEnv(constvar.ServiceWarehouse, config.Cfg); err != nil {
-		logger.Fatal(err)
-	}
-
-	// init mysql
-	db := mysql.NewDB(&config.Cfg.MySQL)
-
-	// init redis
-	rdb, err := redis.NewClient(&config.Cfg.Redis)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// init broker
-	b, err := app.NewRabbitBroker(config.Cfg.AMQP.Addr, constvar.ExchangeOrder)
-	if err != nil {
 		log.Fatal(err)
 	}
 
@@ -51,7 +34,22 @@ func main() {
 		app.WithMigrate(func() {
 			cmd.Migrate()
 		}))
+
+	// init broker
+	b, err := app.NewRabbitBroker(config.Cfg.AMQP.Addr, constvar.ExchangeOrder)
+	if err != nil {
+		log.Fatal(err)
+	}
 	a.Init(micro.Broker(b))
+
+	// init dbs
+	db := orm.NewDB(&config.Cfg.MySQL)
+
+	// init redis
+	rdb, err := redis.NewClient(&config.Cfg.Redis)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// new logic
 	l := logic.New(db, rdb)

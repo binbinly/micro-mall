@@ -2,9 +2,9 @@ package repository
 
 import (
 	"context"
+
 	"github.com/binbinly/pkg/cache"
 	"github.com/binbinly/pkg/repo"
-
 	"gorm.io/gorm"
 
 	"member/model"
@@ -12,7 +12,7 @@ import (
 
 var _ IRepo = (*Repo)(nil)
 
-//IRepo 数据仓库接口
+// IRepo 数据仓库接口
 type IRepo interface {
 	IMember
 	IMemberAddress

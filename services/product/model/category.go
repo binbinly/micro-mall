@@ -1,20 +1,20 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 // CategoryModel 商品三级分类
 type CategoryModel struct {
-	mysql.PriID
+	dbs.PriID
 	Name         string `json:"name" gorm:"column:name;not null;type:varchar(30);comment:分类名"`
-	ParentID     int64  `json:"parent_id" gorm:"column:parent_id;not null;type:int(11) unsigned;default:0;comment:上级分类"`
+	ParentID     int64  `json:"parent_id" gorm:"column:parent_id;not null;type:int;default:0;comment:上级分类"`
 	Level        int8   `json:"level" gorm:"column:level;not null;default:1;comment:层级"`
 	Icon         string `json:"icon" gorm:"column:icon;not null;default:'';comment:图标"`
 	ProductUnit  string `json:"product_unit" gorm:"column:product_unit;not null;default:'';comment:计量单位"`
-	ProductCount int    `json:"product_count" gorm:"column:product_count;not null;type:int(11) unsigned;default:0;comment:商品数量"`
-	mysql.Release
-	mysql.OrderBy
+	ProductCount int    `json:"product_count" gorm:"column:product_count;not null;type:int;default:0;comment:商品数量"`
+	dbs.Release
+	dbs.OrderBy
 }
 
 // TableName 表名

@@ -8,8 +8,6 @@ import (
 var (
 	// DefaultRegistry 注册中心
 	DefaultRegistry Registry
-	// ErrNotFound Not found error when GetService is called
-	ErrNotFound = errors.New("service not found")
 	// ErrWatcherStopped Watcher stopped error when watcher is stopped
 	ErrWatcherStopped = errors.New("watcher stopped")
 )

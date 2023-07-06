@@ -35,6 +35,8 @@ func (r *Repo) UserUpdatePwd(ctx context.Context, user *model.UserModel) error {
 	if err := r.DB.WithContext(ctx).Save(user).Error; err != nil {
 		return errors.Wrapf(err, "[repo.user] update pwd")
 	}
+	r.DelCache(ctx, userCacheKey(user.ID))
+
 	return nil
 }
 

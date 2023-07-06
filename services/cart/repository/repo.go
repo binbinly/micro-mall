@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+
 	"github.com/redis/go-redis/v9"
 )
 
@@ -20,7 +21,7 @@ type IRepo interface {
 	Close() error
 }
 
-// Repo mysql struct
+// Repo dbs struct
 type Repo struct {
 	redis *redis.Client
 }
@@ -32,7 +33,7 @@ func New(redis *redis.Client) IRepo {
 	}
 }
 
-// Close release mysql connection
+// Close release dbs connection
 func (r *Repo) Close() error {
 	return r.redis.Close()
 }

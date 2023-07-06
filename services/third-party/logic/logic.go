@@ -2,8 +2,10 @@ package logic
 
 import (
 	"context"
+
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/redis/go-redis/v9"
+
 	"third-party/eth"
 )
 

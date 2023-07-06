@@ -2,8 +2,9 @@ package handler
 
 import (
 	"context"
-	"go-micro.dev/v4/metadata"
 	"strconv"
+
+	"go-micro.dev/v4/metadata"
 )
 
 // GetUserID 获取用户id

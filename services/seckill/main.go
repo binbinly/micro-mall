@@ -2,17 +2,16 @@ package main
 
 import (
 	"log"
+
+	"github.com/binbinly/pkg/storage/redis"
+	"go-micro.dev/v4"
+
 	"pkg/app"
 	"pkg/constvar"
 	pb "pkg/proto/seckill"
 	"seckill/config"
 	"seckill/handler"
 	"seckill/logic"
-
-	"go-micro.dev/v4"
-	"go-micro.dev/v4/logger"
-
-	"github.com/binbinly/pkg/storage/redis"
 )
 
 var (
@@ -22,7 +21,7 @@ var (
 func main() {
 	// load config
 	if err := app.LoadEnv(constvar.ServiceSeckill, config.Cfg); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
 	// init redis
@@ -46,7 +45,7 @@ func main() {
 
 	// register handler
 	if err = pb.RegisterSeckillHandler(a.Service().Server(), handler.New(logic.New(rdb), a.Service().Client())); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
 	// run

@@ -16,7 +16,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "mall gateway",
 	Short: "micro mall gateway",
-	Long:  `微服务 - 商城学习项目网关`,
+	Long:  `微服务 - 商城网关`,
 	Args:  args,
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Fatalf("unrecognized command cmd: %v args: %v", cmd.Name(), args)

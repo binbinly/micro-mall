@@ -3,10 +3,10 @@ package repository
 import (
 	"context"
 	"fmt"
-	"pkg/mysql"
 
 	"github.com/pkg/errors"
 
+	"pkg/dbs"
 	"product/model"
 )
 
@@ -16,7 +16,7 @@ func (r *Repo) GetAttrGroupByCatID(ctx context.Context, catID int64) (list []*mo
 	if err = r.QueryCache(ctx, doKey, &list, 0, func(data any) error {
 		// 从数据库中获取
 		if err := r.DB.WithContext(ctx).Model(&model.AttrGroupModel{}).Where("cat_id=?", catID).
-			Order(mysql.DefaultOrderSort).Find(&list).Error; err != nil {
+			Order(dbs.DefaultOrderSort).Find(&list).Error; err != nil {
 			return err
 		}
 		return nil

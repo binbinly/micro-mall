@@ -4,17 +4,29 @@ import (
 	"context"
 	"strconv"
 	"testing"
+
+	"github.com/binbinly/pkg/storage/redis"
+
+	"pkg/app"
+	"pkg/constvar"
+	"third-party/config"
 )
 
 var srv Logic
 
-//func TestMain(m *testing.M) {
-//	redis.InitTestRedis()
-//	srv = New(conf.Conf)
-//	if code := m.Run(); code != 0 {
-//		panic(code)
-//	}
-//}
+func TestMain(m *testing.M) {
+	// load config
+	if err := app.LoadEnv(constvar.ServiceWarehouse, config.Cfg); err != nil {
+		panic(err)
+	}
+
+	rdb := redis.InitTestRedis()
+
+	srv = New(rdb, nil)
+	if code := m.Run(); code != 0 {
+		panic(code)
+	}
+}
 
 func TestThird_SendSMS(t1 *testing.T) {
 	type args struct {

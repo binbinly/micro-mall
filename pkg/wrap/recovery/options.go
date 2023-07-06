@@ -12,7 +12,7 @@ var (
 )
 
 type options struct {
-	recoveryHandlerFunc RecoveryHandlerFuncContext
+	recoveryHandlerFunc HandlerFuncContext
 }
 
 func evaluateOptions(opts []Option) *options {
@@ -26,17 +26,17 @@ func evaluateOptions(opts []Option) *options {
 
 type Option func(*options)
 
-// WithRecoveryHandler customizes the function for recovering from a panic.
-func WithRecoveryHandler(f RecoveryHandlerFunc) Option {
+// WithHandler customizes the function for recovering from a panic.
+func WithHandler(f HandlerFunc) Option {
 	return func(o *options) {
-		o.recoveryHandlerFunc = RecoveryHandlerFuncContext(func(ctx context.Context, p any) error {
+		o.recoveryHandlerFunc = HandlerFuncContext(func(ctx context.Context, p any) error {
 			return f(p)
 		})
 	}
 }
 
-// WithRecoveryHandlerContext customizes the function for recovering from a panic.
-func WithRecoveryHandlerContext(f RecoveryHandlerFuncContext) Option {
+// WithHandlerContext customizes the function for recovering from a panic.
+func WithHandlerContext(f HandlerFuncContext) Option {
 	return func(o *options) {
 		o.recoveryHandlerFunc = f
 	}

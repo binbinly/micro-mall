@@ -5,7 +5,7 @@ syntax = "proto3";
 
 package product;
 
-option go_package = "./proto;gateway";
+option go_package = "./proto;product";
 
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";

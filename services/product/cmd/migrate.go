@@ -1,10 +1,9 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
-	"pkg/mysql"
 
+	"github.com/binbinly/pkg/storage/orm"
 	"gorm.io/gorm"
 
 	"product/config"
@@ -14,13 +13,13 @@ import (
 // Migrate 数据迁移
 func Migrate() {
 	// 初始化数据库链接
-	db := mysql.NewDB(&config.Cfg.MySQL)
+	db := orm.NewDB(&config.Cfg.MySQL)
 	// 数据库迁移
-	fmt.Println("数据库迁移开始")
+	log.Println("数据库迁移开始")
 	if err := migrateUp(db); err != nil {
 		log.Fatalf("db err:%v", err)
 	}
-	fmt.Println(`数据库基础数据初始化成功`)
+	log.Println(`数据库基础数据初始化成功`)
 }
 
 // migrateUp 数据迁移

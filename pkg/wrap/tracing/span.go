@@ -2,8 +2,8 @@ package tracing
 
 import (
 	"context"
-	"github.com/binbinly/pkg/util"
 
+	"github.com/binbinly/pkg/util"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -23,7 +23,7 @@ func setClientSpan(ctx context.Context, span trace.Span, m any) {
 	span.SetAttributes(attrs...)
 }
 
-func setServerSpan(ctx context.Context, span trace.Span, m any) {
+func setServerSpan(span trace.Span, m any) {
 	attrs := commonAttrs
 	if p, ok := m.(proto.Message); ok {
 		attrs = append(attrs, attribute.Key("recv_msg.size").Int(proto.Size(p)))

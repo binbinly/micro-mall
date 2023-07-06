@@ -1,15 +1,15 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 // OrderItemModel 订单项信息
 type OrderItemModel struct {
-	mysql.PriID
+	dbs.PriID
 	OID
 	ONo
-	mysql.Sku
+	dbs.Sku
 	SkuName           string `json:"sku_name" gorm:"column:sku_name;not null;type:varchar(60);comment:商品sku名"`
 	SkuImg            string `json:"sku_img" gorm:"column:sku_img;not null;type:varchar(128);comment:商品sku图片"`
 	SkuPrice          int    `json:"sku_price" gorm:"column:sku_price;not null;type:int;comment:商品单价/分"`

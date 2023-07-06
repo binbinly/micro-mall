@@ -5,13 +5,14 @@ import (
 	"fmt"
 
 	"github.com/pkg/errors"
+
 	"member/model"
 )
 
 // IMember 会员接口定义
 type IMember interface {
 	MemberCreate(ctx context.Context, member *model.MemberModel) error
-	MemberUpdate(ctx context.Context, id int64, userMap map[string]interface{}) error
+	MemberUpdate(ctx context.Context, id int64, userMap map[string]any) error
 	GetMemberByID(ctx context.Context, id int64) (member *model.MemberModel, err error)
 	MemberExist(ctx context.Context, username string, phone int64) (bool, error)
 }
@@ -27,7 +28,7 @@ func (r *Repo) MemberCreate(ctx context.Context, member *model.MemberModel) (err
 }
 
 // MemberUpdate 更新用户信息
-func (r *Repo) MemberUpdate(ctx context.Context, id int64, userMap map[string]interface{}) error {
+func (r *Repo) MemberUpdate(ctx context.Context, id int64, userMap map[string]any) error {
 	if err := r.DB.WithContext(ctx).Model(&model.MemberModel{}).Where("id=?", id).Updates(userMap).Error; err != nil {
 		return errors.Wrapf(err, "[repo.member] update")
 	}
@@ -38,7 +39,7 @@ func (r *Repo) MemberUpdate(ctx context.Context, id int64, userMap map[string]in
 
 // GetMemberByID 获取用户
 func (r *Repo) GetMemberByID(ctx context.Context, id int64) (member *model.MemberModel, err error) {
-	if err = r.QueryCache(ctx, buildMemberCacheKey(id), &member, 0, func(data interface{}) error {
+	if err = r.QueryCache(ctx, buildMemberCacheKey(id), &member, 0, func(data any) error {
 		// 从数据库中获取
 		if err := r.DB.WithContext(ctx).First(data, id).Error; err != nil {
 			return err

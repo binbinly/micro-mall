@@ -1,14 +1,14 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 // CategoryRelBrandModel 分类关联品牌
 type CategoryRelBrandModel struct {
-	mysql.PriID
-	mysql.Cat
-	BrandID int `json:"brand_id" gorm:"column:brand_id;not null;type:int(11) unsigned;comment:品牌id"`
+	dbs.PriID
+	dbs.Cat
+	BrandID int `json:"brand_id" gorm:"column:brand_id;not null;type:int;comment:品牌id"`
 }
 
 // TableName 表名

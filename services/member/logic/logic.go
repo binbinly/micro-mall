@@ -6,6 +6,7 @@ import (
 	"github.com/binbinly/pkg/cache"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
+
 	"member/model"
 	"member/repository"
 	center "pkg/proto/core"

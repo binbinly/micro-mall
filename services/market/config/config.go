@@ -7,7 +7,8 @@ import (
 
 var Cfg = &Config{
 	MySQL: orm.Config{
-		Addr:     "127.0.0.1:3306",
+		Host:     "127.0.0.1",
+		Port:     3306,
 		User:     "root",
 		Password: "root",
 		Database: "mall_sms",

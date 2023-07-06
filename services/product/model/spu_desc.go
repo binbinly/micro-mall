@@ -1,13 +1,13 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 // SpuDescModel spu介绍
 type SpuDescModel struct {
-	mysql.PriID
-	mysql.Spu
+	dbs.PriID
+	dbs.Spu
 	Content string `json:"content" gorm:"column:content;comment:商品介绍"`
 }
 

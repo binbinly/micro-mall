@@ -2,12 +2,13 @@ package handler
 
 import (
 	"context"
+
+	"github.com/golang/protobuf/ptypes/empty"
+
 	"market/logic"
 	"market/resource"
 	"pkg/errno"
 	"pkg/handler"
-
-	"github.com/golang/protobuf/ptypes/empty"
 	cpb "pkg/proto/common"
 	pb "pkg/proto/market"
 )

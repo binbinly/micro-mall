@@ -2,33 +2,25 @@ package errno
 
 import (
 	"go-micro.dev/v4/errors"
-)
-
-const (
-	golbalID  = "global"
-	marketID  = "market"
-	prodcutID = "product"
-	memberID  = "member"
-	orderID   = "order"
-	killID    = "seckill"
+	"pkg/constvar"
 )
 
 // 对外错误响应定义
 // 全局错误定义
 var (
 	// ErrParamsCheckInvalid 参数验证不通过
-	ErrParamsCheckInvalid = errors.New(golbalID, "参数非法", 400)
+	ErrParamsCheckInvalid = errors.New("global", "参数非法", 400)
 )
 
 // MarketReplyErr 营销服错误响应处理
 func MarketReplyErr(err error) error {
 	switch err {
 	case ErrCouponFinished:
-		return errors.New(marketID, "优惠券已领完", int32(CouponFinished))
+		return errors.New(constvar.ServiceMarket, "优惠券已领完", int32(CouponFinished))
 	case ErrCouponReceived:
-		return errors.New(marketID, "优惠券已领取过哦", int32(CouponReceived))
+		return errors.New(constvar.ServiceMarket, "优惠券已领取过哦", int32(CouponReceived))
 	case ErrCouponNotFound:
-		return errors.New(marketID, "优惠券不存在", int32(CouponNotFound))
+		return errors.New(constvar.ServiceMarket, "优惠券不存在", int32(CouponNotFound))
 	}
 	return err
 }
@@ -37,7 +29,7 @@ func MarketReplyErr(err error) error {
 func ProductReplyErr(err error) error {
 	switch err {
 	case ErrProductNotFound:
-		return errors.New(prodcutID, "商品不存在哦", int32(ProductNotFound))
+		return errors.New(constvar.ServiceProduct, "商品不存在哦", int32(ProductNotFound))
 	}
 	return err
 }
@@ -46,15 +38,15 @@ func ProductReplyErr(err error) error {
 func MemberReplyErr(err error) error {
 	switch err {
 	case ErrMemberPhoneValid:
-		return errors.New(memberID, "手机号格式错误", int32(MemberPhoneValid))
+		return errors.New(constvar.ServiceMember, "手机号格式错误", int32(MemberPhoneValid))
 	case ErrMemberAddressNotFound:
-		return errors.New(memberID, "收货地址不存在", int32(MemberAddressNotFound))
+		return errors.New(constvar.ServiceMember, "收货地址不存在", int32(MemberAddressNotFound))
 	case ErrMemberFrozen:
-		return errors.New(memberID, "账号已被冻结，如有疑问，请联系客服", int32(MemberFrozen))
+		return errors.New(constvar.ServiceMember, "账号已被冻结，如有疑问，请联系客服", int32(MemberFrozen))
 	case ErrMemberNotFound:
-		return errors.New(memberID, "账号不存在", int32(MemberNotFound))
+		return errors.New(constvar.ServiceMember, "账号不存在", int32(MemberNotFound))
 	case ErrMemberExisted:
-		return errors.New(memberID, "账号已存在", int32(MemberExisted))
+		return errors.New(constvar.ServiceMember, "账号已存在", int32(MemberExisted))
 	}
 	return err
 }
@@ -63,11 +55,11 @@ func MemberReplyErr(err error) error {
 func OrderReplyErr(err error) error {
 	switch err {
 	case ErrOrderNotFound:
-		return errors.New(orderID, "订单不存在", int32(OrderNotFound))
+		return errors.New(constvar.ServiceOrder, "订单不存在", int32(OrderNotFound))
 	case ErrOrderSkuEmpty:
-		return errors.New(orderID, "商品不存在", int32(OrderSkuEmpty))
+		return errors.New(constvar.ServiceOrder, "商品不存在", int32(OrderSkuEmpty))
 	case ErrPayActionInvalid:
-		return errors.New(orderID, "无效的支付方式", int32(PayActionInvallid))
+		return errors.New(constvar.ServiceOrder, "无效的支付方式", int32(PayActionInvalid))
 	}
 	return err
 }
@@ -76,17 +68,17 @@ func OrderReplyErr(err error) error {
 func SeckillReplyErr(err error) error {
 	switch err {
 	case ErrKillTimeInvalid:
-		return errors.New(killID, "不在秒杀时间内哦", int32(KillTimeInvalid))
+		return errors.New(constvar.ServiceSeckill, "不在秒杀时间内哦", int32(KillTimeInvalid))
 	case ErrKillKeyNotMatch:
-		return errors.New(killID, "商品令牌错误", int32(KillKeyNotMatch))
+		return errors.New(constvar.ServiceSeckill, "商品令牌错误", int32(KillKeyNotMatch))
 	case ErrKillLimitExceed:
-		return errors.New(killID, "超出数量限制哦", int32(KillLimitExceed))
+		return errors.New(constvar.ServiceSeckill, "超出数量限制哦", int32(KillLimitExceed))
 	case ErrKillRepeat:
-		return errors.New(killID, "不可重复秒杀哦", int32(KillRepeat))
+		return errors.New(constvar.ServiceSeckill, "不可重复秒杀哦", int32(KillRepeat))
 	case ErrKillFinish:
-		return errors.New(killID, "来晚了，该商品已秒杀完了哦", int32(KillFinish))
+		return errors.New(constvar.ServiceSeckill, "来晚了，该商品已秒杀完了哦", int32(KillFinish))
 	case ErrKillSkuNotFound:
-		return errors.New(killID, "商品不存在", int32(KillSkuNotFound))
+		return errors.New(constvar.ServiceSeckill, "商品不存在", int32(KillSkuNotFound))
 	}
 	return err
 }

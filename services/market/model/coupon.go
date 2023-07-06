@@ -1,6 +1,6 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 const (
 	// CouponUseTypeAll 全场通用
@@ -13,7 +13,7 @@ const (
 
 // CouponModel 优惠券
 type CouponModel struct {
-	mysql.PriID
+	dbs.PriID
 	Name          string `json:"name" gorm:"column:name;not null;type:varchar(128);comment:优惠券名"`
 	Cover         string `json:"cover" gorm:"column:cover;not null;type:varchar(128);default:'';comment:优惠券封面"`
 	Type          int8   `json:"type" gorm:"column:type;not null;comment:优惠卷类型[0->全场赠券；1->会员赠券；2->购物赠券；3->注册赠券]"`
@@ -32,8 +32,8 @@ type CouponModel struct {
 	EnableEndAt   int    `json:"enable_end_at" gorm:"column:enable_end_at;not null;type:int;default:0;comment:可以领取的结束时间"`
 	Code          string `json:"code" gorm:"column:code;not null;type:varchar(20);comment:优惠码"`
 	MemberLevel   int8   `json:"member_level" gorm:"column:member_level;not null;default:0;comment:可以领取的会员等级[0->不限等级，其他-对应等级]"`
-	mysql.Release
-	mysql.CUT
+	dbs.Release
+	dbs.CUT
 }
 
 // TableName 表名

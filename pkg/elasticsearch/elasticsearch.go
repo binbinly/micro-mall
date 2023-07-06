@@ -2,7 +2,6 @@ package elasticsearch
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -37,6 +36,7 @@ func NewClient(c *Config) *elastic.Client {
 	if err != nil {
 		log.Fatal("ping elastic err", err)
 	}
-	fmt.Printf("Elasticsearch returned with code %d and version %s\n", code, info.Version.Number)
+	log.Printf("Elasticsearch returned with code %d and version %s\n", code, info.Version.Number)
+
 	return Client
 }

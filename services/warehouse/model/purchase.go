@@ -1,10 +1,10 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // PurchaseModel 采购信息
 type PurchaseModel struct {
-	mysql.PriID
+	dbs.PriID
 	AssigneeID   int    `json:"assignee_id" gorm:"column:assignee_id;not null;type:int;default:0;comment:采购人id"`
 	AssigneeName string `json:"assignee_name" gorm:"column:assignee_name;not null;type:varchar(64);default:'';comment:采购人"`
 	Phone        string `json:"phone" gorm:"column:phone;not null;type:char(11);default:'';comment:手机号"`
@@ -12,7 +12,7 @@ type PurchaseModel struct {
 	Status       int8   `json:"status" gorm:"column:status;not null;default:0;comment:状态"`
 	WareID       int    `json:"ware_id" gorm:"column:ware_id;not null;type:int;comment:仓库id"`
 	Amount       int    `json:"amount" gorm:"column:amount;not null;type:int;default:0;comment:总金额/分"`
-	mysql.CUT
+	dbs.CUT
 }
 
 // TableName 表名

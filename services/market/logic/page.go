@@ -2,12 +2,12 @@ package logic
 
 import (
 	"context"
-	"github.com/redis/go-redis/v9"
-	"pkg/constvar"
 
 	"github.com/pkg/errors"
+	"github.com/redis/go-redis/v9"
 
 	"market/model"
+	"pkg/constvar"
 )
 
 // GetHomeCat 首页分类

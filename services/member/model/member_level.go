@@ -1,12 +1,12 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 // MemberLevelModel 会员等级
 type MemberLevelModel struct {
-	mysql.PriID
+	dbs.PriID
 	Name          string `json:"name" gorm:"column:name;not null;type:varchar(100);comment:等级名称"`
 	Growth        int    `json:"growth" gorm:"column:growth;not null;type:int;comment:等级需要的成长值"`
 	FreeFreight   int    `json:"free_freight" gorm:"column:free_freight;not null;type:int;comment:免运费标准"`
@@ -16,7 +16,7 @@ type MemberLevelModel struct {
 	IsBirthday    int8   `json:"is_birthday" gorm:"is_birthday;not null;default:0;comment:是否有生日特权"`
 	IsDefault     int8   `json:"is_default" gorm:"is_default;not null;default:0;comment:是否默认等级"`
 	Note          string `json:"note" gorm:"column:note;not null;type:varchar(255);default:'';comment:备注"`
-	mysql.CUT
+	dbs.CUT
 }
 
 // TableName 表名

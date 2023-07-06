@@ -2,9 +2,11 @@ package wrap
 
 import (
 	"context"
-	"go-micro.dev/v4/server"
+
 	"pkg/errno"
 	"pkg/handler"
+
+	"go-micro.dev/v4/server"
 )
 
 // AuthFunc 执行身份验证的可插入函数。

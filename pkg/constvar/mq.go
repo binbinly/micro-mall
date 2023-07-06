@@ -1,5 +1,6 @@
 package constvar
 
+// 消息队列常量定义
 const (
 	// ExchangeOrder 订单服务rabbitmq交换器名
 	ExchangeOrder = "order.event.exchange"

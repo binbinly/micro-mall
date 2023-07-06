@@ -1,11 +1,11 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // SkuLadderModel 商品阶梯价格
 type SkuLadderModel struct {
-	mysql.PriID
-	mysql.Sku
+	dbs.PriID
+	dbs.Sku
 	FullCount int  `json:"full_count" gorm:"column:full_count;not null;type:int;comment:满几件"`
 	Discount  int  `json:"discount" gorm:"column:discount;not null;type:int;comment:打几折"`
 	Price     int  `json:"price" gorm:"column:price;not null;type:int;comment:折后价"`

@@ -1,16 +1,16 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // CollectSpuModel 用户收藏商品
 type CollectSpuModel struct {
-	mysql.PriID
-	mysql.MID
-	mysql.Spu
+	dbs.PriID
+	dbs.MID
+	dbs.Spu
 	SpuName string `json:"spu_name" gorm:"column:spu_name;not null;type:varchar(255);comment:spu_name"`
 	SpuImg  string `json:"spu_img" gorm:"column:spu_img;not null;type:varchar(255);comment:spu_img"`
-	mysql.CT
-	mysql.DT
+	dbs.CT
+	dbs.DT
 }
 
 // TableName 表名

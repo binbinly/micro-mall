@@ -6,10 +6,9 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/binbinly/pkg/storage/redis"
 	"github.com/pkg/errors"
 	"go-micro.dev/v4/logger"
-
-	"github.com/binbinly/pkg/storage/redis"
 )
 
 // AddCart 添加购物车

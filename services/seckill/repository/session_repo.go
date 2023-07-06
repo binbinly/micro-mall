@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/binbinly/pkg/logger"
 	"github.com/pkg/errors"
-	"go-micro.dev/v4/logger"
 )
 
 const (

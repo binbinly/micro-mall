@@ -2,13 +2,19 @@ package logic
 
 import (
 	"context"
-	"go-micro.dev/v4/logger"
+	"strings"
+	"time"
+
+	"github.com/binbinly/pkg/logger"
+	"github.com/pkg/errors"
 	"google.golang.org/protobuf/types/known/emptypb"
+
+	"order/model"
 	"pkg/app"
 	"pkg/constvar"
+	"pkg/dbs"
 	"pkg/errno"
 	"pkg/message"
-	"pkg/mysql"
 	"pkg/proto/cart"
 	cpb "pkg/proto/common"
 	"pkg/proto/core"
@@ -16,11 +22,6 @@ import (
 	"pkg/proto/member"
 	"pkg/proto/product"
 	"pkg/proto/warehouse"
-	"strings"
-	"time"
-
-	"github.com/pkg/errors"
-	"order/model"
 )
 
 // OrderSubmit 购物车提交订单
@@ -402,7 +403,7 @@ func (l *logic) submitBefore(ctx context.Context, order *model.OrderModel, items
 	skuNums := getSkuNums(order, items)
 	// 仓储服务 锁定库存
 	if _, err := l.warehouseService.SKuStockLock(ctx, &warehouse.SkuStockLockReq{
-		OrderId:   0,
+		OrderId:   order.ID,
 		OrderNo:   order.OrderNo,
 		Consignee: order.AddressName,
 		Phone:     order.AddressPhone,
@@ -449,7 +450,7 @@ func (l *logic) buildOrder(ctx context.Context, addressId, memberID, couponID in
 	}
 
 	return &model.OrderModel{
-		MID:             mysql.MID{MemberID: memberID},
+		MID:             dbs.MID{MemberID: memberID},
 		OrderNo:         orderNo,
 		CouponID:        couponID,
 		TotalAmount:     total,
@@ -475,7 +476,7 @@ func (l *logic) buildOrder(ctx context.Context, addressId, memberID, couponID in
 func buildOrderItem(skuId int64, price, num int, title, cover, skuAttrs string) *model.OrderItemModel {
 	amount := price * num
 	return &model.OrderItemModel{
-		Sku:             mysql.Sku{SkuID: skuId},
+		Sku:             dbs.Sku{SkuID: skuId},
 		SkuName:         title,
 		SkuImg:          cover,
 		SkuPrice:        amount,

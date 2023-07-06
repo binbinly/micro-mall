@@ -6,11 +6,6 @@ init:
 	@go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 	@go install github.com/go-micro/generator/cmd/protoc-gen-micro@latest
 
-.PHONY: proto
-proto:
-	@protoc --proto_path=. --micro_out=. --go_out=:. --validate_out="lang=go:." proto/seckill.proto
-	@protoc --proto_path=. --micro_out=. --go_out=:. proto/health.proto
-
 .PHONY: update
 update:
 	@go get -u

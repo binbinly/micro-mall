@@ -3,12 +3,15 @@ module product
 go 1.18
 
 require (
+	github.com/binbinly/pkg v0.0.0-00010101000000-000000000000
 	github.com/golang/protobuf v1.5.3
 	github.com/olivere/elastic/v7 v7.0.32
 	github.com/pkg/errors v0.9.1
+	github.com/redis/go-redis/v9 v9.0.4
 	go-micro.dev/v4 v4.10.2
 	golang.org/x/sync v0.2.0
 	gorm.io/gorm v1.25.1
+	pkg v0.0.0-00010101000000-000000000000
 )
 
 require (
@@ -18,7 +21,6 @@ require (
 	github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a // indirect
 	github.com/alicebob/miniredis/v2 v2.30.2 // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
-	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0 // indirect
 	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
@@ -37,6 +39,7 @@ require (
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-micro/cli v1.1.4 // indirect
+	github.com/go-micro/plugins/v4/broker/rabbitmq v1.2.1 // indirect
 	github.com/go-micro/plugins/v4/client/grpc v1.1.0 // indirect
 	github.com/go-micro/plugins/v4/config/encoder/yaml v1.2.0 // indirect
 	github.com/go-micro/plugins/v4/config/source/consul v1.2.0 // indirect
@@ -57,6 +60,9 @@ require (
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/hashicorp/serf v0.9.5 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/jackc/pgx/v5 v5.3.1 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
@@ -75,9 +81,9 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/redis/go-redis/extra/rediscmd/v9 v9.0.4 // indirect
 	github.com/redis/go-redis/extra/redisotel/v9 v9.0.4 // indirect
-	github.com/redis/go-redis/v9 v9.0.4 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
+	github.com/streadway/amqp v1.0.0 // indirect
 	github.com/uber/jaeger-client-go v2.29.1+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/urfave/cli/v2 v2.8.1 // indirect
@@ -104,7 +110,10 @@ require (
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.5.0 // indirect
+	gorm.io/driver/postgres v1.5.2 // indirect
 	gorm.io/plugin/opentelemetry v0.1.2 // indirect
 )
 
 replace pkg => ./../../pkg
+
+replace github.com/binbinly/pkg => ../../../pkg

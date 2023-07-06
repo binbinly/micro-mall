@@ -2,14 +2,13 @@ package router
 
 import (
 	"encoding/json"
-	"github.com/binbinly/pkg/util"
 	"log"
+	"net/http"
 
+	"github.com/binbinly/pkg/util"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/protobuf/encoding/protojson"
-
-	"net/http"
 )
 
 // healthCheckResponse 健康检查响应结构体

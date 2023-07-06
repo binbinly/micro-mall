@@ -3,11 +3,12 @@ package repository
 import (
 	"context"
 	"fmt"
-	"gorm.io/gorm"
-	"pkg/mysql"
 
 	"github.com/pkg/errors"
+	"gorm.io/gorm"
+
 	"member/model"
+	"pkg/dbs"
 )
 
 // IMemberAddress 用户收货地址接口
@@ -56,7 +57,7 @@ func (r *Repo) GetMemberAddressList(ctx context.Context, memberID int64) (list [
 	doKey := fmt.Sprintf("member_address_all:%d", memberID)
 	if err = r.QueryCache(ctx, doKey, &list, 0, func(data interface{}) error {
 		// 从数据库中获取
-		if err = r.DB.WithContext(ctx).Where("member_id=?", memberID).Order(mysql.DefaultOrder).Find(&list).Error; err != nil {
+		if err = r.DB.WithContext(ctx).Where("member_id=?", memberID).Order(dbs.DefaultOrder).Find(&list).Error; err != nil {
 			return err
 		}
 		if len(list) == 0 {

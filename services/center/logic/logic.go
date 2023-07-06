@@ -1,12 +1,14 @@
 package logic
 
 import (
-	"center/model"
-	"center/repository"
 	"context"
+
 	"github.com/binbinly/pkg/cache"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
+
+	"center/model"
+	"center/repository"
 )
 
 var _ Logic = (*logic)(nil)
@@ -22,7 +24,7 @@ type Logic interface {
 	// UserEditPwd 修改密码
 	UserEditPwd(ctx context.Context, id int64, oldPassword, password string) error
 	// UserEdit 修改用户信息
-	UserEdit(ctx context.Context, id int64, userMap map[string]interface{}) error
+	UserEdit(ctx context.Context, id int64, userMap map[string]any) error
 	// UserInfoByID 获取用户详情
 	UserInfoByID(ctx context.Context, id int64) (*model.UserModel, error)
 	// UserLogout 用户登出

@@ -13,11 +13,12 @@ type Config struct {
 
 var Cfg = &Config{
 	Secret: Secret{
-		JwtSecret:  "TQ2MNWIB2zK0z9JCqUC6WcTG9pMTnX12CLuVSop5Xr2owx4M9JTJIzBnMMYeWwRs",
+		JwtSecret:  "u33A7ss43e89bbNtjtfkARnpi96zKWVv11MHOiHHdl89rLjKsIe15oNPpOuRkslG",
 		JwtTimeout: 86400,
 	},
 	MySQL: orm.Config{
-		Addr:     "127.0.0.1:3306",
+		Host:     "127.0.0.1",
+		Port:     3306,
 		User:     "root",
 		Password: "root",
 		Database: "center",

@@ -2,16 +2,17 @@ package main
 
 import (
 	"log"
+
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/binbinly/pkg/storage/redis"
+
 	"market/cmd"
 	"market/config"
 	"market/handler"
 	"market/logic"
 	"pkg/app"
 	"pkg/constvar"
-	"pkg/mysql"
 	pb "pkg/proto/market"
-
-	"github.com/binbinly/pkg/storage/redis"
 )
 
 var (
@@ -24,8 +25,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// init mysql
-	db := mysql.NewDB(&config.Cfg.MySQL)
+	// init dbs
+	db := orm.NewDB(&config.Cfg.MySQL)
 
 	// init redis
 	rdb, err := redis.NewClient(&config.Cfg.Redis)

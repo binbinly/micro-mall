@@ -3,11 +3,12 @@ package logic
 import (
 	"context"
 	"fmt"
-	"pkg/errno"
-	"seckill/repository"
 	"time"
 
 	"github.com/pkg/errors"
+
+	"pkg/errno"
+	"seckill/repository"
 )
 
 // SeckillCheck 秒杀验证

@@ -3,10 +3,11 @@ package repository
 import (
 	"context"
 
-	"center/model"
 	"github.com/binbinly/pkg/cache"
 	"github.com/binbinly/pkg/repo"
 	"gorm.io/gorm"
+
+	"center/model"
 )
 
 var _ IRepo = (*Repo)(nil)
@@ -32,7 +33,7 @@ type IRepo interface {
 	Close() error
 }
 
-// Repo mysql struct
+// Repo dbs struct
 type Repo struct {
 	repo.Repo
 }

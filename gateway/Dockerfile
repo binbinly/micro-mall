@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine as build
+FROM golang:1.20-alpine as builder
 
 # 作者
 LABEL maintainer="mall"
@@ -12,21 +12,20 @@ ENV GO111MODULE=on \
     TZ=Asia/Shanghai
 
 # 执行镜像的工作目录
-WORKDIR /go/src/mall
+WORKDIR /go/src/gateway
 
 # 将目录拷贝到镜像里
-COPY gateway/ ./gateway
-COPY pkg/ ./pkg
+COPY . .
 
-RUN cd gateway && go mod tidy && go build -o gateway .
+RUN go mod tidy && go build -o gateway .
 
 # 引入alphine最小linux镜像
 FROM alpine
 
 WORKDIR /app
 # 复制生成的可执行命令和一些配置文件
-COPY --from=build /go/src/mall/gateway/gateway .
-COPY --from=build /go/src/mall/gateway/docker.yaml .
+COPY --from=builder /go/src/gateway/gateway .
+COPY --from=builder /go/src/gateway/configs/docker.yaml .
 
 EXPOSE 9520
 

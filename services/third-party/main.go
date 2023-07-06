@@ -1,18 +1,17 @@
 package main
 
 import (
+	"log"
+
 	"github.com/binbinly/pkg/storage/redis"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"log"
+
 	"pkg/app"
 	"pkg/constvar"
-	"third-party/config"
-	"third-party/logic"
-
 	pb "pkg/proto/core"
+	"third-party/config"
 	"third-party/handler"
-
-	"go-micro.dev/v4/logger"
+	"third-party/logic"
 )
 
 var (
@@ -45,7 +44,7 @@ func main() {
 
 	// register handler
 	if err = pb.RegisterThirdPartyHandler(a.Service().Server(), handler.New(logic.New(rdb, c))); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
 	// run

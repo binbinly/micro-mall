@@ -1,10 +1,11 @@
 package resource
 
 import (
+	"strconv"
+	
 	"member/model"
 	pb "pkg/proto/common"
 	center "pkg/proto/core"
-	"strconv"
 )
 
 // MemberTokenResource 转化会员登录信息

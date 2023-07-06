@@ -1,11 +1,8 @@
-/logs
-/.idea
-/.DS_Store
-/.scannerwork/
-go.sum
+logs/
+.idea/
+.DS_Store
+.scannerwork/
 .git
-local.yaml
 .gitignore
 Dockerfile
 *.md
-/example

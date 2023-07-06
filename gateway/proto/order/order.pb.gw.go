@@ -2,11 +2,11 @@
 // source: order/order.proto
 
 /*
-Package gateway is a reverse proxy.
+Package order is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package gateway
+package order
 
 import (
 	"context"

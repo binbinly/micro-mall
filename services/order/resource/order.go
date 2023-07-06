@@ -1,8 +1,9 @@
 package resource
 
 import (
-	"github.com/binbinly/pkg/util"
 	"strings"
+
+	"github.com/binbinly/pkg/util"
 
 	"order/config"
 	"order/model"

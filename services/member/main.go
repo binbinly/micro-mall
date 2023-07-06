@@ -1,18 +1,18 @@
 package main
 
 import (
-	"github.com/binbinly/pkg/storage/redis"
 	"log"
+
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/binbinly/pkg/storage/redis"
+
 	"member/cmd"
 	"member/config"
 	"member/handler"
 	"member/logic"
 	"pkg/app"
 	"pkg/constvar"
-	"pkg/mysql"
 	pb "pkg/proto/member"
-
-	"go-micro.dev/v4/logger"
 )
 
 var (
@@ -25,8 +25,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// init mysql
-	db := mysql.NewDB(&config.Cfg.MySQL)
+	// init dbs
+	db := orm.NewDB(&config.Cfg.MySQL)
 
 	// init redis
 	rdb, err := redis.NewClient(&config.Cfg.Redis)
@@ -46,7 +46,7 @@ func main() {
 
 	// register handler
 	if err = pb.RegisterMemberHandler(a.Service().Server(), handler.New(logic.New(db, rdb), a.Service().Client())); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
 	a.Run()

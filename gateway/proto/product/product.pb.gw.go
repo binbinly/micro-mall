@@ -2,11 +2,11 @@
 // source: product/product.proto
 
 /*
-Package gateway is a reverse proxy.
+Package product is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package gateway
+package product
 
 import (
 	"context"

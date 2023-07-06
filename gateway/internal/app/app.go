@@ -12,12 +12,12 @@ import (
 	"syscall"
 	"time"
 
-	"gateway/pkg/registry"
-	"gateway/pkg/transport"
-
 	"github.com/binbinly/pkg/logger"
+	"github.com/binbinly/pkg/transport"
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
+
+	"gateway/pkg/registry"
 )
 
 // App global app

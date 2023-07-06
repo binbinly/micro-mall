@@ -19,7 +19,7 @@
     "/v1/seckill/detail/{id}": {
       "get": {
         "summary": "获取商品秒杀详情",
-        "operationId": "Seckill_GetSkuByID",
+        "operationId": "Seckill_GetSkuDetail",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -72,10 +72,10 @@
         ]
       }
     },
-    "/v1/seckill/skus/{sessionId}": {
+    "/v1/seckill/skus/{id}": {
       "get": {
         "summary": "获取场次下所有秒杀商品",
-        "operationId": "Seckill_GetSkusList",
+        "operationId": "Seckill_GetSessionSkus",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -92,7 +92,7 @@
         },
         "parameters": [
           {
-            "name": "sessionId",
+            "name": "id",
             "description": "/ 场次id",
             "in": "path",
             "required": true,

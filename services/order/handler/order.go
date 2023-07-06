@@ -2,15 +2,22 @@ package handler
 
 import (
 	"context"
+	"reflect"
+
 	"github.com/golang/protobuf/ptypes/empty"
+
 	"order/logic"
 	"order/resource"
 	"pkg/errno"
 	"pkg/handler"
 	cpb "pkg/proto/common"
 	pb "pkg/proto/order"
-	"reflect"
 )
+
+//Auth 购物车服身份验证
+func Auth(method string) bool {
+	return true
+}
 
 // Order 订单服务处理器
 type Order struct {

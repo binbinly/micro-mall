@@ -2,15 +2,15 @@ package logic
 
 import (
 	"context"
-	"github.com/binbinly/pkg/auth"
-	"pkg/constvar"
-	"pkg/errno"
 	"time"
 
+	"github.com/binbinly/pkg/auth"
 	"github.com/pkg/errors"
 
 	"center/config"
 	"center/model"
+	"pkg/constvar"
+	"pkg/errno"
 )
 
 // UserRegister 注册用户
@@ -95,6 +95,7 @@ func (l *logic) UserEdit(ctx context.Context, id int64, um map[string]any) error
 	if err := l.repo.UserUpdate(ctx, id, um); err != nil {
 		return errors.Wrapf(err, "[center.user] update user by id: %d", id)
 	}
+
 	return nil
 }
 
@@ -123,11 +124,11 @@ func (l *logic) UserInfoByID(ctx context.Context, id int64) (*model.UserModel, e
 
 // UserLogout 用户登出
 func (l *logic) UserLogout(ctx context.Context, id int64) error {
-	pipe := l.rdb.Pipeline()
-	pipe.Del(ctx, constvar.BuildUserTokenKey(id))
-	pipe.Del(ctx, constvar.BuildOnlineKey(id))
-	_, err := pipe.Exec(ctx)
-	return err
+	if err := l.rdb.Del(ctx, constvar.BuildUserTokenKey(id)).Err(); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // generateToken 生成token

@@ -1,11 +1,7 @@
 package app
 
 import (
-	"context"
-	"google.golang.org/grpc"
 	"time"
-
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 )
 
 // Conf 全局配置
@@ -42,9 +38,4 @@ type ServerConfig struct {
 // TraceConfig 链路追踪配置
 type TraceConfig struct {
 	Endpoint string
-}
-
-type Service struct {
-	Name    string
-	Handler func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error
 }

@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 	"fmt"
-	"github.com/binbinly/pkg/logger"
 
+	"github.com/binbinly/pkg/logger"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 

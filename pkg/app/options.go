@@ -7,7 +7,6 @@ import (
 type Option func(o *options)
 
 type options struct {
-	client   bool
 	name     string
 	version  string
 	migrate  func()
@@ -39,12 +38,5 @@ func WithName(name string) Option {
 func WithVersion(version string) Option {
 	return func(o *options) {
 		o.version = version
-	}
-}
-
-// WithClient with
-func WithClient() Option {
-	return func(o *options) {
-		o.client = true
 	}
 }

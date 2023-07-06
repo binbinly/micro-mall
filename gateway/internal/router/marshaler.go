@@ -1,9 +1,10 @@
 package router
 
 import (
+	"io"
+
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"io"
 )
 
 type CustomMarshaler struct {

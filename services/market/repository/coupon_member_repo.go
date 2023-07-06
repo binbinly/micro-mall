@@ -2,20 +2,20 @@ package repository
 
 import (
 	"context"
-	"pkg/mysql"
 	"time"
 
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 
 	"market/model"
+	"pkg/dbs"
 )
 
 // GetCouponMemberList 获取用户领取的优惠券列表
 func (r *Repo) GetCouponMemberList(ctx context.Context, memberID int64) (list []*model.Coupon, err error) {
 	err = r.DB.WithContext(ctx).Table("sms_coupon_member as m").
 		Select("`name`,`amount`,min_point,start_at,end_at,`note`,m.id,m.status").
-		Scopes(mysql.WhereRelease).Joins("left join sms_coupon as c on m.coupon_id = c.id").
+		Scopes(dbs.WhereRelease).Joins("left join sms_coupon as c on m.coupon_id = c.id").
 		Where("member_id=?", memberID).Order("amount desc").Scan(&list).Error
 	if err != nil {
 		return nil, errors.Wrapf(err, "[repo.couponMember] by db uid: %v", memberID)
@@ -46,7 +46,7 @@ func (r *Repo) SetCouponMemberUsed(ctx context.Context, id, memberID, orderID in
 		return errors.Wrapf(result.Error, "[repo.couponMember] set used")
 	}
 	if result.RowsAffected == 0 { //没有记录更新
-		return mysql.ErrRecordNotModified
+		return dbs.ErrRecordNotModified
 	}
 
 	return nil

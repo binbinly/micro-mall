@@ -48,7 +48,7 @@ func NewHandlerWrapper(opts ...Option) server.HandlerWrapper {
 			var span trace.Span
 			ctx, span = tracer.Start(ctx, req.Endpoint())
 			defer span.End()
-			setServerSpan(ctx, span, req.Body())
+			setServerSpan(span, req.Body())
 
 			span.SetAttributes(
 				semconv.RPCServiceKey.String(req.Service()),

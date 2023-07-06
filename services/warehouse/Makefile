@@ -7,11 +7,6 @@ init:
 	@go install github.com/go-micro/generator/cmd/protoc-gen-micro@latest
 	@go install github.com/envoyproxy/protoc-gen-validate
 
-.PHONY: proto
-proto:
-	@protoc --proto_path=. --micro_out=. --go_out=:. proto/health.proto
-	@protoc --proto_path=. --micro_out=. --go_out=:. --validate_out="lang=go:." proto/warehouse.proto
-
 .PHONY: update
 update:
 	@go get -u

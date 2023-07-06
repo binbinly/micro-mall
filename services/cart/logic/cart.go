@@ -1,11 +1,12 @@
 package logic
 
 import (
-	"cart/repository"
 	"context"
 	"sort"
 
 	"github.com/pkg/errors"
+
+	"cart/repository"
 )
 
 // AddCart 添加购物车
@@ -103,7 +104,7 @@ func setCart(sku *repository.Sku, num int, cart *repository.CartModel) {
 	cart.SkuID = sku.ID
 	cart.Num = num
 	cart.Cover = sku.Cover
-	cart.Price = sku.Price
+	cart.Price = int(sku.Price)
 	cart.Title = sku.Title
 	cart.SkuAttr = sku.AttrValue
 }

@@ -3,13 +3,13 @@ package repository
 import (
 	"context"
 	"fmt"
-	"gorm.io/gorm"
-	"pkg/mysql"
 	"time"
 
 	"github.com/pkg/errors"
+	"gorm.io/gorm"
 
 	"market/model"
+	"pkg/dbs"
 )
 
 // ICoupon 优惠券接口
@@ -27,7 +27,7 @@ type ICoupon interface {
 // GetCouponList 可以被领取的优惠券列表
 func (r *Repo) GetCouponList(ctx context.Context, catID, spuID int64) (list []*model.CouponModel, err error) {
 	now := time.Now().Unix()
-	err = r.DB.WithContext(ctx).Model(&model.CouponModel{}).Scopes(mysql.WhereRelease).
+	err = r.DB.WithContext(ctx).Model(&model.CouponModel{}).Scopes(dbs.WhereRelease).
 		Where("enable_start_at<=?", now).Where("enable_end_at>=?", now).
 		Where("use_type=?", model.CouponUseTypeAll).
 		Order("amount desc,id desc").Find(&list).Error

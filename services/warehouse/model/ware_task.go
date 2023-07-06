@@ -1,6 +1,6 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 const (
 	//TaskStatusLock 锁定
@@ -13,7 +13,7 @@ const (
 
 // WareTaskModel 库存工作单
 type WareTaskModel struct {
-	mysql.PriID
+	dbs.PriID
 	OrderID   int64  `json:"order_id" gorm:"column:order_id;not null;index;type:int;comment:order_id"`
 	OrderNo   string `json:"order_no" gorm:"column:order_no;not null;index;type:varchar(32);comment:单号"`
 	Consignee string `json:"consignee" gorm:"column:consignee;not null;type:varchar(64);comment:收货人"`
@@ -22,7 +22,7 @@ type WareTaskModel struct {
 	Note      string `json:"note" gorm:"column:note;not null;type:varchar(255);default:'';comment:备注"`
 	Remark    string `json:"remark" gorm:"column:remark;not null;type:varchar(255);default:'';comment:任务备注"`
 	Status    int8   `json:"status" gorm:"column:status;not null;default:0;comment:状态 1=锁定 2=解锁 3=扣减"`
-	mysql.CUT
+	dbs.CUT
 }
 
 // TableName 表名

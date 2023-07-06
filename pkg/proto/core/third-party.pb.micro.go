@@ -6,8 +6,8 @@ package core
 import (
 	fmt "fmt"
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	proto "google.golang.org/protobuf/proto"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	math "math"
 )
 
@@ -41,9 +41,9 @@ type ThirdPartyService interface {
 	// / 发送短信验证码
 	SendSMS(ctx context.Context, in *SendSMSReq, opts ...client.CallOption) (*CodeReply, error)
 	// / 短信验证码验证
-	CheckVCode(ctx context.Context, in *VCodeReq, opts ...client.CallOption) (*empty.Empty, error)
+	CheckVCode(ctx context.Context, in *VCodeReq, opts ...client.CallOption) (*emptypb.Empty, error)
 	// / 以太币支付检测
-	CheckETHPay(ctx context.Context, in *ETHPayReq, opts ...client.CallOption) (*empty.Empty, error)
+	CheckETHPay(ctx context.Context, in *ETHPayReq, opts ...client.CallOption) (*emptypb.Empty, error)
 }
 
 type thirdPartyService struct {
@@ -68,9 +68,9 @@ func (c *thirdPartyService) SendSMS(ctx context.Context, in *SendSMSReq, opts ..
 	return out, nil
 }
 
-func (c *thirdPartyService) CheckVCode(ctx context.Context, in *VCodeReq, opts ...client.CallOption) (*empty.Empty, error) {
+func (c *thirdPartyService) CheckVCode(ctx context.Context, in *VCodeReq, opts ...client.CallOption) (*emptypb.Empty, error) {
 	req := c.c.NewRequest(c.name, "ThirdParty.CheckVCode", in)
-	out := new(empty.Empty)
+	out := new(emptypb.Empty)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -78,9 +78,9 @@ func (c *thirdPartyService) CheckVCode(ctx context.Context, in *VCodeReq, opts .
 	return out, nil
 }
 
-func (c *thirdPartyService) CheckETHPay(ctx context.Context, in *ETHPayReq, opts ...client.CallOption) (*empty.Empty, error) {
+func (c *thirdPartyService) CheckETHPay(ctx context.Context, in *ETHPayReq, opts ...client.CallOption) (*emptypb.Empty, error) {
 	req := c.c.NewRequest(c.name, "ThirdParty.CheckETHPay", in)
-	out := new(empty.Empty)
+	out := new(emptypb.Empty)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -94,16 +94,16 @@ type ThirdPartyHandler interface {
 	// / 发送短信验证码
 	SendSMS(context.Context, *SendSMSReq, *CodeReply) error
 	// / 短信验证码验证
-	CheckVCode(context.Context, *VCodeReq, *empty.Empty) error
+	CheckVCode(context.Context, *VCodeReq, *emptypb.Empty) error
 	// / 以太币支付检测
-	CheckETHPay(context.Context, *ETHPayReq, *empty.Empty) error
+	CheckETHPay(context.Context, *ETHPayReq, *emptypb.Empty) error
 }
 
 func RegisterThirdPartyHandler(s server.Server, hdlr ThirdPartyHandler, opts ...server.HandlerOption) error {
 	type thirdParty interface {
 		SendSMS(ctx context.Context, in *SendSMSReq, out *CodeReply) error
-		CheckVCode(ctx context.Context, in *VCodeReq, out *empty.Empty) error
-		CheckETHPay(ctx context.Context, in *ETHPayReq, out *empty.Empty) error
+		CheckVCode(ctx context.Context, in *VCodeReq, out *emptypb.Empty) error
+		CheckETHPay(ctx context.Context, in *ETHPayReq, out *emptypb.Empty) error
 	}
 	type ThirdParty struct {
 		thirdParty
@@ -120,10 +120,10 @@ func (h *thirdPartyHandler) SendSMS(ctx context.Context, in *SendSMSReq, out *Co
 	return h.ThirdPartyHandler.SendSMS(ctx, in, out)
 }
 
-func (h *thirdPartyHandler) CheckVCode(ctx context.Context, in *VCodeReq, out *empty.Empty) error {
+func (h *thirdPartyHandler) CheckVCode(ctx context.Context, in *VCodeReq, out *emptypb.Empty) error {
 	return h.ThirdPartyHandler.CheckVCode(ctx, in, out)
 }
 
-func (h *thirdPartyHandler) CheckETHPay(ctx context.Context, in *ETHPayReq, out *empty.Empty) error {
+func (h *thirdPartyHandler) CheckETHPay(ctx context.Context, in *ETHPayReq, out *emptypb.Empty) error {
 	return h.ThirdPartyHandler.CheckETHPay(ctx, in, out)
 }

@@ -1,12 +1,12 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 // PaymentModel 支付模型
 type PaymentModel struct {
-	mysql.PriID
+	dbs.PriID
 	OID
 	ONo
 	TradeNo         string `json:"trade_no" gorm:"column:trade_no;not null;type:varchar(32);comment:交易号"`
@@ -15,7 +15,7 @@ type PaymentModel struct {
 	ConfirmAt       int64  `json:"confirm_at" gorm:"column:confirm_at;not null;default:0;comment:确认时间"`
 	CallbackContent string `json:"callback_content" gorm:"column:callback_content;not null;type:varchar(3000);default:'';comment:回调内容"`
 	CallbackAt      int64  `json:"callback_at" gorm:"column:callback_at;not null;default:0;comment:回调时间"`
-	mysql.CUT
+	dbs.CUT
 }
 
 // TableName 表名

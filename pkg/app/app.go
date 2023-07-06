@@ -2,25 +2,24 @@ package app
 
 import (
 	"context"
-	"github.com/urfave/cli/v2"
 	"os"
-	"pkg/handler"
-	pb "pkg/proto/core"
-	"pkg/wrap"
-	"pkg/wrap/recovery"
 	"sync"
 	"time"
 
+	"github.com/go-micro/cli/debug/trace/jaeger"
+	grpcc "github.com/go-micro/plugins/v4/client/grpc"
+	_ "github.com/go-micro/plugins/v4/registry/consul"
+	grpcs "github.com/go-micro/plugins/v4/server/grpc"
 	ot "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	"github.com/urfave/cli/v2"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/logger"
 	"go-micro.dev/v4/server"
 
-	"github.com/go-micro/cli/debug/trace/jaeger"
-
-	grpcc "github.com/go-micro/plugins/v4/client/grpc"
-	_ "github.com/go-micro/plugins/v4/registry/consul"
-	grpcs "github.com/go-micro/plugins/v4/server/grpc"
+	"pkg/handler"
+	pb "pkg/proto/core"
+	"pkg/wrap"
+	"pkg/wrap/recovery"
 )
 
 // App global app

@@ -2,20 +2,20 @@ package main
 
 import (
 	"context"
-	"github.com/binbinly/pkg/storage/redis"
 	"log"
+
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/binbinly/pkg/storage/redis"
+
 	"pkg/app"
 	"pkg/constvar"
 	"pkg/elasticsearch"
-	"pkg/mysql"
 	pb "pkg/proto/product"
 	"product/cmd"
 	"product/config"
 	"product/es"
 	"product/handler"
 	"product/logic"
-
-	"go-micro.dev/v4/logger"
 )
 
 var (
@@ -34,8 +34,8 @@ func main() {
 		log.Fatalf("es init err: %v", err)
 	}
 
-	// init mysql
-	db := mysql.NewDB(&config.Cfg.MySQL)
+	// init dbs
+	db := orm.NewDB(&config.Cfg.MySQL)
 
 	// init redis
 	rdb, err := redis.NewClient(&config.Cfg.Redis)
@@ -49,13 +49,12 @@ func main() {
 		app.WithVersion(version),
 		app.WithMigrate(func() {
 			cmd.Migrate()
-		}),
-		app.WithAuthFunc(handler.Auth))
+		}))
 	a.Init()
 
 	// register handler
-	if err := pb.RegisterProductHandler(a.Service().Server(), handler.New(logic.New(elastic, db, rdb), a.Service().Client())); err != nil {
-		logger.Fatal(err)
+	if err = pb.RegisterProductHandler(a.Service().Server(), handler.New(logic.New(elastic, db, rdb), a.Service().Client())); err != nil {
+		log.Fatal(err)
 	}
 
 	// run

@@ -2,19 +2,19 @@ package logic
 
 import (
 	"context"
-	"pkg/errno"
-	"pkg/mysql"
 
 	"github.com/pkg/errors"
 
 	"member/model"
+	"pkg/dbs"
+	"pkg/errno"
 	center "pkg/proto/core"
 )
 
 // MemberRegister 注册用户
 func (s *logic) MemberRegister(ctx context.Context, uid, phone int64, username string) error {
 	u := &model.MemberModel{
-		PriID:    mysql.PriID{ID: uid},
+		PriID:    dbs.PriID{ID: uid},
 		Username: username,
 		Phone:    phone,
 		Status:   model.MemberStatusNormal,
@@ -57,7 +57,7 @@ func (s *logic) MemberCreate(ctx context.Context, user *center.UserInfo) error {
 	}
 	if member == nil || member.ID == 0 { // 会员不存在，注册
 		u := &model.MemberModel{
-			PriID:    mysql.PriID{ID: user.Id},
+			PriID:    dbs.PriID{ID: user.Id},
 			Username: user.Username,
 			Nickname: user.Nickname,
 			Avatar:   user.Avatar,

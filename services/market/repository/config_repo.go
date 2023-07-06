@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/pkg/errors"
 
 	"market/model"

@@ -2,20 +2,21 @@ package handler
 
 import (
 	"context"
+
 	"github.com/pkg/errors"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/client"
+	"google.golang.org/protobuf/types/known/emptypb"
+
 	"pkg/app"
 	"pkg/constvar"
 	"pkg/errno"
 	"pkg/handler"
 	"pkg/message"
-	"seckill/logic"
-	"seckill/resource"
-
-	"google.golang.org/protobuf/types/known/emptypb"
 	cpb "pkg/proto/common"
 	pb "pkg/proto/seckill"
+	"seckill/logic"
+	"seckill/resource"
 )
 
 // Auth 秒杀服身份验证

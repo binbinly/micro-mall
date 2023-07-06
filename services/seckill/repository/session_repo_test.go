@@ -3,17 +3,18 @@ package repository
 import (
 	"context"
 	"testing"
+
+	"github.com/binbinly/pkg/storage/redis"
 )
 
 var repo IRepo
 
-//func TestMain(m *testing.M) {
-//	redis.InitTestRedis()
-//	repo = New(redis.Client)
-//	if code := m.Run(); code != 0 {
-//		panic(code)
-//	}
-//}
+func TestMain(m *testing.M) {
+	repo = New(redis.InitTestRedis())
+	if code := m.Run(); code != 0 {
+		panic(code)
+	}
+}
 
 func TestRepo_GetSessionAll(t *testing.T) {
 	type args struct {

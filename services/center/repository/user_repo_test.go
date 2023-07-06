@@ -1,53 +1,49 @@
 package repository
 
 import (
-	"center/model"
 	"context"
-	"gorm.io/gorm"
-	"pkg/mysql"
 	"testing"
 
 	"github.com/binbinly/pkg/cache"
-	"github.com/binbinly/pkg/repo"
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/binbinly/pkg/storage/redis"
 	"github.com/stretchr/testify/assert"
+
+	"center/config"
+	"center/model"
+	"pkg/app"
+	"pkg/constvar"
+	"pkg/dbs"
 )
 
-var r Repo
+var r IRepo
 
-//func TestMain(m *testing.M) {
-//	redis.InitTestRedis()
-//	orm.InitTest("center")
-//	repo = New(orm.GetDB(), util.NewCache())
-//	if code := m.Run(); code != 0 {
-//		panic(code)
-//	}
-//}
+func TestMain(m *testing.M) {
+	if err := app.LoadEnv(constvar.ServiceCenter, config.Cfg); err != nil {
+		panic(err)
+	}
+	r = New(orm.NewDB(&config.Cfg.MySQL), cache.NewRedisCache(redis.InitTestRedis()))
+	if code := m.Run(); code != 0 {
+		panic(code)
+	}
+}
 
 func TestRepo_UserCreate(t *testing.T) {
-	type fields struct {
-		db    *gorm.DB
-		cache cache.Cache
-	}
 	type args struct {
 		ctx  context.Context
 		user *model.UserModel
 	}
 	tests := []struct {
 		name    string
-		fields  fields
 		args    args
 		wantID  int64
 		wantErr bool
 	}{
 		{"zhangsan",
-			fields{
-				db:    r.GetDB(),
-				cache: r.Cache,
-			},
 			args{
 				ctx: context.Background(),
 				user: &model.UserModel{
-					PriID:    mysql.PriID{ID: 1},
+					PriID:    dbs.PriID{ID: 1},
 					Username: "zhangsan",
 					Password: "123456",
 					Phone:    15555555555,
@@ -59,10 +55,6 @@ func TestRepo_UserCreate(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &Repo{repo.Repo{
-				DB:    tt.fields.db,
-				Cache: tt.fields.cache,
-			}}
 			gotID, err := r.UserCreate(tt.args.ctx, tt.args.user)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("UserCreate() error = %v, wantErr %v", err, tt.wantErr)

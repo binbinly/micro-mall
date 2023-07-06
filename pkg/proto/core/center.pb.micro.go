@@ -6,8 +6,8 @@ package core
 import (
 	fmt "fmt"
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	proto "google.golang.org/protobuf/proto"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	math "math"
 )
 
@@ -29,13 +29,13 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Api Endpoints for centerService service
+// Api Endpoints for Center service
 
 func NewCenterEndpoints() []*api.Endpoint {
 	return []*api.Endpoint{}
 }
 
-// Client API for centerService service
+// Client API for Center service
 
 type CenterService interface {
 	// / 用户注册
@@ -45,13 +45,13 @@ type CenterService interface {
 	// / 手机号登录
 	PhoneLogin(ctx context.Context, in *PhoneReq, opts ...client.CallOption) (*UserReply, error)
 	// / 修改用户信息
-	Edit(ctx context.Context, in *EditReq, opts ...client.CallOption) (*empty.Empty, error)
+	Edit(ctx context.Context, in *EditReq, opts ...client.CallOption) (*emptypb.Empty, error)
 	// / 修改密码
-	EditPwd(ctx context.Context, in *EditPwdReq, opts ...client.CallOption) (*empty.Empty, error)
+	EditPwd(ctx context.Context, in *EditPwdReq, opts ...client.CallOption) (*emptypb.Empty, error)
 	// / 获取用户信息
-	Info(ctx context.Context, in *empty.Empty, opts ...client.CallOption) (*UserInfo, error)
+	Info(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*UserInfo, error)
 	// / 用户登出
-	Logout(ctx context.Context, in *empty.Empty, opts ...client.CallOption) (*empty.Empty, error)
+	Logout(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*emptypb.Empty, error)
 }
 
 type centerService struct {
@@ -67,7 +67,7 @@ func NewCenterService(name string, c client.Client) CenterService {
 }
 
 func (c *centerService) Register(ctx context.Context, in *RegisterReq, opts ...client.CallOption) (*RegisterReply, error) {
-	req := c.c.NewRequest(c.name, "centerService.Register", in)
+	req := c.c.NewRequest(c.name, "Center.Register", in)
 	out := new(RegisterReply)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -77,7 +77,7 @@ func (c *centerService) Register(ctx context.Context, in *RegisterReq, opts ...c
 }
 
 func (c *centerService) Login(ctx context.Context, in *LoginReq, opts ...client.CallOption) (*UserReply, error) {
-	req := c.c.NewRequest(c.name, "centerService.Login", in)
+	req := c.c.NewRequest(c.name, "Center.Login", in)
 	out := new(UserReply)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -87,7 +87,7 @@ func (c *centerService) Login(ctx context.Context, in *LoginReq, opts ...client.
 }
 
 func (c *centerService) PhoneLogin(ctx context.Context, in *PhoneReq, opts ...client.CallOption) (*UserReply, error) {
-	req := c.c.NewRequest(c.name, "centerService.PhoneLogin", in)
+	req := c.c.NewRequest(c.name, "Center.PhoneLogin", in)
 	out := new(UserReply)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -96,9 +96,9 @@ func (c *centerService) PhoneLogin(ctx context.Context, in *PhoneReq, opts ...cl
 	return out, nil
 }
 
-func (c *centerService) Edit(ctx context.Context, in *EditReq, opts ...client.CallOption) (*empty.Empty, error) {
-	req := c.c.NewRequest(c.name, "centerService.Edit", in)
-	out := new(empty.Empty)
+func (c *centerService) Edit(ctx context.Context, in *EditReq, opts ...client.CallOption) (*emptypb.Empty, error) {
+	req := c.c.NewRequest(c.name, "Center.Edit", in)
+	out := new(emptypb.Empty)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -106,9 +106,9 @@ func (c *centerService) Edit(ctx context.Context, in *EditReq, opts ...client.Ca
 	return out, nil
 }
 
-func (c *centerService) EditPwd(ctx context.Context, in *EditPwdReq, opts ...client.CallOption) (*empty.Empty, error) {
-	req := c.c.NewRequest(c.name, "centerService.EditPwd", in)
-	out := new(empty.Empty)
+func (c *centerService) EditPwd(ctx context.Context, in *EditPwdReq, opts ...client.CallOption) (*emptypb.Empty, error) {
+	req := c.c.NewRequest(c.name, "Center.EditPwd", in)
+	out := new(emptypb.Empty)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -116,8 +116,8 @@ func (c *centerService) EditPwd(ctx context.Context, in *EditPwdReq, opts ...cli
 	return out, nil
 }
 
-func (c *centerService) Info(ctx context.Context, in *empty.Empty, opts ...client.CallOption) (*UserInfo, error) {
-	req := c.c.NewRequest(c.name, "centerService.Info", in)
+func (c *centerService) Info(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*UserInfo, error) {
+	req := c.c.NewRequest(c.name, "Center.Info", in)
 	out := new(UserInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -126,9 +126,9 @@ func (c *centerService) Info(ctx context.Context, in *empty.Empty, opts ...clien
 	return out, nil
 }
 
-func (c *centerService) Logout(ctx context.Context, in *empty.Empty, opts ...client.CallOption) (*empty.Empty, error) {
-	req := c.c.NewRequest(c.name, "centerService.Logout", in)
-	out := new(empty.Empty)
+func (c *centerService) Logout(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*emptypb.Empty, error) {
+	req := c.c.NewRequest(c.name, "Center.Logout", in)
+	out := new(emptypb.Empty)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -136,7 +136,7 @@ func (c *centerService) Logout(ctx context.Context, in *empty.Empty, opts ...cli
 	return out, nil
 }
 
-// Server API for centerService service
+// Server API for Center service
 
 type CenterHandler interface {
 	// / 用户注册
@@ -146,13 +146,13 @@ type CenterHandler interface {
 	// / 手机号登录
 	PhoneLogin(context.Context, *PhoneReq, *UserReply) error
 	// / 修改用户信息
-	Edit(context.Context, *EditReq, *empty.Empty) error
+	Edit(context.Context, *EditReq, *emptypb.Empty) error
 	// / 修改密码
-	EditPwd(context.Context, *EditPwdReq, *empty.Empty) error
+	EditPwd(context.Context, *EditPwdReq, *emptypb.Empty) error
 	// / 获取用户信息
-	Info(context.Context, *empty.Empty, *UserInfo) error
+	Info(context.Context, *emptypb.Empty, *UserInfo) error
 	// / 用户登出
-	Logout(context.Context, *empty.Empty, *empty.Empty) error
+	Logout(context.Context, *emptypb.Empty, *emptypb.Empty) error
 }
 
 func RegisterCenterHandler(s server.Server, hdlr CenterHandler, opts ...server.HandlerOption) error {
@@ -160,10 +160,10 @@ func RegisterCenterHandler(s server.Server, hdlr CenterHandler, opts ...server.H
 		Register(ctx context.Context, in *RegisterReq, out *RegisterReply) error
 		Login(ctx context.Context, in *LoginReq, out *UserReply) error
 		PhoneLogin(ctx context.Context, in *PhoneReq, out *UserReply) error
-		Edit(ctx context.Context, in *EditReq, out *empty.Empty) error
-		EditPwd(ctx context.Context, in *EditPwdReq, out *empty.Empty) error
-		Info(ctx context.Context, in *empty.Empty, out *UserInfo) error
-		Logout(ctx context.Context, in *empty.Empty, out *empty.Empty) error
+		Edit(ctx context.Context, in *EditReq, out *emptypb.Empty) error
+		EditPwd(ctx context.Context, in *EditPwdReq, out *emptypb.Empty) error
+		Info(ctx context.Context, in *emptypb.Empty, out *UserInfo) error
+		Logout(ctx context.Context, in *emptypb.Empty, out *emptypb.Empty) error
 	}
 	type Center struct {
 		center
@@ -188,18 +188,18 @@ func (h *centerHandler) PhoneLogin(ctx context.Context, in *PhoneReq, out *UserR
 	return h.CenterHandler.PhoneLogin(ctx, in, out)
 }
 
-func (h *centerHandler) Edit(ctx context.Context, in *EditReq, out *empty.Empty) error {
+func (h *centerHandler) Edit(ctx context.Context, in *EditReq, out *emptypb.Empty) error {
 	return h.CenterHandler.Edit(ctx, in, out)
 }
 
-func (h *centerHandler) EditPwd(ctx context.Context, in *EditPwdReq, out *empty.Empty) error {
+func (h *centerHandler) EditPwd(ctx context.Context, in *EditPwdReq, out *emptypb.Empty) error {
 	return h.CenterHandler.EditPwd(ctx, in, out)
 }
 
-func (h *centerHandler) Info(ctx context.Context, in *empty.Empty, out *UserInfo) error {
+func (h *centerHandler) Info(ctx context.Context, in *emptypb.Empty, out *UserInfo) error {
 	return h.CenterHandler.Info(ctx, in, out)
 }
 
-func (h *centerHandler) Logout(ctx context.Context, in *empty.Empty, out *empty.Empty) error {
+func (h *centerHandler) Logout(ctx context.Context, in *emptypb.Empty, out *emptypb.Empty) error {
 	return h.CenterHandler.Logout(ctx, in, out)
 }

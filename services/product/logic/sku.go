@@ -2,10 +2,12 @@ package logic
 
 import (
 	"context"
+
 	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
+
+	"pkg/dbs"
 	"pkg/errno"
-	"pkg/mysql"
 	"product/model"
 )
 
@@ -163,8 +165,8 @@ func (l *logic) SpuComment(ctx context.Context, skuIds []int64, memberID, orderI
 	comments := make([]*model.SpuCommentModel, 0, len(skus))
 	for _, sku := range skus {
 		comments = append(comments, &model.SpuCommentModel{
-			Spu:       mysql.Spu{SpuID: sku.SpuID},
-			Sku:       mysql.Sku{SkuID: sku.ID},
+			Spu:       dbs.Spu{SpuID: sku.SpuID},
+			Sku:       dbs.Sku{SkuID: sku.ID},
 			SkuName:   sku.Name,
 			MemberID:  memberID,
 			ReplyID:   0,
@@ -173,7 +175,7 @@ func (l *logic) SpuComment(ctx context.Context, skuIds []int64, memberID, orderI
 			SkuAttrs:  sku.AttrValue,
 			Resources: resources,
 			Content:   content,
-			Release:   mysql.Release{IsRelease: 1},
+			Release:   dbs.Release{IsRelease: 1},
 		})
 	}
 

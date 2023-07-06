@@ -2,9 +2,9 @@ package resource
 
 import (
 	"github.com/binbinly/pkg/util"
+
 	cpb "pkg/proto/common"
 	pb "pkg/proto/product"
-
 	"product/config"
 	"product/es"
 	"product/model"

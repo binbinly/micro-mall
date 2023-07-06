@@ -1,13 +1,13 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 // MemberStatModel 会员统计信息
 type MemberStatModel struct {
-	mysql.PriID
-	mysql.MID
+	dbs.PriID
+	dbs.MID
 	TotalAmount         int `json:"total_amount" gorm:"column:total_amount;not null;default:0;comment:累计消费金额/分"`
 	CouponAmount        int `json:"coupon_amount" gorm:"column:coupon_amount;not null;default:0;comment:累计优惠金额/分"`
 	OrderCount          int `json:"order_count" gorm:"column:order_count;not null;default:0;comment:订单数"`

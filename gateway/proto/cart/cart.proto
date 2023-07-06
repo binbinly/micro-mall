@@ -5,7 +5,7 @@ syntax = "proto3";
 
 package cart;
 
-option go_package = "./proto;gateway";
+option go_package = "./proto;cart";
 
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
@@ -37,7 +37,7 @@ service Cart {
     };
   };
   /// 批量删除购物车
-  rpc BatchDelCart(common.SkuIDReq) returns (google.protobuf.Empty){
+  rpc DelCart(common.SkuIDReq) returns (google.protobuf.Empty){
     option (google.api.http) = {
       post: "/v1/cart/del"
       body: "*"

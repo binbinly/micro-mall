@@ -143,7 +143,7 @@
     "/v1/member/edit": {
       "post": {
         "summary": "/ 修改会员信息",
-        "operationId": "Member_MemberEdit",
+        "operationId": "Member_Edit",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -165,7 +165,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/memberMemberEditReq"
+              "$ref": "#/definitions/memberEditReq"
             }
           }
         ],
@@ -177,7 +177,7 @@
     "/v1/member/edit_pwd": {
       "post": {
         "summary": "/ 修改密码",
-        "operationId": "Member_MemberPwdEdit",
+        "operationId": "Member_PwdEdit",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -301,7 +301,7 @@
     "/v1/member/profile": {
       "get": {
         "summary": "/ 获取会员信息",
-        "operationId": "Member_MemberProfile",
+        "operationId": "Member_Profile",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -535,8 +535,8 @@
           "type": "string"
         },
         "data": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "/ 收货地址id"
         }
       },
@@ -590,21 +590,7 @@
       },
       "title": "发送短信响应结构"
     },
-    "memberLoginReq": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "string",
-          "title": "/ 用户名"
-        },
-        "password": {
-          "type": "string",
-          "title": "/ 密码"
-        }
-      },
-      "title": "登录请求结构"
-    },
-    "memberMemberEditReq": {
+    "memberEditReq": {
       "type": "object",
       "properties": {
         "avatar": {
@@ -618,6 +604,20 @@
         }
       },
       "title": "会员信息修改请求结构"
+    },
+    "memberLoginReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "/ 用户名"
+        },
+        "password": {
+          "type": "string",
+          "title": "/ 密码"
+        }
+      },
+      "title": "登录请求结构"
     },
     "memberMemberReply": {
       "type": "object",

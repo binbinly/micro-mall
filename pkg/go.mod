@@ -46,7 +46,6 @@ require (
 	github.com/go-git/go-git/v5 v5.4.2 // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/gobwas/httphead v0.1.0 // indirect
 	github.com/gobwas/pool v0.2.1 // indirect
 	github.com/gobwas/ws v1.0.4 // indirect
@@ -65,6 +64,7 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
@@ -76,6 +76,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
+	github.com/rogpeppe/go-internal v1.10.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/streadway/amqp v1.0.0 // indirect
@@ -83,7 +84,6 @@ require (
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/xanzy/ssh-agent v0.3.1 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
-	go.opentelemetry.io/otel/metric v0.38.1 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/mod v0.9.0 // indirect
@@ -96,8 +96,6 @@ require (
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gorm.io/driver/mysql v1.5.0 // indirect
-	gorm.io/plugin/opentelemetry v0.1.2 // indirect
 )
 
 replace github.com/binbinly/pkg => ../../pkg

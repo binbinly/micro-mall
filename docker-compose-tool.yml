@@ -28,7 +28,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       TZ: Asia/Shanghai
-    # 解决外部无法访问 for mysql
+    # 解决外部无法访问 for dbs
     command: [
         '--character-set-server=utf8',
         '--collation-server=utf8_unicode_ci',
@@ -40,8 +40,8 @@ services:
       retries: 10   # 重试次数
       start_period: 40s # 启动多久后开始检查
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./deploy/docker/mysql/my.cnf:/etc/my.cnf
+      - mysql_data:/var/lib/dbs
+      - ./deploy/docker/dbs/my.cnf:/etc/my.cnf
       - ./deploy/database/:/docker-entrypoint-initdb.d/
     networks:
       - mall

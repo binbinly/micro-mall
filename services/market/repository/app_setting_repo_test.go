@@ -2,9 +2,11 @@ package repository
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
-	"market/model"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+
+	"market/model"
 )
 
 func TestRepo_AppPageData(t *testing.T) {

@@ -1,9 +1,11 @@
 package logic
 
 import (
-	"cart/repository"
 	"context"
+	
 	"github.com/redis/go-redis/v9"
+
+	"cart/repository"
 )
 
 var _ Logic = (*logic)(nil)

@@ -1,10 +1,10 @@
 package resource
 
 import (
-	"seckill/repository"
 	"time"
 
 	pb "pkg/proto/common"
+	"seckill/repository"
 )
 
 // SessionsResource 转换场次结构输出

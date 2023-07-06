@@ -2,14 +2,15 @@ package router
 
 import (
 	"context"
-	"gateway/internal/app"
-	"github.com/binbinly/pkg/auth"
 	"net/http"
 	"strconv"
 
+	"github.com/binbinly/pkg/auth"
 	"github.com/binbinly/pkg/logger"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc/metadata"
+
+	"gateway/internal/app"
 )
 
 // customMatcher 从 HTTP 请求头到 gRPC 客户端元数据的映射

@@ -15,4 +15,4 @@
 # vendor/
 
 # don't commit the service binary to vcs
-seckill
+logs

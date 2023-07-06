@@ -2,14 +2,14 @@ package logic
 
 import (
 	"context"
-	"github.com/redis/go-redis/v9"
-	"gorm.io/gorm"
-	"product/model"
-	"product/repository"
-
-	"product/es"
 
 	"github.com/binbinly/pkg/cache"
+	"github.com/redis/go-redis/v9"
+	"gorm.io/gorm"
+
+	"product/es"
+	"product/model"
+	"product/repository"
 )
 
 var _ Logic = (*logic)(nil)
@@ -24,6 +24,8 @@ type Logic interface {
 	SpuComment(ctx context.Context, skuIds []int64, memberID, orderID int64, star int8, content, resources string) error
 	Search(ctx context.Context, keyword string, catID int64, field, order, priceS, priceE int32,
 		hasStock bool, brandIds []int64, attrs map[int64][]string, page int32) (*es.SearchRes, error)
+	ParseCats(ctx context.Context, res *es.SearchRes) (map[int64]string, error)
+	ParseBrands(ctx context.Context, res *es.SearchRes) (map[int64]*model.Brand, error)
 
 	Close() error
 }

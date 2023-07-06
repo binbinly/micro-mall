@@ -1,19 +1,25 @@
 package repository
 
 import (
-	"common/orm"
-	"common/util"
 	"context"
-	"pkg/redis"
 	"testing"
+
+	"github.com/binbinly/pkg/cache"
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/binbinly/pkg/storage/redis"
+
+	"pkg/app"
+	"pkg/constvar"
+	"product/config"
 )
 
 var repo IRepo
 
 func TestMain(m *testing.M) {
-	redis.InitTestRedis()
-	orm.InitTest("mall_pms")
-	repo = New(orm.GetDB(), util.NewCache())
+	if err := app.LoadEnv(constvar.ServiceProduct, config.Cfg); err != nil {
+		panic(err)
+	}
+	repo = New(orm.NewDB(&config.Cfg.MySQL), cache.NewRedisCache(redis.InitTestRedis()))
 	if code := m.Run(); code != 0 {
 		panic(code)
 	}

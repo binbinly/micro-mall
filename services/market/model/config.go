@@ -1,7 +1,7 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 const (
@@ -13,12 +13,12 @@ const (
 
 // ConfigModel 配置模型
 type ConfigModel struct {
-	mysql.PriID
+	dbs.PriID
 	Name  string `json:"name" gorm:"column:name;not null;type:char(15);comment:配置键"`
 	Value string `json:"value" gorm:"column:value;not null;type:varchar(1000);comment:配置值"`
 	Desc  string `json:"desc" gorm:"column:desc;not null;type:varchar(255);default:'';comment:描述"`
-	mysql.CUBy
-	mysql.CUT
+	dbs.CUBy
+	dbs.CUT
 }
 
 // TableName 表名

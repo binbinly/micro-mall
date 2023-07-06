@@ -2,19 +2,19 @@ package logic
 
 import (
 	"context"
-	"pkg/errno"
-	"pkg/mysql"
 
 	"github.com/pkg/errors"
 
 	"member/model"
+	"pkg/dbs"
+	"pkg/errno"
 )
 
 // MemberAddressAdd 添加收货地址
 func (s *logic) MemberAddressAdd(ctx context.Context, MemberID int64, name, phone,
 	province, city, county, detail string, areaCode int, isDefault int8) (int64, error) {
 	addr := &model.MemberAddressModel{
-		MID:       mysql.MID{MemberID: MemberID},
+		MID:       dbs.MID{MemberID: MemberID},
 		Name:      name,
 		Phone:     phone,
 		Province:  province,

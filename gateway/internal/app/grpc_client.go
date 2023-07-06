@@ -2,11 +2,10 @@ package app
 
 import (
 	"context"
-	"fmt"
-	"github.com/binbinly/pkg/logger"
 	"log"
 	"time"
 
+	"github.com/binbinly/pkg/logger"
 	grpcprom "github.com/grpc-ecosystem/go-grpc-middleware/providers/prometheus"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/timeout"
@@ -92,7 +91,7 @@ func interceptorLogger() logging.Logger {
 		case logging.LevelError:
 			logger.Error(largs...)
 		default:
-			panic(fmt.Sprintf("unknown level %v", lvl))
+			logger.Fatal(largs...)
 		}
 	})
 }

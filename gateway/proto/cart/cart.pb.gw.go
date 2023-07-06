@@ -2,11 +2,11 @@
 // source: cart/cart.proto
 
 /*
-Package gateway is a reverse proxy.
+Package cart is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package gateway
+package cart
 
 import (
 	"context"
@@ -135,7 +135,7 @@ func local_request_Cart_EditCartNum_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-func request_Cart_BatchDelCart_0(ctx context.Context, marshaler runtime.Marshaler, client CartClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Cart_DelCart_0(ctx context.Context, marshaler runtime.Marshaler, client CartClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq common.SkuIDReq
 	var metadata runtime.ServerMetadata
 
@@ -147,12 +147,12 @@ func request_Cart_BatchDelCart_0(ctx context.Context, marshaler runtime.Marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.BatchDelCart(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DelCart(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_Cart_BatchDelCart_0(ctx context.Context, marshaler runtime.Marshaler, server CartServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Cart_DelCart_0(ctx context.Context, marshaler runtime.Marshaler, server CartServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq common.SkuIDReq
 	var metadata runtime.ServerMetadata
 
@@ -164,7 +164,7 @@ func local_request_Cart_BatchDelCart_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.BatchDelCart(ctx, &protoReq)
+	msg, err := server.DelCart(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -286,7 +286,7 @@ func RegisterCartHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 
 	})
 
-	mux.Handle("POST", pattern_Cart_BatchDelCart_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Cart_DelCart_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -294,12 +294,12 @@ func RegisterCartHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/cart.Cart/BatchDelCart", runtime.WithHTTPPathPattern("/v1/cart/del"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/cart.Cart/DelCart", runtime.WithHTTPPathPattern("/v1/cart/del"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Cart_BatchDelCart_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Cart_DelCart_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -307,7 +307,7 @@ func RegisterCartHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 			return
 		}
 
-		forward_Cart_BatchDelCart_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Cart_DelCart_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -468,25 +468,25 @@ func RegisterCartHandlerClient(ctx context.Context, mux *runtime.ServeMux, clien
 
 	})
 
-	mux.Handle("POST", pattern_Cart_BatchDelCart_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Cart_DelCart_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/cart.Cart/BatchDelCart", runtime.WithHTTPPathPattern("/v1/cart/del"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/cart.Cart/DelCart", runtime.WithHTTPPathPattern("/v1/cart/del"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Cart_BatchDelCart_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Cart_DelCart_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Cart_BatchDelCart_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Cart_DelCart_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -544,7 +544,7 @@ var (
 
 	pattern_Cart_EditCartNum_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "cart", "edit_num"}, ""))
 
-	pattern_Cart_BatchDelCart_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "cart", "del"}, ""))
+	pattern_Cart_DelCart_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "cart", "del"}, ""))
 
 	pattern_Cart_ClearCart_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "cart", "clear"}, ""))
 
@@ -558,7 +558,7 @@ var (
 
 	forward_Cart_EditCartNum_0 = runtime.ForwardResponseMessage
 
-	forward_Cart_BatchDelCart_0 = runtime.ForwardResponseMessage
+	forward_Cart_DelCart_0 = runtime.ForwardResponseMessage
 
 	forward_Cart_ClearCart_0 = runtime.ForwardResponseMessage
 

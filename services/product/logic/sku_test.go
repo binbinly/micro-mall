@@ -3,12 +3,27 @@ package logic
 import (
 	"context"
 	"testing"
+
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/binbinly/pkg/storage/redis"
+
+	"pkg/app"
+	"pkg/constvar"
+	"product/config"
 )
 
 var srv Logic
 
 func TestMain(m *testing.M) {
-	srv = New()
+	// load config
+	if err := app.LoadEnv(constvar.ServiceProduct, config.Cfg); err != nil {
+		panic(err)
+	}
+
+	// init dbs
+	db := orm.NewDB(&config.Cfg.MySQL)
+
+	srv = New(nil, db, redis.InitTestRedis())
 	if code := m.Run(); code != 0 {
 		panic(code)
 	}

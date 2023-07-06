@@ -2,11 +2,11 @@
 // source: seckill/seckill.proto
 
 /*
-Package gateway is a reverse proxy.
+Package seckill is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package gateway
+package seckill
 
 import (
 	"context"
@@ -85,7 +85,7 @@ func local_request_Seckill_GetSessionAll_0(ctx context.Context, marshaler runtim
 
 }
 
-func request_Seckill_GetSkusList_0(ctx context.Context, marshaler runtime.Marshaler, client SeckillClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Seckill_GetSessionSkus_0(ctx context.Context, marshaler runtime.Marshaler, client SeckillClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SessionIdReq
 	var metadata runtime.ServerMetadata
 
@@ -96,22 +96,22 @@ func request_Seckill_GetSkusList_0(ctx context.Context, marshaler runtime.Marsha
 		_   = err
 	)
 
-	val, ok = pathParams["session_id"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "session_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.SessionId, err = runtime.Int64(val)
+	protoReq.Id, err = runtime.Int64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "session_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := client.GetSkusList(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetSessionSkus(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_Seckill_GetSkusList_0(ctx context.Context, marshaler runtime.Marshaler, server SeckillServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Seckill_GetSessionSkus_0(ctx context.Context, marshaler runtime.Marshaler, server SeckillServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SessionIdReq
 	var metadata runtime.ServerMetadata
 
@@ -122,22 +122,22 @@ func local_request_Seckill_GetSkusList_0(ctx context.Context, marshaler runtime.
 		_   = err
 	)
 
-	val, ok = pathParams["session_id"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "session_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.SessionId, err = runtime.Int64(val)
+	protoReq.Id, err = runtime.Int64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "session_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := server.GetSkusList(ctx, &protoReq)
+	msg, err := server.GetSessionSkus(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_Seckill_GetSkuByID_0(ctx context.Context, marshaler runtime.Marshaler, client SeckillClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Seckill_GetSkuDetail_0(ctx context.Context, marshaler runtime.Marshaler, client SeckillClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq common.SkuIDReq
 	var metadata runtime.ServerMetadata
 
@@ -158,12 +158,12 @@ func request_Seckill_GetSkuByID_0(ctx context.Context, marshaler runtime.Marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := client.GetSkuByID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetSkuDetail(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_Seckill_GetSkuByID_0(ctx context.Context, marshaler runtime.Marshaler, server SeckillServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Seckill_GetSkuDetail_0(ctx context.Context, marshaler runtime.Marshaler, server SeckillServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq common.SkuIDReq
 	var metadata runtime.ServerMetadata
 
@@ -184,7 +184,7 @@ func local_request_Seckill_GetSkuByID_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := server.GetSkuByID(ctx, &protoReq)
+	msg, err := server.GetSkuDetail(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -245,7 +245,7 @@ func RegisterSeckillHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 
 	})
 
-	mux.Handle("GET", pattern_Seckill_GetSkusList_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Seckill_GetSessionSkus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -253,12 +253,12 @@ func RegisterSeckillHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/seckill.Seckill/GetSkusList", runtime.WithHTTPPathPattern("/v1/seckill/skus/{session_id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/seckill.Seckill/GetSessionSkus", runtime.WithHTTPPathPattern("/v1/seckill/skus/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Seckill_GetSkusList_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Seckill_GetSessionSkus_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -266,11 +266,11 @@ func RegisterSeckillHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 			return
 		}
 
-		forward_Seckill_GetSkusList_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Seckill_GetSessionSkus_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Seckill_GetSkuByID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Seckill_GetSkuDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -278,12 +278,12 @@ func RegisterSeckillHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/seckill.Seckill/GetSkuByID", runtime.WithHTTPPathPattern("/v1/seckill/detail/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/seckill.Seckill/GetSkuDetail", runtime.WithHTTPPathPattern("/v1/seckill/detail/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Seckill_GetSkuByID_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Seckill_GetSkuDetail_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -291,7 +291,7 @@ func RegisterSeckillHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 			return
 		}
 
-		forward_Seckill_GetSkuByID_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Seckill_GetSkuDetail_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -380,47 +380,47 @@ func RegisterSeckillHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 
 	})
 
-	mux.Handle("GET", pattern_Seckill_GetSkusList_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Seckill_GetSessionSkus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/seckill.Seckill/GetSkusList", runtime.WithHTTPPathPattern("/v1/seckill/skus/{session_id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/seckill.Seckill/GetSessionSkus", runtime.WithHTTPPathPattern("/v1/seckill/skus/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Seckill_GetSkusList_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Seckill_GetSessionSkus_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Seckill_GetSkusList_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Seckill_GetSessionSkus_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Seckill_GetSkuByID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Seckill_GetSkuDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/seckill.Seckill/GetSkuByID", runtime.WithHTTPPathPattern("/v1/seckill/detail/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/seckill.Seckill/GetSkuDetail", runtime.WithHTTPPathPattern("/v1/seckill/detail/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Seckill_GetSkuByID_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Seckill_GetSkuDetail_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Seckill_GetSkuByID_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Seckill_GetSkuDetail_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -432,9 +432,9 @@ var (
 
 	pattern_Seckill_GetSessionAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "seckill", "sessions"}, ""))
 
-	pattern_Seckill_GetSkusList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "seckill", "skus", "session_id"}, ""))
+	pattern_Seckill_GetSessionSkus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "seckill", "skus", "id"}, ""))
 
-	pattern_Seckill_GetSkuByID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "seckill", "detail", "id"}, ""))
+	pattern_Seckill_GetSkuDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "seckill", "detail", "id"}, ""))
 )
 
 var (
@@ -442,7 +442,7 @@ var (
 
 	forward_Seckill_GetSessionAll_0 = runtime.ForwardResponseMessage
 
-	forward_Seckill_GetSkusList_0 = runtime.ForwardResponseMessage
+	forward_Seckill_GetSessionSkus_0 = runtime.ForwardResponseMessage
 
-	forward_Seckill_GetSkuByID_0 = runtime.ForwardResponseMessage
+	forward_Seckill_GetSkuDetail_0 = runtime.ForwardResponseMessage
 )

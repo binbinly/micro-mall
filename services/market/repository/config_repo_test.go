@@ -2,20 +2,29 @@ package repository
 
 import (
 	"context"
-	"market/model"
 	"testing"
+
+	"github.com/binbinly/pkg/cache"
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/binbinly/pkg/storage/redis"
+
+	"market/config"
+	"market/model"
+	"pkg/app"
+	"pkg/constvar"
 )
 
 var repo IRepo
 
-//func TestMain(m *testing.M) {
-//	redis.InitTestRedis()
-//	orm.InitTest("mall_sms")
-//	repo = New(orm.GetDB(), util.NewCache())
-//	if code := m.Run(); code != 0 {
-//		panic(code)
-//	}
-//}
+func TestMain(m *testing.M) {
+	if err := app.LoadEnv(constvar.ServiceMarket, config.Cfg); err != nil {
+		panic(err)
+	}
+	repo = New(orm.NewDB(&config.Cfg.MySQL), cache.NewRedisCache(redis.InitTestRedis()))
+	if code := m.Run(); code != 0 {
+		panic(code)
+	}
+}
 
 func TestRepo_GetConfigByName(t *testing.T) {
 	type fields struct {

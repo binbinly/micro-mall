@@ -1,9 +1,10 @@
 package resource
 
 import (
+	"github.com/binbinly/pkg/util"
+
 	"cart/config"
 	"cart/repository"
-	"github.com/binbinly/pkg/util"
 	pb "pkg/proto/common"
 )
 

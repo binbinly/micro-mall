@@ -8,7 +8,7 @@ module.exports = {
   // }
   mysql: {
     enable: true,
-    package: "egg-mysql",
+    package: "egg-dbs",
   },
 
   cors: {

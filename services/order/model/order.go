@@ -1,7 +1,7 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 const (
@@ -28,8 +28,8 @@ const (
 
 // OrderModel 订单
 type OrderModel struct {
-	mysql.PriID
-	mysql.MID
+	dbs.PriID
+	dbs.MID
 	OrderNo           string `json:"order_no" gorm:"column:order_no;uniqueIndex;not null;type:char(30);comment:订单号"`
 	CouponID          int64  `json:"coupon_id" gorm:"column:coupon_id;not null;type:int;default:0;comment:优惠券id"`
 	Username          string `json:"username" gorm:"column:username;not null;type:varchar(60);comment:用户名"`
@@ -64,8 +64,8 @@ type OrderModel struct {
 	DeliveryAt        int64  `json:"delivery_at" gorm:"column:delivery_at;not null;type:int;default:0;comment:发货时间"`
 	ReceiveAt         int64  `json:"receive_at" gorm:"column:receive_at;not null;type:int;default:0;comment:确认收货时间"`
 	CommentAt         int64  `json:"comment_at" gorm:"column:comment_at;not null;type:int;default:0;comment:评价时间"`
-	mysql.CUT
-	mysql.DT
+	dbs.CUT
+	dbs.DT
 	Items []*OrderItemModel `json:"items" gorm:"foreignkey:order_id;references:id"`
 }
 

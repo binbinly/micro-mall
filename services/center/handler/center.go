@@ -1,15 +1,16 @@
 package handler
 
 import (
-	"center/logic"
-	"center/resource"
 	"context"
-	"encoding/json"
-	"github.com/pkg/errors"
-	"pkg/errno"
-	"pkg/handler"
 
 	"github.com/golang/protobuf/ptypes/empty"
+	"github.com/pkg/errors"
+
+	"center/logic"
+	"center/resource"
+	"encoding/json"
+	"pkg/errno"
+	"pkg/handler"
 	pb "pkg/proto/core"
 )
 
@@ -67,6 +68,7 @@ func (c *Center) EditPwd(ctx context.Context, req *pb.EditPwdReq, empty *empty.E
 	if err := c.logic.UserEditPwd(ctx, handler.GetUserID(ctx), req.OldPwd, req.Pwd); err != nil {
 		return errno.CenterReplyErr(err)
 	}
+
 	return nil
 }
 

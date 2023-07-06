@@ -5,7 +5,7 @@ syntax = "proto3";
 
 package member;
 
-option go_package = "./proto;gateway";
+option go_package = "./proto;member";
 
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
@@ -38,21 +38,21 @@ service Member {
     };
   };
   /// 修改会员信息
-  rpc MemberEdit(MemberEditReq) returns (google.protobuf.Empty){
+  rpc Edit(EditReq) returns (google.protobuf.Empty){
     option (google.api.http) = {
       post: "/v1/member/edit"
       body: "*"
     };
   };
   /// 修改密码
-  rpc MemberPwdEdit(PwdEditReq) returns (google.protobuf.Empty){
+  rpc PwdEdit(PwdEditReq) returns (google.protobuf.Empty){
     option (google.api.http) = {
       post: "/v1/member/edit_pwd"
       body: "*"
     };
   };
   /// 获取会员信息
-  rpc MemberProfile(google.protobuf.Empty) returns (MemberReply){
+  rpc Profile(google.protobuf.Empty) returns (MemberReply){
     option (google.api.http) = {
       get: "/v1/member/profile"
     };
@@ -123,7 +123,7 @@ message PhoneLoginReq {
 }
 
 // 会员信息修改请求结构
-message MemberEditReq {
+message EditReq {
   string avatar = 1;
   string nickname = 2;
   string sign = 3;
@@ -185,7 +185,7 @@ message MemberReply {
 message AddressIDReply {
   int32 code = 2;
   string message = 3;
-  int64 data = 1; /// 收货地址id
+  int32 data = 1; /// 收货地址id
 }
 
 // 发送短信响应结构

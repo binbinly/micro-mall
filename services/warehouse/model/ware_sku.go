@@ -1,16 +1,16 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // WareSkuModel 商品库存
 type WareSkuModel struct {
-	mysql.PriID
-	mysql.Sku
+	dbs.PriID
+	dbs.Sku
 	WareID    int64  `json:"ware_id" gorm:"column:ware_id;not null;type:int;comment:仓库id"`
 	SkuName   string `json:"sku_name" gorm:"column:sku_name;not null;type:varchar(255);default:'';comment:采购商品名"`
-	Stock     int    `json:"stock" gorm:"column:stock;not null;type:int(11) unsigned;default:0;comment:库存"`
-	StockLock int    `json:"stock_lock" gorm:"column:stock_lock;not null;type:int(11) unsigned;default:0;comment:锁定库存"`
-	mysql.CUT
+	Stock     int    `json:"stock" gorm:"column:stock;not null;type:int;default:0;comment:库存"`
+	StockLock int    `json:"stock_lock" gorm:"column:stock_lock;not null;type:int;default:0;comment:锁定库存"`
+	dbs.CUT
 }
 
 // TableName 表名

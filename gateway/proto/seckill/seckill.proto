@@ -5,7 +5,7 @@ syntax = "proto3";
 
 package seckill;
 
-option go_package = "./proto;gateway";
+option go_package = "./proto;seckill";
 
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
@@ -29,13 +29,13 @@ service Seckill {
     };
   };
   //获取场次下所有秒杀商品
-  rpc GetSkusList(SessionIdReq) returns (SkusReply){
+  rpc GetSessionSkus(SessionIdReq) returns (SkusReply){
     option (google.api.http) = {
-      get: "/v1/seckill/skus/{session_id}"
+      get: "/v1/seckill/skus/{id}"
     };
   };
   //获取商品秒杀详情
-  rpc GetSkuByID(common.SkuIDReq) returns (SkuReply){
+  rpc GetSkuDetail(common.SkuIDReq) returns (SkuReply){
     option (google.api.http) = {
       get: "/v1/seckill/detail/{id}"
     };
@@ -52,7 +52,7 @@ message KillReq {
 
 // 场次id
 message SessionIdReq {
-  int64 session_id = 1 [(validate.rules).int64.gt = 0]; /// 场次id
+  int64 id = 1 [(validate.rules).int64.gt = 0]; /// 场次id
 }
 
 //秒杀响应结构

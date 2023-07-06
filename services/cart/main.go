@@ -1,11 +1,13 @@
 package main
 
 import (
+	"log"
+
+	"github.com/binbinly/pkg/storage/redis"
+
 	"cart/config"
 	"cart/handler"
 	"cart/logic"
-	"github.com/binbinly/pkg/storage/redis"
-	"log"
 	"pkg/app"
 	"pkg/constvar"
 	pb "pkg/proto/cart"
@@ -30,7 +32,8 @@ func main() {
 	// init app
 	a := app.New(
 		app.WithName(constvar.ServiceCart),
-		app.WithVersion(version))
+		app.WithVersion(version),
+		app.WithAuthFunc(handler.Auth))
 	a.Init()
 
 	// register handler

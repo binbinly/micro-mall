@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"pkg/mysql"
+	"pkg/dbs"
 
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
@@ -53,8 +53,8 @@ func (r *Repo) GetOrderByNo(ctx context.Context, orderNo string) (*model.OrderMo
 
 // GetOrderList 用户订单列表
 func (r *Repo) GetOrderList(ctx context.Context, memberID int64, status, offset, limit int) (list []*model.OrderModel, err error) {
-	err = r.DB.WithContext(ctx).Where("member_id=?", memberID).Preload("Items").Order(mysql.DefaultOrder).
-		Scopes(orderScopesStatus(status), mysql.OffsetPage(offset, limit)).Find(&list).Error
+	err = r.DB.WithContext(ctx).Where("member_id=?", memberID).Preload("Items").Order(dbs.DefaultOrder).
+		Scopes(orderScopesStatus(status), dbs.OffsetPage(offset, limit)).Find(&list).Error
 	if err != nil {
 		return nil, errors.Wrapf(err, "[repo.order] find")
 	}

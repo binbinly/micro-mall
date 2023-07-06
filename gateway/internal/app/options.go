@@ -2,15 +2,19 @@ package app
 
 import (
 	"context"
-
-	"gateway/pkg/transport"
-	"google.golang.org/grpc"
 	"time"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-
 	"gateway/pkg/registry"
-	market "gateway/proto/market"
+	"gateway/proto/cart"
+	"gateway/proto/market"
+	"gateway/proto/member"
+	"gateway/proto/order"
+	"gateway/proto/product"
+	"gateway/proto/seckill"
+
+	"github.com/binbinly/pkg/transport"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"google.golang.org/grpc"
 )
 
 var (
@@ -26,6 +30,41 @@ var services = []Service{
 			return market.RegisterMarketHandler(ctx, mux, conn)
 		},
 	},
+	{
+		Name: "mall.cart",
+		Handler: func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+			return cart.RegisterCartHandler(ctx, mux, conn)
+		},
+	},
+	{
+		Name: "mall.member",
+		Handler: func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+			return member.RegisterMemberHandler(ctx, mux, conn)
+		},
+	},
+	{
+		Name: "mall.order",
+		Handler: func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+			return order.RegisterOrderHandler(ctx, mux, conn)
+		},
+	},
+	{
+		Name: "mall.seckill",
+		Handler: func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+			return seckill.RegisterSeckillHandler(ctx, mux, conn)
+		},
+	},
+	{
+		Name: "mall.product",
+		Handler: func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+			return product.RegisterProductHandler(ctx, mux, conn)
+		},
+	},
+}
+
+type Service struct {
+	Name    string
+	Handler func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error
 }
 
 // Option is func for application

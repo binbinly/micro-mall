@@ -1,12 +1,12 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // AttrRelGroupModel 属性关联属性分组
 type AttrRelGroupModel struct {
-	mysql.PriID
-	AttrID  int `json:"attr_id" gorm:"column:attr_id;not null;type:int(11) unsigned;comment:属性id"`
-	GroupID int `json:"group_id" gorm:"column:group_id;not null;type:int(11) unsigned;comment:属性分组id"`
+	dbs.PriID
+	AttrID  int `json:"attr_id" gorm:"column:attr_id;not null;type:int;comment:属性id"`
+	GroupID int `json:"group_id" gorm:"column:group_id;not null;type:int;comment:属性分组id"`
 }
 
 // TableName 表名

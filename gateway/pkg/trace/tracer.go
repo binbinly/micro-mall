@@ -1,9 +1,9 @@
 package trace
 
 import (
-	jaegerprop "go.opentelemetry.io/contrib/propagators/jaeger"
 	"strings"
 
+	jaegerprop "go.opentelemetry.io/contrib/propagators/jaeger"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"

@@ -1,14 +1,14 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // AppNoticeModel 公告模型
 type AppNoticeModel struct {
-	mysql.PriID
+	dbs.PriID
 	Title   string `json:"title" gorm:"column:title;not null;type:varchar(255);comment:标题"`
 	Content string `json:"content" gorm:"column:content;not null;type:varchar(1000);comment:内容"`
-	mysql.CUBy
-	mysql.CUT
+	dbs.CUBy
+	dbs.CUT
 }
 
 // TableName 表名

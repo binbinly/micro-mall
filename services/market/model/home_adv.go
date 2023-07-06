@@ -1,10 +1,10 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // HomeAdvModel 首页轮播广告
 type HomeAdvModel struct {
-	mysql.PriID
+	dbs.PriID
 	Title      string `json:"title" gorm:"column:title;not null;type:varchar(128);comment:标题"`
 	Img        string `json:"img" gorm:"column:img;not null;type:varchar(128);comment:图片"`
 	StartAt    int64  `json:"start_at" gorm:"column:start_at;not null;type:int;comment:开始时间"`
@@ -12,10 +12,10 @@ type HomeAdvModel struct {
 	ClickCount int    `json:"click_count" gorm:"column:click_count;not null;type:int;default:0;comment:点击数"`
 	Url        string `json:"url" gorm:"column:url;not null;type:varchar(128);default:'';comment:链接地址"`
 	Note       string `json:"note" gorm:"column:note;not null;type:varchar(255);default:'';comment:备注"`
-	mysql.Release
-	mysql.OrderBy
-	mysql.CUBy
-	mysql.CUT
+	dbs.Release
+	dbs.OrderBy
+	dbs.CUBy
+	dbs.CUT
 }
 
 // TableName 表名

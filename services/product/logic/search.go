@@ -2,9 +2,10 @@ package logic
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"pkg/constvar"
 
+	"github.com/pkg/errors"
+
+	"pkg/constvar"
 	"product/es"
 	"product/model"
 )

@@ -2,6 +2,7 @@ package resource
 
 import (
 	"encoding/json"
+
 	"github.com/binbinly/pkg/util"
 
 	cpb "pkg/proto/common"

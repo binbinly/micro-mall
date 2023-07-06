@@ -1,15 +1,15 @@
 package model
 
 import (
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 // OrderReturnApplyModel 订单退货申请
 type OrderReturnApplyModel struct {
-	mysql.PriID
+	dbs.PriID
 	OID
 	ONo
-	mysql.Sku
+	dbs.Sku
 	Username      string `json:"username" gorm:"column:username;not null;type:varchar(60);comment:用户名"`
 	Amount        int    `json:"amount" gorm:"column:amount;not null;type:int;comment:退款金额"`
 	ReturnName    string `json:"return_name" gorm:"column:return_name;not null;type:varchar(100);comment:退款人姓名"`
@@ -33,7 +33,7 @@ type OrderReturnApplyModel struct {
 	ReceiveNote   string `json:"receive_note" gorm:"column:receive_note;not null;type:varchar(255);default:'';comment:收货备注"`
 	ReceiveAt     int64  `json:"receive_at" gorm:"column:receive_at;not null;type:int;default:0;comment:收货时间"`
 	AddressDetail string `json:"address_detail" gorm:"column:address_detail;not null;type:varchar(255);comment:收货地址"`
-	mysql.CUT
+	dbs.CUT
 }
 
 // TableName 表名

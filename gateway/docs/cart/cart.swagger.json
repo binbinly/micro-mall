@@ -77,7 +77,7 @@
     "/v1/cart/del": {
       "post": {
         "summary": "/ 批量删除购物车",
-        "operationId": "Cart_BatchDelCart",
+        "operationId": "Cart_DelCart",
         "responses": {
           "200": {
             "description": "A successful response.",

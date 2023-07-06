@@ -1,5 +1,4 @@
-/logs
-/.idea
-/.DS_Store
-/.scannerwork/
-.git
+.idea/
+.DS_Store
+.scannerwork/
+log/

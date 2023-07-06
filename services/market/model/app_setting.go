@@ -2,7 +2,7 @@ package model
 
 import (
 	"encoding/json"
-	"pkg/mysql"
+	"pkg/dbs"
 )
 
 const (
@@ -27,14 +27,14 @@ const (
 
 // AppSettingModel 应用页面设置模型
 type AppSettingModel struct {
-	mysql.PriID
-	mysql.Cat
-	Page int8   `json:"page" gorm:"column:page;not null;type:tinyint unsigned;comment:页面"`
-	Type int8   `json:"type" gorm:"column:type;not null;type:tinyint unsigned;comment:类型"`
+	dbs.PriID
+	dbs.Cat
+	Page int8   `json:"page" gorm:"column:page;not null;type:tinyint;comment:页面"`
+	Type int8   `json:"type" gorm:"column:type;not null;type:tinyint;comment:类型"`
 	Data string `json:"data" gorm:"column:data;not null;type:varchar(5000);default:'';comment:数据"`
-	mysql.OrderBy
-	mysql.CUBy
-	mysql.CUT
+	dbs.OrderBy
+	dbs.CUBy
+	dbs.CUT
 }
 
 // TableName 表名

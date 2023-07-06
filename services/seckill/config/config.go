@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/binbinly/pkg/storage/redis"
+
 	"pkg/app"
 )
 

@@ -2,11 +2,15 @@ package logic
 
 import (
 	"context"
+
 	"github.com/binbinly/pkg/cache"
+	"github.com/redis/go-redis/v9"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/client"
 	"gorm.io/gorm"
+
 	"order/model"
+	"order/repository"
 	"pkg/constvar"
 	"pkg/proto/cart"
 	"pkg/proto/core"
@@ -14,9 +18,6 @@ import (
 	"pkg/proto/member"
 	"pkg/proto/product"
 	"pkg/proto/warehouse"
-
-	"github.com/redis/go-redis/v9"
-	"order/repository"
 )
 
 var _ Logic = (*logic)(nil)

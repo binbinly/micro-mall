@@ -3,14 +3,14 @@ package logic
 import (
 	"context"
 	"fmt"
-	"github.com/redis/go-redis/v9"
-	"pkg/errno"
-	"pkg/mysql"
 	"time"
 
 	"github.com/pkg/errors"
+	"github.com/redis/go-redis/v9"
 
 	"market/model"
+	"pkg/dbs"
+	"pkg/errno"
 )
 
 // GetCouponList 优惠券列表
@@ -66,7 +66,7 @@ func (l *logic) CouponDraw(ctx context.Context, memberID, id int64) error {
 		return errno.ErrCouponFinished
 	}
 	couponMember := &model.CouponMemberModel{
-		MID:      mysql.MID{MemberID: memberID},
+		MID:      dbs.MID{MemberID: memberID},
 		CouponID: id,
 		GetType:  model.CouponGetTypeDraw,
 		Status:   model.CouponStatusInit,
@@ -88,7 +88,7 @@ func (l *logic) CouponUsed(ctx context.Context, memberID, id, orderID int64) err
 		return errno.ErrCouponNotFound
 	}
 	err = l.repo.SetCouponMemberUsed(ctx, id, memberID, orderID)
-	if errors.Is(err, mysql.ErrRecordNotModified) {
+	if errors.Is(err, dbs.ErrRecordNotModified) {
 		return errno.ErrCouponNotFound
 	} else if err != nil {
 		return errors.Wrapf(err, "[logic.coupon] set used id: %v uid: %v, oid: %v", id, memberID, orderID)

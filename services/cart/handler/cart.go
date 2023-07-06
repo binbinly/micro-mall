@@ -1,19 +1,25 @@
 package handler
 
 import (
-	"cart/repository"
-	"cart/resource"
 	"context"
+
+	"github.com/golang/protobuf/ptypes/empty"
 	"go-micro.dev/v4/client"
-	"pkg/constvar"
-	"pkg/handler"
 
 	"cart/logic"
-	"github.com/golang/protobuf/ptypes/empty"
+	"cart/repository"
+	"cart/resource"
+	"pkg/constvar"
+	"pkg/handler"
 	pb "pkg/proto/cart"
 	cpb "pkg/proto/common"
 	"pkg/proto/product"
 )
+
+// Auth 购物车服身份验证
+func Auth(method string) bool {
+	return true
+}
 
 // Cart 购物车处理器
 type Cart struct {

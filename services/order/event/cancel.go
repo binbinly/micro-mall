@@ -2,10 +2,11 @@ package event
 
 import (
 	"context"
+
+	"github.com/binbinly/pkg/logger"
+
 	"order/logic"
 	"pkg/message"
-
-	"go-micro.dev/v4/logger"
 )
 
 // CancelEvent 订单取消 event
@@ -20,7 +21,7 @@ func NewCancel(l logic.Logic) *CancelEvent {
 
 // Handler 秒杀订单消息处理
 func (e *CancelEvent) Handler(ctx context.Context, message *message.OrderCancelMessage) error {
-	logger.Infof("[order.CancelEvent] handler message: %v", message)
+	logger.Debugf("[order.CancelEvent] handler message: %v", message)
 
 	if err := e.logic.OrderCancel(context.Background(), message.MemberID, message.OrderID); err != nil {
 		logger.Warnf("[order.CancelEvent] order cancel err: %v", err)

@@ -3,13 +3,13 @@ package repository
 import (
 	"context"
 	"fmt"
-	"gorm.io/gorm"
-	"pkg/mysql"
 	"reflect"
 
 	"github.com/pkg/errors"
 	"go-micro.dev/v4/logger"
+	"gorm.io/gorm"
 
+	"pkg/dbs"
 	"product/model"
 )
 
@@ -74,7 +74,7 @@ func (r *Repo) GetCategoryChild(ctx context.Context, id int64) ([]int64, error) 
 func (r *Repo) CategoryAll(ctx context.Context) (list []*model.CategoryModel, err error) {
 	if err = r.QueryCache(ctx, "category_all", &list, 0, func(data interface{}) error {
 		// 从数据库中获取
-		if err := r.DB.WithContext(ctx).Model(&model.CategoryModel{}).Order(mysql.DefaultOrderSort).Find(&list).Error; err != nil {
+		if err := r.DB.WithContext(ctx).Model(&model.CategoryModel{}).Order(dbs.DefaultOrderSort).Find(&list).Error; err != nil {
 			return err
 		}
 		if len(list) == 0 {

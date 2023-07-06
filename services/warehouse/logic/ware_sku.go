@@ -2,10 +2,11 @@ package logic
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"pkg/errno"
-	"pkg/mysql"
 
+	"github.com/pkg/errors"
+
+	"pkg/dbs"
+	"pkg/errno"
 	"warehouse/model"
 )
 
@@ -89,7 +90,7 @@ func (l *logic) SKuStockLock(ctx context.Context, orderID int64, orderNo, consig
 		taskDetails = append(taskDetails, &model.WareTaskDetailModel{
 			TaskID:  task.ID,
 			WareID:  m.WareID,
-			Sku:     mysql.Sku{SkuID: m.SkuID},
+			Sku:     dbs.Sku{SkuID: m.SkuID},
 			SkuName: m.SkuName,
 			SkuNum:  int(sku[m.SkuID]),
 		})
@@ -154,7 +155,7 @@ func (l *logic) SkuStockUnlock(ctx context.Context, orderID int64, finish bool) 
 	}
 	if err = l.repo.UpdateWareTaskStatus(ctx, tx, orderID, status); err != nil {
 		tx.Rollback()
-		if errors.Is(err, mysql.ErrRecordNotModified) {
+		if errors.Is(err, dbs.ErrRecordNotModified) {
 			return nil
 		}
 		return errors.Wrapf(err, "[logic.wareSku] update task")

@@ -3,7 +3,7 @@
  */
 syntax = "proto3";
 
-package center;
+package core;
 
 option go_package = "./proto;core";
 

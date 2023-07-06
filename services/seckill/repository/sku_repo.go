@@ -4,10 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/redis/go-redis/v9"
 	"strconv"
 
 	"github.com/pkg/errors"
+	"github.com/redis/go-redis/v9"
 	"go-micro.dev/v4/logger"
 )
 

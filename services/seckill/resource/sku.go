@@ -1,11 +1,12 @@
 package resource
 
 import (
-	"github.com/binbinly/pkg/util"
-	"seckill/config"
 	"time"
 
+	"github.com/binbinly/pkg/util"
+
 	pb "pkg/proto/common"
+	"seckill/config"
 	"seckill/repository"
 )
 

@@ -2,9 +2,11 @@ package logic
 
 import (
 	"context"
+
 	"github.com/binbinly/pkg/cache"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
+
 	"warehouse/repository"
 )
 

@@ -4,6 +4,8 @@ import (
 	"context"
 	"github.com/golang/protobuf/ptypes/empty"
 	"go-micro.dev/v4/client"
+	"reflect"
+
 	"pkg/constvar"
 	"pkg/errno"
 	"pkg/handler"
@@ -15,13 +17,7 @@ import (
 	"product/logic"
 	"product/model"
 	"product/resource"
-	"reflect"
 )
-
-// Auth 产品服身份验证
-func Auth(method string) bool {
-	return false
-}
 
 // Product 产品服务处理器
 type Product struct {
@@ -62,8 +58,18 @@ func (p *Product) SkuSearch(ctx context.Context, req *pb.SearchReq, reply *pb.Se
 	if err != nil {
 		return errno.ProductReplyErr(err)
 	}
+	cats, err := p.logic.ParseCats(ctx, data)
+	if err != nil {
+		return errno.ProductReplyErr(err)
+	}
+	brands, err := p.logic.ParseBrands(ctx, data)
+	if err != nil {
+		return errno.ProductReplyErr(err)
+	}
 
-	reflect.ValueOf(reply).Elem().Set(reflect.ValueOf(data).Elem())
+	res := resource.SearchResResource(data, cats, brands)
+	reflect.ValueOf(reply).Elem().Set(reflect.ValueOf(res).Elem())
+
 	return nil
 }
 

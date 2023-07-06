@@ -3,10 +3,10 @@ package repository
 import (
 	"context"
 	"fmt"
-	"gorm.io/gorm"
 
 	"github.com/pkg/errors"
 	"go-micro.dev/v4/logger"
+	"gorm.io/gorm"
 
 	"product/model"
 )

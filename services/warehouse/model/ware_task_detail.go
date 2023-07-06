@@ -1,16 +1,16 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // WareTaskDetailModel 库存工作单详情
 type WareTaskDetailModel struct {
-	mysql.PriID
+	dbs.PriID
 	TaskID int64 `json:"task_id" gorm:"column:task_id;not null;type:int;comment:工作单id"`
 	WareID int64 `json:"ware_id" gorm:"column:ware_id;not null;type:int;comment:仓库id"`
-	mysql.Sku
+	dbs.Sku
 	SkuName string `json:"sku_name" gorm:"column:sku_name;not null;type:varchar(255);comment:采购商品名"`
 	SkuNum  int    `json:"sku_num" gorm:"column:sku_num;not null;type:int;comment:采购数量"`
-	mysql.CUT
+	dbs.CUT
 }
 
 // TableName 表名

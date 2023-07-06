@@ -1,12 +1,15 @@
 package main
 
 import (
+	"log"
+
+	"github.com/binbinly/pkg/storage/orm"
 	"github.com/binbinly/pkg/storage/redis"
+	"github.com/go-micro/plugins/v4/broker/rabbitmq"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/broker"
-	"go-micro.dev/v4/logger"
 	"go-micro.dev/v4/server"
-	"log"
+
 	"order/cmd"
 	"order/config"
 	"order/event"
@@ -14,10 +17,7 @@ import (
 	"order/logic"
 	"pkg/app"
 	"pkg/constvar"
-	"pkg/mysql"
 	pb "pkg/proto/order"
-
-	"github.com/go-micro/plugins/v4/broker/rabbitmq"
 )
 
 var (
@@ -30,8 +30,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// init mysql
-	db := mysql.NewDB(&config.Cfg.MySQL)
+	// init dbs
+	db := orm.NewDB(&config.Cfg.MySQL)
 
 	// init redis
 	rdb, err := redis.NewClient(&config.Cfg.Redis)
@@ -51,6 +51,7 @@ func main() {
 	a := app.New(
 		app.WithName(constvar.ServiceOrder),
 		app.WithVersion(version),
+		app.WithAuthFunc(handler.Auth),
 		app.WithMigrate(func() {
 			cmd.Migrate()
 		}))
@@ -60,7 +61,7 @@ func main() {
 
 	// register handler
 	if err = pb.RegisterOrderHandler(a.Service().Server(), handler.New(l)); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
 	// register subscriber 订阅订单秒杀事件

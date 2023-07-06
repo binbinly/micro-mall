@@ -1,11 +1,11 @@
 package model
 
-import "pkg/mysql"
+import "pkg/dbs"
 
 // MemberPriceModel 商品会员价格
 type MemberPriceModel struct {
-	mysql.PriID
-	mysql.Sku
+	dbs.PriID
+	dbs.Sku
 	LevelID   int    `json:"level_id" gorm:"column:level_id;not null;type:int;comment:会员等级"`
 	LevelName string `json:"level_name" gorm:"column:level_name;not null;type:varchar(64);comment:会员等级名"`
 	Price     int    `json:"price" gorm:"column:price;not null;type:int;comment:会员对应价格"`

@@ -3,7 +3,7 @@ module center
 go 1.18
 
 require (
-	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0
+	github.com/binbinly/pkg v0.0.0-00010101000000-000000000000
 	github.com/golang/protobuf v1.5.3
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.0.4
@@ -60,6 +60,9 @@ require (
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/hashicorp/serf v0.9.5 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/jackc/pgx/v5 v5.3.1 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
@@ -109,7 +112,10 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/mysql v1.5.0 // indirect
+	gorm.io/driver/postgres v1.5.2 // indirect
 	gorm.io/plugin/opentelemetry v0.1.2 // indirect
 )
 
 replace pkg => ./../../pkg
+
+replace github.com/binbinly/pkg => ../../../pkg
