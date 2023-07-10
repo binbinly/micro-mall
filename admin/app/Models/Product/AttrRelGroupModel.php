@@ -14,7 +14,7 @@ class AttrRelGroupModel extends BaseModel
 
     public $timestamps = false;
 
-    public function attr()
+    public function attr(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(AttrModel::class, 'id', 'attr_id');
     }
@@ -24,7 +24,8 @@ class AttrRelGroupModel extends BaseModel
      * @param array $ids
      * @return array
      */
-    public static function getAttrByGroupIds(array $ids){
+    public static function getAttrByGroupIds(array $ids): array
+    {
         if (count($ids) == 0) return [];
         return self::query()->whereIn('group_id', $ids)->pluck('attr_id')->toArray();
     }
@@ -34,7 +35,8 @@ class AttrRelGroupModel extends BaseModel
      * @param $ids
      * @return array
      */
-    public static function getBaseAttrs($ids){
+    public static function getBaseAttrs($ids): array
+    {
         return self::query()->whereIn('group_id', $ids)->with('attr')
             ->whereHas('attr', function ($query){
                 $query->where('type', AttrModel::TYPE_BASE);

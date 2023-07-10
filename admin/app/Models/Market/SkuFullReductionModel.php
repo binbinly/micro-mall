@@ -4,7 +4,7 @@
 namespace App\Models\Market;
 
 
-use App\Admin\Common\Format;
+use App\Admin\Common\CastAmount;
 
 /**
  * 商品满减优惠
@@ -17,23 +17,8 @@ class SkuFullReductionModel extends BaseModel
 
     public $timestamps = false;
 
-    public function getFullPriceAttribute($value)
-    {
-        return Format::amountToYuan($value);
-    }
-
-    public function setFullPriceAttribute($value)
-    {
-        $this->attributes['full_price'] = Format::amountToPenny($value);
-    }
-
-    public function getReducePriceAttribute($value)
-    {
-        return Format::amountToYuan($value);
-    }
-
-    public function setReducePriceAttribute($value)
-    {
-        $this->attributes['reduce_price'] = Format::amountToPenny($value);
-    }
+    protected $casts = [
+        'full_price' => CastAmount::class,
+        'reduce_price' => CastAmount::class
+    ];
 }

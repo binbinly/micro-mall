@@ -10,6 +10,7 @@
         this.commonPrice = 0; // 统一价格
         this.title = $(warp).find('#sku_title').val();
         this.init();
+        this.getSkuAttr()
     }
 
 

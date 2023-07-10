@@ -1,13 +1,14 @@
-
 GOPATH:=$(shell go env GOPATH)
+
 .PHONY: init
 init:
-	go install github.com/golang/protobuf/proto
-	go install github.com/golang/protobuf/protoc-gen-go
-	go get github.com/micro/micro/v3/cmd/protoc-gen-micro
-	go get github.com/micro/micro/v3/cmd/protoc-gen-openapi
-	go get github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
-	mkdir docs
+	go install github.com/golang/protobuf/proto@latest
+	go install github.com/golang/protobuf/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	go install github.com/go-micro/cli/cmd/go-micro@latest
+	go install github.com/go-micro/generator/cmd/protoc-gen-micro@latest
+	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+	go install github.com/envoyproxy/protoc-gen-validate@latest
 
 .PHONY: proto
 proto:

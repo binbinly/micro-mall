@@ -25,26 +25,26 @@ class BaseController extends AdminController
      * 列表自定义参数
      * @var array
      */
-    protected $params;
+    protected array $params;
 
     /**
      * 修改时的主键ID
      * @var int
      */
-    protected $id;
+    protected int $id;
 
     //编辑权限slug
-    protected $editSlug = '';
+    protected string $editSlug = '';
 
     //新增权限slug
-    protected $addSlug = '';
+    protected string $addSlug = '';
 
     /**
      * 列表
      * @param Content $content
      * @return Content
      */
-    public function index(Content $content)
+    public function index(Content $content): Content
     {
         $this->params = request()->all();
         /** @var Grid $grid */
@@ -66,7 +66,7 @@ class BaseController extends AdminController
      * @param Content $content
      * @return Content
      */
-    public function edit($id, Content $content)
+    public function edit($id, Content $content): Content
     {
         $this->id = $id;
         return parent::edit($id, $content);
@@ -76,7 +76,7 @@ class BaseController extends AdminController
      * 检查新增权限
      * @param $grid
      */
-    protected function checkAddPermission(Grid $grid)
+    protected function checkAddPermission(Grid $grid): void
     {
         if (!Admin::user()->can($this->addSlug)) {
             $grid->disableCreateButton();
@@ -87,7 +87,7 @@ class BaseController extends AdminController
      * 检查编辑权限
      * @param $grid
      */
-    protected function checkEditPermission(Grid $grid)
+    protected function checkEditPermission(Grid $grid): void
     {
         if (Admin::user()->can($this->editSlug)) {
             $this->disableGridDeleteAndView($grid);
@@ -101,7 +101,7 @@ class BaseController extends AdminController
      * @param string $msg
      * @return RedirectResponse
      */
-    protected function alertError($msg = '操作失败')
+    protected function alertError(string $msg = '操作失败'): RedirectResponse
     {
         $error = new MessageBag([
             'title' => $msg,
@@ -115,7 +115,7 @@ class BaseController extends AdminController
      * @param string $msg
      * @return RedirectResponse
      */
-    protected function alertSuccess($msg = '操作成功')
+    protected function alertSuccess(string $msg = '操作成功'): RedirectResponse
     {
         admin_success($msg);
         return back();
@@ -127,7 +127,7 @@ class BaseController extends AdminController
      * @param $title
      * @return string
      */
-    protected function showButton($url, $title)
+    protected function showButton($url, $title): string
     {
         return '<a href="' . $url . '" class="btn btn-primary"  target="_blank" rel="noopener noreferrer" style="margin:0 20px">' . $title . '</a>';
     }

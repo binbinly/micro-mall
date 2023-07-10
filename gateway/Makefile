@@ -9,16 +9,13 @@ init:
 	go install github.com/golang/protobuf/proto@latest
 	go install github.com/golang/protobuf/protoc-gen-go@latest
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-	go install github.com/go-micro/cli/cmd/go-micro@latest
-	go install github.com/go-micro/generator/cmd/protoc-gen-micro@latest
-	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
 	go install github.com/envoyproxy/protoc-gen-validate@latest
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
 .PHONY: dev
 dev:
-	go run main.go server -c configs/app.yaml
+	go run main.go server -c configs
 
 .PHONY: proto
 proto:
@@ -42,7 +39,7 @@ test:
 
 .PHONY: docker
 docker:
-	docker build . -t gateway:latest
+	docker build -t gateway:latest .
 
 #检查代码规范
 .PHONY: lint

@@ -1,10 +1,8 @@
 GOPATH:=$(shell go env GOPATH)
 
-.PHONY: init
-init:
-	@go get -u google.golang.org/protobuf/proto
-	@go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-	@go install github.com/go-micro/generator/cmd/protoc-gen-micro@latest
+.PHONY: dev
+dev:
+	@go run main.go --registry consul --registry_address 127.0.0.1:8500
 
 .PHONY: update
 update:
@@ -13,10 +11,6 @@ update:
 .PHONY: tidy
 tidy:
 	@go mod tidy
-
-.PHONY: build
-build:
-	@go build -o member *.go
 
 .PHONY: test
 test:

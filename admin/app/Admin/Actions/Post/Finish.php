@@ -62,7 +62,7 @@ class Finish extends RowAction
         return $this->response()->success('已完成')->refresh();
     }
 
-    public function dialog()
+    public function dialog(): void
     {
         $this->confirm('请确认是否已完成采购？');
     }

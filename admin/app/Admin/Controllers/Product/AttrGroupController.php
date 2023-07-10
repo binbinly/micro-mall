@@ -48,7 +48,7 @@ class AttrGroupController extends BaseController
         return $grid;
     }
 
-    public function edit($id, Content $content)
+    public function edit($id, Content $content): Content
     {
         return $content
             ->title($this->title())

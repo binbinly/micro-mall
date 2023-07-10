@@ -1,18 +1,18 @@
 package server
 
 import (
-	"gateway/internal/app"
-	"gateway/pkg/trace"
 	"log"
 	"time"
 
-	"gateway/pkg/config"
 	"github.com/spf13/cobra"
 
+	"gateway/internal/app"
 	"gateway/internal/router"
 	"gateway/internal/server"
+	"gateway/pkg/config"
 	"gateway/pkg/registry"
 	"gateway/pkg/registry/consul"
+	"gateway/pkg/trace"
 )
 
 var (
@@ -21,7 +21,7 @@ var (
 	StartCmd = &cobra.Command{
 		Use:          "server",
 		Short:        "Start API Gateway Server",
-		Example:      "gateway server -c configs/default.yml",
+		Example:      "gateway server -c configs",
 		SilenceUsage: true,
 		PreRun: func(cmd *cobra.Command, args []string) {
 			setup()

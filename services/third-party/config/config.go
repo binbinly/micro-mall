@@ -2,15 +2,13 @@ package config
 
 import (
 	"github.com/binbinly/pkg/storage/redis"
+
+	"pkg/app"
 )
 
 var Cfg = &Config{
-	Redis: redis.Config{
-		Addr:     "127.0.0.1:6379",
-		Password: "",
-		DB:       0,
-	},
-	Sms: SmsConfig{IsReal: false},
+	Redis: app.DefRedisConfig,
+	Sms:   SmsConfig{IsReal: false},
 	Eth: EthConfig{
 		NetworkID:  15,
 		NetworkUrl: "http://127.0.0.1:8545",

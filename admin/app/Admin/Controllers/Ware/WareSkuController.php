@@ -18,7 +18,7 @@ class WareSkuController extends BaseController
      *
      * @var string
      */
-    protected $title = 'WareSkuModel';
+    protected $title = '商品库存';
 
     /**
      * Make a grid builder.

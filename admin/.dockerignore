@@ -1,7 +1,0 @@
-/vendor
-.env
-*.log
-/.idea
-/.DS_Store
-/.git
-*.md

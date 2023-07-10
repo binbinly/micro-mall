@@ -26,6 +26,7 @@ class Sku extends StepForm
     public function handle(Request $request)
     {
         $service = new SpuService();
+        dd($this->all());
         $suc = $service->create($this->all(), $err);
         if ($suc) {
             admin_success('添加成功');

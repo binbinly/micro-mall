@@ -17,29 +17,29 @@ class FormMediaField extends Field
         'vendor/yelphp/narwhalformmedia/mediayel_field.js'
     ];
 
-    protected $limit = 1;
-    protected $rootpath = '';
-    protected $remove = false;
-    protected $type = 'img';
-    protected $path = "./";
+    protected int $limit = 1;
+    protected bool $remove = false;
+    protected string $type = 'img';
+    protected string $path = "./";
 
     /**
      * @param int $limit
      * @return $this
      */
-    public function limit($limit = 1)
+    public function limit(int $limit = 1): static
     {
         $this->limit = $limit;
         return $this;
     }
 
-    public function remove()
+    public function remove(): static
     {
         $this->remove = true;
         return $this;
     }
 
-    public function path($path){
+    public function path($path): static
+    {
         $this->path = $path;
         return $this;
     }

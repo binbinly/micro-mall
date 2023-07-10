@@ -21,20 +21,20 @@ class CouponMemberModel extends BaseModel
 
     protected $table = 'sms_coupon_member';
 
-    public static $getTypeLabel = [
+    public static array $getTypeLabel = [
         self::GET_TYPE_ADMIN => '后台赠送',
         self::GET_TYPE_MY => '主动领取'
     ];
 
-    public static $statusLabel = [
+    public static array $statusLabel = [
         self::STATUS_NOT => '未使用',
         self::STATUS_USE => '已使用',
         self::STATUS_EXPIRE => '已过期'
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'used_at'
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'used_at' => 'datetime'
     ];
 }

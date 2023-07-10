@@ -1,6 +1,8 @@
 package app
 
 import (
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/binbinly/pkg/storage/redis"
 	"github.com/pkg/errors"
 	"go-micro.dev/v4/config/source/env"
 	"time"
@@ -13,6 +15,40 @@ import (
 	"go-micro.dev/v4/logger"
 )
 
+var DefDfsConfig = DFSConfig{
+	Endpoint: "http://127.0.0.1:8080",
+}
+
+var DefAMQPConfig = AMQPConfig{
+	Addr: "amqp://guest:guest@localhost:5672",
+}
+
+var DefRedisConfig = redis.Config{
+	Addr:         "127.0.0.1:6379",
+	Password:     "",
+	DB:           0,
+	MinIdleConn:  1,
+	DialTimeout:  5 * time.Second,
+	ReadTimeout:  500 * time.Millisecond,
+	WriteTimeout: 500 * time.Millisecond,
+	PoolSize:     10,
+	PoolTimeout:  5 * time.Minute,
+}
+
+func DefOrmConfig(database string) orm.Config {
+	return orm.Config{
+		Host:            "127.0.0.1",
+		Port:            3306,
+		User:            "root",
+		Password:        "root",
+		Database:        database,
+		Debug:           true,
+		MaxIdleConn:     1,
+		MaxOpenConn:     10,
+		ConnMaxLifeTime: 100 * time.Second,
+	}
+}
+
 // DFSConfig 图片资源配置
 type DFSConfig struct {
 	Endpoint string `json:"endpoint"`
@@ -24,13 +60,13 @@ type AMQPConfig struct {
 }
 
 // LoadEnv 加载系统 env 配置
-func LoadEnv(path string, val any) error {
+func LoadEnv(val any) error {
 	conf, err := config.NewConfig(config.WithSource(env.NewSource()))
 	if err != nil {
 		return errors.Wrap(err, "conf.New")
 	}
 
-	return load(conf, path, val)
+	return load(conf, "", val)
 }
 
 // LoadFile 加载文件配置
@@ -76,12 +112,15 @@ func load(conf config.Config, path string, val any) error {
 		return errors.Wrap(err, "conf.Load")
 	}
 
-	go watch(conf, path, val)
-	//fmt.Println("data", c.Map())
+	if path != "" {
+		go watch(conf, path, val)
+		conf.Get(path)
+	}
 
-	if err := conf.Get(path).Scan(val); err != nil {
+	if err := conf.Scan(val); err != nil {
 		return errors.Wrap(err, "conf.Scan")
 	}
+	logger.Infof("[config] load config: %v", val)
 
 	return nil
 }

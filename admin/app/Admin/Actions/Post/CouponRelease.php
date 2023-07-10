@@ -42,7 +42,7 @@ class CouponRelease extends RowAction
         return $this->response()->success('操作成功')->refresh();
     }
 
-    public function form($model)
+    public function form($model): void
     {
         $this->text('num', '发行数量')->default($model->num)->required()->rules('required|numeric');
     }

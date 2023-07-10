@@ -76,29 +76,29 @@ namespace App\Admin\Bean;
 //}
 class ProductBean
 {
-    protected $skuId = 0;
+    protected int $skuId = 0;
 
-    protected $spuId = 0;
+    protected int $spuId = 0;
 
-    protected $skuTitle = '';
+    protected string $skuTitle = '';
 
-    protected $skuPrice = 0;
+    protected int $skuPrice = 0;
 
-    protected $skuImg = '';
+    protected string $skuImg = '';
 
-    protected $saleCount = 0;
+    protected int $saleCount = 0;
 
-    protected $hasStock = false;
+    protected bool $hasStock = false;
 
-    protected $hotScore = 0;
+    protected int $hotScore = 0;
 
-    protected $brandId = 0;
+    protected int $brandId = 0;
 
-    protected $catId = 0;
+    protected int $catId = 0;
 
-    protected $catName = '';
+    protected string $catName = '';
 
-    protected $brandName = '';
+    protected string $brandName = '';
 
-    protected $brandImg = '';
+    protected string $brandImg = '';
 }

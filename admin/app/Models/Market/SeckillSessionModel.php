@@ -13,7 +13,7 @@ class SeckillSessionModel extends BaseModel
 {
     protected $table = 'sms_seckill_session';
 
-    public static function getAll()
+    public static function getAll(): array
     {
         return self::query()->pluck('name', 'id')->toArray();
     }

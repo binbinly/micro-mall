@@ -31,12 +31,12 @@ class CategoryModel extends BaseModel
      * 所有一级分类
      * @return array
      */
-    public static function parentAll()
+    public static function parentAll(): array
     {
         return self::query()->where('parent_id', 0)->pluck('name', 'id')->toArray();
     }
 
-    public static function getAll()
+    public static function getAll(): array
     {
         return self::query()->pluck('name', 'id')->toArray();
     }

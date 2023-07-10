@@ -15,21 +15,9 @@ type Config struct {
 }
 
 var Cfg = &Config{
-	MySQL: orm.Config{
-		Host:     "127.0.0.1",
-		Port:     3306,
-		User:     "root",
-		Password: "root",
-		Database: "mall_pms",
-	},
-	Redis: redis.Config{
-		Addr:     "127.0.0.1:6379",
-		Password: "",
-		DB:       0,
-	},
-	DFS: app.DFSConfig{
-		Endpoint: "http://127.0.0.1:8080",
-	},
+	MySQL: app.DefOrmConfig("mall_pms"),
+	Redis: app.DefRedisConfig,
+	DFS:   app.DefDfsConfig,
 	Elastic: elasticsearch.Config{
 		Host: "http://127.0.0.1:9200",
 	},

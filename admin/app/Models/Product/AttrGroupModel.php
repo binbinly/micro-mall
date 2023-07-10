@@ -15,7 +15,7 @@ class AttrGroupModel extends BaseModel
 
     public $timestamps = false;
 
-    public static function getAll()
+    public static function getAll(): array
     {
         return self::query()->pluck('name', 'id')->toArray();
     }
@@ -23,16 +23,20 @@ class AttrGroupModel extends BaseModel
     /**
      * 当前分类下的所有分组id
      * @param int $catId
+     * @return array
      */
-    public static function getGroupIdByCatId(int $catId) {
+    public static function getGroupIdByCatId(int $catId): array
+    {
         return self::query()->where('cat_id', $catId)->pluck('id')->toArray();
     }
 
     /**
      * 当前分类下的所有分组
      * @param int $catId
+     * @return array
      */
-    public static function getGroupByCatId(int $catId) {
+    public static function getGroupByCatId(int $catId): array
+    {
         return self::query()->where('cat_id', $catId)->pluck('name', 'id')->toArray();
     }
 }

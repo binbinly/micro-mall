@@ -51,7 +51,7 @@ class AppSettingController extends BaseController
      *
      * @return Content
      */
-    public function edit($id, Content $content)
+    public function edit($id, Content $content): Content
     {
         session()->put(PageSet::SESSION_ID, $id);
         return $content

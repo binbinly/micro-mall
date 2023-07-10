@@ -20,7 +20,7 @@ class PurchaseDetailModel extends BaseModel
     const STATUS_FINISH = 3;
     const STATUS_ERR = 4;
 
-    public static $statusLabel = [
+    public static array $statusLabel = [
         self::STATUS_INIT => '新建',
         self::STATUS_USE => '已分配',
         self::STATUS_ING => '采购中',

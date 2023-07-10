@@ -28,7 +28,8 @@ class Assign extends RowAction
         return $this->response()->success('分配成功')->refresh();
     }
 
-    public function form(){
+    public function form(): void
+    {
         $this->text('id', '采购人id')->required();
         $this->text('name', '采购人')->required();
         $this->mobile('phone', '手机号')->required();

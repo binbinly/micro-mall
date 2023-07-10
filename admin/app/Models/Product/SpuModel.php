@@ -22,7 +22,7 @@ class SpuModel extends BaseModel
     const STATUS_ONLINE = 1;
     const STATUS_OFFLINE = 2;
 
-    public static $statusLabel = [
+    public static array $statusLabel = [
         self::STATUS_INIT => '草稿',
         self::STATUS_ONLINE => '上线',
         self::STATUS_OFFLINE => '下线'

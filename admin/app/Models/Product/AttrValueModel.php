@@ -13,7 +13,7 @@ class AttrValueModel extends BaseModel
 {
     protected $table = 'pms_attr_value';
 
-    public function attr()
+    public function attr(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(AttrModel::class, 'id', 'attr_id');
     }

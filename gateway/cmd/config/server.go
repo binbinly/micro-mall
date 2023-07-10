@@ -2,10 +2,11 @@ package config
 
 import (
 	"fmt"
-	"gateway/internal/app"
-	"gateway/pkg/config"
 
 	"github.com/spf13/cobra"
+
+	"gateway/internal/app"
+	"gateway/pkg/config"
 )
 
 var (

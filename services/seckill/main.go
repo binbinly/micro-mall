@@ -20,13 +20,7 @@ var (
 
 func main() {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceSeckill, config.Cfg); err != nil {
-		log.Fatal(err)
-	}
-
-	// init redis
-	rdb, err := redis.NewClient(&config.Cfg.Redis)
-	if err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		log.Fatal(err)
 	}
 
@@ -42,6 +36,12 @@ func main() {
 		app.WithVersion(version),
 		app.WithAuthFunc(handler.Auth))
 	a.Init(micro.Broker(b))
+
+	// init redis
+	rdb, err := redis.NewClient(&config.Cfg.Redis)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// register handler
 	if err = pb.RegisterSeckillHandler(a.Service().Server(), handler.New(logic.New(rdb), a.Service().Client())); err != nil {

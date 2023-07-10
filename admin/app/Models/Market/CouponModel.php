@@ -4,7 +4,7 @@
 namespace App\Models\Market;
 
 
-use App\Admin\Common\Format;
+use App\Admin\Common\CastAmount;
 
 /**
  * 优惠券模型
@@ -24,47 +24,29 @@ class CouponModel extends BaseModel
 
     protected $table = 'sms_coupon';
 
-    public static $typeLabel = [
+    public static array $typeLabel = [
         self::TYPE_ALL => '全场赠券',
         self::TYPE_MEMBER => '会员赠券',
         self::TYPE_SHOP => '购物赠券',
         self::TYPE_REGISTER => '注册赠券'
     ];
 
-    public static $useTypeLabel = [
+    public static array $useTypeLabel = [
         self::USE_TYPE_ALL => '全场通用',
         self::USE_TYPE_CAT => '指定分类',
         self::USE_TYPE_PRODUCT => '指定商品'
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'start_at',
-        'end_at',
-        'enable_start_at',
-        'enable_end_at'
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
+        'enable_start_at' => 'datetime',
+        'enable_end_at' => 'datetime',
+        'amount' => CastAmount::class,
+        'min_point' => CastAmount::class
     ];
-
-    public function getAmountAttribute($value)
-    {
-        return Format::amountToYuan($value);
-    }
-
-    public function setAmountAttribute($value)
-    {
-        $this->attributes['amount'] = Format::amountToPenny($value);
-    }
-
-    public function getMinPointAttribute($value)
-    {
-        return Format::amountToYuan($value);
-    }
-
-    public function setMinPointAttribute($value)
-    {
-        $this->attributes['min_point'] = Format::amountToPenny($value);
-    }
 
 }

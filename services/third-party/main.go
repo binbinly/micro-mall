@@ -20,9 +20,15 @@ var (
 
 func main() {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceThird, config.Cfg); err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		log.Fatal(err)
 	}
+
+	// init app
+	a := app.New(
+		app.WithName(constvar.ServiceThird),
+		app.WithVersion(version))
+	a.Init()
 
 	// connect to eth
 	c, err := ethclient.Dial(config.Cfg.Eth.NetworkUrl)
@@ -35,12 +41,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// init app
-	a := app.New(
-		app.WithName(constvar.ServiceThird),
-		app.WithVersion(version))
-	a.Init()
 
 	// register handler
 	if err = pb.RegisterThirdPartyHandler(a.Service().Server(), handler.New(logic.New(rdb, c))); err != nil {

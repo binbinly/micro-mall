@@ -25,7 +25,7 @@ class PurchaseModel extends BaseModel
     const STATUS_FINISH = 3;
     const STATUS_ERR = 4;
 
-    public static $statusLabel = [
+    public static array $statusLabel = [
         self::STATUS_INIT => '新建',
         self::STATUS_USE => '已分配',
         self::STATUS_RECEIVED => '已领取',
@@ -39,7 +39,8 @@ class PurchaseModel extends BaseModel
      * 获取可以被分配的采购单
      * @return array
      */
-    public static function getAssigned(){
+    public static function getAssigned(): array
+    {
         return self::query()->whereIn('status', [self::STATUS_INIT, self::STATUS_USE])->pluck('priority', 'id')->toArray();
     }
 }

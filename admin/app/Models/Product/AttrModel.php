@@ -15,7 +15,7 @@ class AttrModel extends BaseModel
     const TYPE_BASE = 1;
     const TYPE_COMMON = 2;
 
-    public static $typeLabel = [
+    public static array $typeLabel = [
         self::TYPE_SALE => '销售属性',
         self::TYPE_BASE => '基本属性',
 //        self::TYPE_COMMON => '公共属性' //既是销售属性又是基本属性
@@ -23,7 +23,7 @@ class AttrModel extends BaseModel
 
     protected $table = 'pms_attr';
 
-    public function relGroup()
+    public function relGroup(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(AttrRelGroupModel::class, 'attr_id');
     }
@@ -34,7 +34,8 @@ class AttrModel extends BaseModel
      * @param int $type
      * @return array
      */
-    public static function getAttrMapByCatID($catId, $type = self::TYPE_BASE) {
+    public static function getAttrMapByCatID($catId, int $type = self::TYPE_BASE): array
+    {
         return self::query()->when($catId>0, function ($query) use($catId) {
             return $query->where('cat_id', $catId);
         })->where('type', $type)->pluck('name', 'id')->toArray();
@@ -46,7 +47,8 @@ class AttrModel extends BaseModel
      * @param int $type
      * @return array
      */
-    public static function getAttrByCatID($catId, $type = self::TYPE_BASE) {
+    public static function getAttrByCatID($catId, int $type = self::TYPE_BASE): array
+    {
         return self::query()->where('cat_id', $catId)->where('type', $type)->get()->toArray();
     }
 }

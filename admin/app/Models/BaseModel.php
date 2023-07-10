@@ -34,14 +34,12 @@ class BaseModel extends Model
         parent::__construct($attributes);
     }
 
-    protected $dateFormat = '';
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'start_at',
-        'end_at'
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime'
     ];
 
     /**
@@ -52,6 +50,16 @@ class BaseModel extends Model
     public function fromDateTime($value)
     {
         return strtotime(parent::fromDateTime($value));
+    }
+
+    /**
+     * 时间格式页面显示
+     * @param $date
+     * @return string
+     */
+    protected function serializeDate($date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**

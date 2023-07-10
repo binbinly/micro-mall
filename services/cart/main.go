@@ -19,13 +19,7 @@ var (
 
 func main() {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceCart, config.Cfg); err != nil {
-		log.Fatal(err)
-	}
-
-	// init redis
-	rdb, err := redis.NewClient(&config.Cfg.Redis)
-	if err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		log.Fatal(err)
 	}
 
@@ -35,6 +29,12 @@ func main() {
 		app.WithVersion(version),
 		app.WithAuthFunc(handler.Auth))
 	a.Init()
+
+	// init redis
+	rdb, err := redis.NewClient(&config.Cfg.Redis)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// register handler
 	if err = pb.RegisterCartHandler(a.Service().Server(), handler.New(logic.New(rdb), a.Service().Client())); err != nil {

@@ -13,7 +13,6 @@ class WareSkuModel extends BaseModel
 {
     /**
      * 可以被批量赋值的属性。
-     *
      * @var array
      */
     protected $fillable = ['sku_id', 'ware_id', 'stock'];

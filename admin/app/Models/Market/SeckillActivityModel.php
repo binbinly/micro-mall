@@ -13,7 +13,7 @@ class SeckillActivityModel extends BaseModel
 {
     protected $table = 'sms_seckill_activity';
 
-    public static function getAll()
+    public static function getAll(): array
     {
         return self::query()->pluck('title', 'id')->toArray();
     }

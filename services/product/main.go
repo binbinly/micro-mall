@@ -24,9 +24,18 @@ var (
 
 func main() {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceProduct, config.Cfg); err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		log.Fatal(err)
 	}
+
+	// init broker
+	a := app.New(
+		app.WithName(constvar.ServiceProduct),
+		app.WithVersion(version),
+		app.WithMigrate(func() {
+			cmd.Migrate()
+		}))
+	a.Init()
 
 	// init es
 	elastic := es.New(elasticsearch.NewClient(&config.Cfg.Elastic))
@@ -42,15 +51,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// init broker
-	a := app.New(
-		app.WithName(constvar.ServiceProduct),
-		app.WithVersion(version),
-		app.WithMigrate(func() {
-			cmd.Migrate()
-		}))
-	a.Init()
 
 	// register handler
 	if err = pb.RegisterProductHandler(a.Service().Server(), handler.New(logic.New(elastic, db, rdb), a.Service().Client())); err != nil {

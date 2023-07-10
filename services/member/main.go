@@ -21,16 +21,7 @@ var (
 
 func main() {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceMember, config.Cfg); err != nil {
-		log.Fatal(err)
-	}
-
-	// init dbs
-	db := orm.NewDB(&config.Cfg.MySQL)
-
-	// init redis
-	rdb, err := redis.NewClient(&config.Cfg.Redis)
-	if err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		log.Fatal(err)
 	}
 
@@ -43,6 +34,15 @@ func main() {
 		}),
 		app.WithAuthFunc(handler.Auth))
 	a.Init()
+
+	// init dbs
+	db := orm.NewDB(&config.Cfg.MySQL)
+
+	// init redis
+	rdb, err := redis.NewClient(&config.Cfg.Redis)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// register handler
 	if err = pb.RegisterMemberHandler(a.Service().Server(), handler.New(logic.New(db, rdb), a.Service().Client())); err != nil {

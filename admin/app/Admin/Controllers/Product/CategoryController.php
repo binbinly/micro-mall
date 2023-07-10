@@ -16,7 +16,7 @@ use Encore\Admin\Layout\Content;
  */
 class CategoryController extends BaseController
 {
-    public function index(Content $content)
+    public function index(Content $content): Content
     {
         $tree = new Tree(new CategoryModel);
 

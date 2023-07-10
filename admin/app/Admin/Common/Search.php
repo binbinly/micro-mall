@@ -17,7 +17,7 @@ trait Search
      * 筛选
      * @param Grid $grid
      */
-    protected function search(Grid &$grid)
+    protected function search(Grid &$grid): void
     {
         $grid->filter(function (Grid\Filter $filter) {
             $filter->disableIdFilter();

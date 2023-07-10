@@ -21,7 +21,7 @@ var (
 
 func main() {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceCenter, config.Cfg); err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		log.Fatal(err)
 	}
 

@@ -41,6 +41,8 @@ class SpuController extends BaseController
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $actions->disableView();
+            $actions->disableEdit();
+            $actions->disableDelete();
             in_array($actions->row->status, [SpuModel::STATUS_INIT]) && $actions->add(new Online());
             in_array($actions->row->status, [SpuModel::STATUS_ONLINE]) && $actions->add(new Offline());
         });

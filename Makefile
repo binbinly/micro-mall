@@ -14,9 +14,6 @@ build:
 	cp warehouse/default.yaml target/config/warehouse.yaml
 	$(GOBUILD) -o target/warehouse warehouse/main.go
 
-test:
-	$(GOTEST) -v ${PKG_LIST}
-
 clean:
 	rm -rf target/
 	rm -rf nohup.out

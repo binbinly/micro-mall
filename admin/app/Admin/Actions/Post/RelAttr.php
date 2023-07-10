@@ -21,7 +21,7 @@ class RelAttr extends Action
 
     public $name = '关联属性';
 
-    protected $groupId;
+    protected int $groupId;
 
     public function __construct($groupId = 0)
     {
@@ -45,7 +45,8 @@ class RelAttr extends Action
         return $this->response()->error('添加失败');
     }
 
-    public function form(){
+    public function form(): void
+    {
         //当前分组模型
         $group = AttrGroupModel::query()->find($this->groupId);
         if (! ($group instanceof AttrGroupModel)) {
@@ -79,7 +80,7 @@ class RelAttr extends Action
         }
     }
 
-    public function html()
+    public function html(): string
     {
         return <<<HTML
         <a class="btn btn-sm btn-info rel-attr">添加关联</a>

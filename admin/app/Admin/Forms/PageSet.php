@@ -8,7 +8,6 @@ use App\Models\Market\AppSettingModel;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Exception;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
@@ -102,10 +101,6 @@ class PageSet extends Base
         }
     }
 
-    /**
-     * @return array|mixed
-     * @throws Exception
-     */
     public function data()
     {
         return AppSettingModel::query()->findOrFail($this->id);

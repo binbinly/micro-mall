@@ -8,24 +8,10 @@ import (
 )
 
 var Cfg = &Config{
-	MySQL: orm.Config{
-		Host:     "127.0.0.1",
-		Port:     3306,
-		User:     "root",
-		Password: "root",
-		Database: "mall_oms",
-	},
-	Redis: redis.Config{
-		Addr:     "127.0.0.1:6379",
-		Password: "",
-		DB:       0,
-	},
-	DFS: app.DFSConfig{
-		Endpoint: "http://127.0.0.1:8080",
-	},
-	AMQP: app.AMQPConfig{
-		Addr: "amqp://guest:guest@localhost:5672/",
-	},
+	MySQL: app.DefOrmConfig("mall_oms"),
+	Redis: app.DefRedisConfig,
+	DFS:   app.DefDfsConfig,
+	AMQP:  app.DefAMQPConfig,
 }
 
 type Config struct {

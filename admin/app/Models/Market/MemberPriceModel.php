@@ -4,7 +4,7 @@
 namespace App\Models\Market;
 
 
-use App\Admin\Common\Format;
+use App\Admin\Common\CastAmount;
 
 /**
  * 商品会员价格模型
@@ -17,13 +17,7 @@ class MemberPriceModel extends BaseModel
 
     public $timestamps = false;
 
-    public function getPriceAttribute($value)
-    {
-        return Format::amountToYuan($value);
-    }
-
-    public function setPriceAttribute($value)
-    {
-        $this->attributes['price'] = Format::amountToPenny($value);
-    }
+    protected $casts = [
+        'price' => CastAmount::class
+    ];
 }

@@ -26,16 +26,7 @@ var (
 
 func main() {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceOrder, config.Cfg); err != nil {
-		log.Fatal(err)
-	}
-
-	// init dbs
-	db := orm.NewDB(&config.Cfg.MySQL)
-
-	// init redis
-	rdb, err := redis.NewClient(&config.Cfg.Redis)
-	if err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		log.Fatal(err)
 	}
 
@@ -56,6 +47,15 @@ func main() {
 			cmd.Migrate()
 		}))
 	a.Init(micro.Broker(b))
+
+	// init dbs
+	db := orm.NewDB(&config.Cfg.MySQL)
+
+	// init redis
+	rdb, err := redis.NewClient(&config.Cfg.Redis)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	l := logic.New(db, rdb, a.Service().Client())
 

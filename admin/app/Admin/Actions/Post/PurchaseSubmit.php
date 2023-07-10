@@ -55,7 +55,8 @@ class PurchaseSubmit extends BatchAction
         return $this->response()->success('提交成功')->refresh();
     }
 
-    public function form(){
+    public function form(): void
+    {
         $this->select('purchase_id', '选择采购单')->options(PurchaseModel::getAssigned());
     }
 }

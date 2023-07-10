@@ -11,7 +11,7 @@ class Format
      * @param $value
      * @return int
      */
-    public static function amountToPenny($value)
+    public static function amountToPenny($value): int
     {
         return intval($value * 100);
     }
@@ -22,7 +22,7 @@ class Format
      * @param bool $format 是否格式化为数字字符串
      * @return float|int
      */
-    public static function amountToYuan($value, $format = false)
+    public static function amountToYuan($value, bool $format = false): float|int
     {
         if ($value == 0) return 0;
         if ($format) {
@@ -38,7 +38,7 @@ class Format
      * @param bool $ret 直接返回
      * @return \Closure
      */
-    public static function totalView($amount = false, $ret = false)
+    public static function totalView(bool $amount = false, bool $ret = false): \Closure
     {
         return function ($val) use ($amount, $ret) {
             if ($ret) {
@@ -51,12 +51,12 @@ class Format
 
     /**
      * 格式化二维数组成map结构
-     * @param $list
+     * @param array $list
      * @param $key
      * @param $value
      * @return array|false
      */
-    public static function formatColumn(array $list, $key, $value)
+    public static function formatColumn(array $list, $key, $value): bool|array
     {
         return array_combine(array_column($list, $key), array_column($list, $value));
     }

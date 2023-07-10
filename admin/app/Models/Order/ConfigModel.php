@@ -63,7 +63,7 @@ class ConfigModel extends BaseModel
      * @return array|false
      * @throws Exception
      */
-    public static function cat()
+    public static function cat(): bool|array
     {
         return Format::formatColumn(self::init(self::KEY_HOME_CAT, self::TYPE_JSON), 'id', 'name');
     }

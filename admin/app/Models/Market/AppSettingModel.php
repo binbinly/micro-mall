@@ -20,7 +20,7 @@ class AppSettingModel extends BaseModel
     const PAGE_HOME = 1;
     const PAGE_SEARCH = 2;
 
-    public static $typeLabel = [
+    public static array $typeLabel = [
         self::TYPE_SWIPER => '轮播图',
         self::TYPE_NAV => '图标',
         self::TYPE_THREE_ADV => '三图广告',
@@ -28,7 +28,7 @@ class AppSettingModel extends BaseModel
         self::TYPE_GOODS_LIST => '商品列表'
     ];
 
-    public static $pageLabel = [
+    public static array $pageLabel = [
         self::PAGE_HOME => '首页',
         self::PAGE_SEARCH => '搜索页'
     ];
@@ -44,7 +44,7 @@ class AppSettingModel extends BaseModel
         }
     }
 
-    public function setDataAttribute($value)
+    public function setDataAttribute($value): void
     {
         if (is_array($value)) {
             if (isset($value['title']) || isset($value['router'])) {

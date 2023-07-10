@@ -17,7 +17,7 @@ trait Footer
      * 列表尾定义
      * @param Grid $grid
      */
-    protected function footer(Grid &$grid)
+    protected function footer(Grid &$grid): void
     {
         $grid->footer(function ($query) {
             return $this->footerBody($query);
@@ -29,5 +29,5 @@ trait Footer
      * @param $query
      * @return mixed
      */
-    abstract protected function footerBody($query);
+    abstract protected function footerBody($query): mixed;
 }

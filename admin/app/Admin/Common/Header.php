@@ -17,7 +17,7 @@ trait Header
      * 列表头定义
      * @param Grid $grid
      */
-    protected function header(Grid &$grid)
+    protected function header(Grid &$grid): void
     {
         $grid->header(function ($query) {
             return $this->headerBody($query);
@@ -29,5 +29,5 @@ trait Header
      * @param $query
      * @return mixed
      */
-    abstract protected function headerBody($query);
+    abstract protected function headerBody($query): mixed;
 }

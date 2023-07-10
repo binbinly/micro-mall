@@ -23,17 +23,19 @@ class Base extends Form
      * @param string $msg
      * @return RedirectResponse
      */
-    protected function success($msg = '操作成功'){
+    protected function success(string $msg = '操作成功'): RedirectResponse
+    {
         admin_success($msg);
         return back();
     }
 
     /**
      * 失败
-     * @param $msg
+     * @param string $msg
      * @return RedirectResponse
      */
-    protected function error($msg = '操作失败'){
+    protected function error(string $msg = '操作失败'): RedirectResponse
+    {
         admin_error($msg);
         return back();
     }

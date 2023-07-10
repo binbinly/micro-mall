@@ -12,13 +12,13 @@ class Href extends RowAction
      * 跳转地址
      * @var string
      */
-    public $url;
+    public string $url;
 
     /**
      * 是否开启新窗口
      * @var bool
      */
-    public $blank = true;
+    public bool $blank = true;
 
     public function __construct($name, $url)
     {
@@ -27,7 +27,7 @@ class Href extends RowAction
         parent::__construct();
     }
 
-    public function render()
+    public function render(): string
     {
         return "<a href='{$this->url}'>{$this->name}</a>";
     }

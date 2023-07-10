@@ -18,7 +18,8 @@ trait FormTrait
      * 发布状态
      * @param Form $form
      */
-    protected function releaseForm(Form $form){
+    protected function releaseForm(Form $form): void
+    {
         $form->switch('is_release', '是否发布')->states(Constant::SWITCH);
     }
 
@@ -26,7 +27,8 @@ trait FormTrait
      * 排序
      * @param Form $form
      */
-    protected function sortForm(Form $form) {
+    protected function sortForm(Form $form): void
+    {
         $form->number('sort', '排序值')->default(50)->help('值越大越靠前');
     }
 
@@ -34,7 +36,8 @@ trait FormTrait
      * 更新修改者
      * @param Form $form
      */
-    protected function updateByForm(Form $form) {
+    protected function updateByForm(Form $form): void
+    {
         $form->saving(function (Form $form){
             if ($form->isCreating()) {
                 $form->model()->create_by = Admin::user()->id;
@@ -48,7 +51,7 @@ trait FormTrait
      * 禁用form表单底部check选项
      * @param Form $form
      */
-    protected function disableFormCheck(Form &$form)
+    protected function disableFormCheck(Form &$form): void
     {
         $form->footer(function (Form\Footer $footer) {
             $footer->disableViewCheck();
@@ -61,7 +64,7 @@ trait FormTrait
      * 禁用form表单底部功能操作
      * @param Form $form
      */
-    protected function disableFormFooter(Form &$form)
+    protected function disableFormFooter(Form &$form): void
     {
         $form->footer(function (Form\Footer $footer) {
             $footer->disableViewCheck();
@@ -75,7 +78,7 @@ trait FormTrait
      * 禁用底部所有操作
      * @param Form $form
      */
-    protected function disableFormFooterAll(Form &$form)
+    protected function disableFormFooterAll(Form &$form): void
     {
         $form->footer(function (Form\Footer $footer) {
             $footer->disableViewCheck();

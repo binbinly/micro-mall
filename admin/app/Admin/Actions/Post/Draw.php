@@ -25,7 +25,7 @@ class Draw extends RowAction
         return $this->response()->success('领取成功')->refresh();
     }
 
-    public function dialog()
+    public function dialog(): void
     {
         $this->confirm('请确认是否领取该采购单？');
     }

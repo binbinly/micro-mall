@@ -37,7 +37,7 @@ class ConfigModel extends BaseModel
      * @return array|mixed
      * @throws Exception
      */
-    public static function init($name = null, $format = self::TYPE_STRING)
+    public static function init($name = null, $format = self::TYPE_STRING): mixed
     {
         $list = self::query()->pluck('value', 'name')->toArray();
         if ($name) {
@@ -63,7 +63,7 @@ class ConfigModel extends BaseModel
      * @return array|false
      * @throws Exception
      */
-    public static function cat()
+    public static function cat(): bool|array
     {
         return Format::formatColumn(self::init(self::KEY_HOME_CAT, self::TYPE_JSON), 'id', 'name');
     }

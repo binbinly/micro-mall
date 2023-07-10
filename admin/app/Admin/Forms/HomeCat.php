@@ -8,20 +8,12 @@ use App\Admin\Services\ConfigService;
 use App\Models\Market\ConfigModel;
 use App\Models\Product\CategoryModel;
 use Encore\Admin\Form\NestedForm;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Exception;
-use Throwable;
 
 class HomeCat extends Base
 {
     public $title = '首页推荐分类';
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     * @throws Throwable
-     */
     public function handle(Request $request)
     {
         parent::handle($request);
@@ -46,7 +38,7 @@ class HomeCat extends Base
     /**
      * Build a form here.
      */
-    public function form()
+    public function form(): void
     {
         $this->table(ConfigModel::KEY_HOME_CAT, '首页推荐分类', function (NestedForm $form){
             $form->select('id', '选择分类')->options(CategoryModel::parentAll());
@@ -54,11 +46,7 @@ class HomeCat extends Base
         });
     }
 
-    /**
-     * @return array|mixed
-     * @throws Exception
-     */
-    public function data()
+    public function data(): array
     {
         return [ConfigModel::KEY_HOME_CAT => ConfigModel::init(ConfigModel::KEY_HOME_CAT, ConfigModel::TYPE_JSON)];
     }
