@@ -16,7 +16,7 @@ import (
 )
 
 var DefDfsConfig = DFSConfig{
-	Endpoint: "http://127.0.0.1:8080",
+	Endpoint: "http://localhost:9000/group1",
 }
 
 var DefAMQPConfig = AMQPConfig{

@@ -11,7 +11,7 @@
 
     <van-radio-group v-model="choose">
       <van-cell-group title="选择支付">
-        <van-cell v-for="(item,index) in list" :title="item.name" clickable @click="choose = index">
+        <van-cell v-for="(item,index) in list" :key="index" :title="item.name" clickable @click="choose = index">
           <template #right-icon>
             <van-radio :name="index" checked-color="#FD6801" />
           </template>

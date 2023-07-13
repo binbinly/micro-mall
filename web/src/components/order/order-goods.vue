@@ -7,7 +7,7 @@
         <div class="flex-1 d-flex flex-column pl-1" style="width:280px;">
           <div class="text-dark font-sm text-inline">{{item.title}}</div>
           <!-- 规格属性 -->
-          <div class="d-flex text-light-muted" style="padding:5px 0;">
+          <div class="d-flex text-light-muted font" style="padding:5px 0;">
             {{item.attr_value || '默认'}}
           </div>
           <div class="mt-auto d-flex j-sb">

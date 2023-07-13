@@ -36,7 +36,7 @@ class SkuController extends BaseController
         $grid->column('brand_id', '品牌')->using(BrandModel::getAll())->label('info');
         $grid->column('name', '商品名')->width(200);
         $grid->column('desc', '描述')->width(200);
-        $grid->column('cover', '封面')->image();
+        $grid->column('cover', '封面')->image('', 120);
         $grid->column('title', '标题')->width(200);
         $grid->column('subtitle', '副标题')->width(200);
         $grid->column('price', '价格')->amount();

@@ -8,7 +8,7 @@
     </van-cell-group>
 
     <van-cell-group title="关于">
-      <van-cell v-for="(item,index) in list" :title="item.title" is-link @click="onPush(item.path)" />
+      <van-cell v-for="(item,index) in list" :key="index" :title="item.title" is-link @click="onPush(item.path)" />
     </van-cell-group>
 
     <div class="p-1" v-if="token">

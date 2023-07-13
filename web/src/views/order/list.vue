@@ -4,13 +4,13 @@
 
     <!-- 订单列表 -->
     <van-tabs v-model="active" @change="onChange" color="#FD6801" title-active-color="#FD6801" offset-top="45" sticky animated swipeable>
-      <van-tab v-for="(item,index) in tabBars" :title="item.name">
+      <van-tab v-for="(item,index) in tabBars" :key="index" :title="item.name">
         <van-pull-refresh v-model="item.refreshing" @refresh="onRefresh">
           <template v-if="item.empty === false">
             <van-list v-model="item.loading" :finished="item.finished" finished-text="没有更多了" :immediate-check="false" @load="onLoad"
                       error-text="加载失败，请重试">
               <template v-for="(item2,index2) in item.list">
-                <order-list :item="item2" :index="index2" @cancel="onCancel"></order-list>
+                <order-list :item="item2" :index="index2" :key="index2" @cancel="onCancel"></order-list>
               </template>
             </van-list>
           </template>

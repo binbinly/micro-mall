@@ -1,21 +1,7 @@
-# Go parameters
-GOCMD=GO111MODULE=on go
-GOBUILD=$(GOCMD) build
-GOTEST=$(GOCMD) test
-
-PROJECT_NAME := "mall"
-PKG := "$(PROJECT_NAME)"
-PKG_LIST := $(shell go list ${PKG}/... | grep -v /example)
-
-all: test build
-build:
-	rm -rf target/
-	mkdir -p target/config
-	cp warehouse/default.yaml target/config/warehouse.yaml
-	$(GOBUILD) -o target/warehouse warehouse/main.go
+GOPATH:=$(shell go env GOPATH)
 
 clean:
-	rm -rf target/
+	rm -rf build/
 	rm -rf nohup.out
 
 # 运行服务

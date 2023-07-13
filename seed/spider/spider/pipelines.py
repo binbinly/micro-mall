@@ -12,6 +12,7 @@ from spider.items import *
 from spider.util import *
 import logging
 import scrapy
+import time
 from scrapy.pipelines.images import ImagesPipeline
 
 
@@ -45,11 +46,11 @@ class ProductPipeline:
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            db_host=os.environ.get("MYSQL_HOST", "127.0.0.1"),
-            db_pwd=os.environ.get("MYSQL_PWD", "root"),
+            db_host=os.environ.get("CHAT_DB_HOST", "127.0.0.1"),
+            db_pwd=os.environ.get("CHAT_DB_PWD", "root"),
             db_name=os.environ.get("MYSQL_DB_NAME", "mall_pms"),
-            db_port=os.environ.get("MYSQL_PORT", "3306"),
-            db_user=os.environ.get("MYSQL_USER", "root")
+            db_port=os.environ.get("CHAT_DB_PORT", "3306"),
+            db_user=os.environ.get("CHAT_DB_USER", "root")
         )
 
     def open_spider(self, spider):
@@ -69,18 +70,27 @@ class ProductPipeline:
     def process_item(self, item, spider):
         try:
             if isinstance(item, CatItem):
+                item['is_release'] = 1
                 self.send_db(item, 'pms_category', item['id'])
             elif isinstance(item, AttrGroupItem):
                 self.send_db(item, 'pms_attr_group', item['id'])
             elif isinstance(item, AttrItem):
+                item['is_release'] = 1
+                item['type'] = 1
+                item['created_at'] = int(time.time())
+                item['updated_at'] = int(time.time())
                 self.send_db(item, 'pms_attr', item['id'])
             elif isinstance(item, SpuItem):
+                item['weight'] = 100
+                item['created_at'] = int(time.time())
+                item['updated_at'] = int(time.time())
                 self.send_db(item, 'pms_spu', item['id'])
             elif isinstance(item, BrandItem):
+                item['created_at'] = int(time.time())
+                item['updated_at'] = int(time.time())
                 item['logo'] = parse_img_url(item['logo'])
-                if item['cover'] != '':
-                    item['cover'] = parse_img_url(item['cover'])
-
+                item['cover'] = parse_img_url(item['cover'])
+                item['is_release'] = 1
                 self.send_db(item, 'pms_brand', item['id'])
             elif isinstance(item, SkuItem):
                 item['cover'] = parse_img_url(item['cover'])
@@ -126,8 +136,8 @@ class ProductPipeline:
             logging.error(e)
         return item
 
-    def send_db(self, item, table, pri_id):
-        sql = 'select * from %s where id=%s' % (table, pri_id)
+    def send_db(self, item, table, pri_id, key='id'):
+        sql = 'select * from %s where %s = %s' % (table, key, pri_id)
         self.cursor.execute(sql)
         if not self.cursor.fetchone():
             return self.save_db(item, table)

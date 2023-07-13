@@ -2,11 +2,11 @@
   <div>
     <van-nav-bar title="每日秒杀" left-arrow @click-left="back" />
     <van-tabs v-model="active" @change="onChangeTab" color="#FD6801" title-active-color="#FD6801" offset-top="45" sticky animated swipeable>
-      <van-tab v-for="(item,index) in tabBars" :title="item.name">
+      <van-tab v-for="(item,index) in tabBars" :key="index" :title="item.name">
         <template v-if="item.skus.length > 0">
           <van-list v-model="item.loading" :finished="item.finished" finished-text="没有更多了" @load="onLoad" error-text="加载失败，请重试">
             <div class="row j-sb">
-              <common-list v-for="(item2,index2) in item.skus" :item="item2" :index="index2" />
+              <common-list v-for="(item2,index2) in item.skus" :key="index2" :item="item2" :index="index2" />
             </div>
           </van-list>
         </template>

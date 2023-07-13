@@ -43,18 +43,18 @@
       </div>
     </div>
 
-    <div class="d-flex a-center j-center p-1 text-primary" hover-class="bg-light-secondary" @click="open('/product_comment')">
+    <div class="d-flex a-center j-center p-1 text-primary font" hover-class="bg-light-secondary" @click="open('/product_comment')">
       查看评论 <div class="iconfont icon-you"></div>
     </div>
 
     <!-- 商品详情 -->
     <div class="w-100">
-      <div class="bg-light-secondary text-center" style="padding:5px 0;">详情</div>
-      <img v-for="img in detail.mains" v-lazy="img" class="w-100" @click="previewImage(img)" />
+      <div class="bg-light-secondary text-center font-md" style="padding:5px 0;">详情</div>
+      <img v-for="(img,index) in detail.mains" v-lazy="img" :key="index" class="w-100" @click="previewImage(img)" />
     </div>
     <!-- 热门推荐 -->
     <card headTitle="热门推荐" :headTitleWeight="false" :headBorderBottom="false">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" error-text="加载失败，请重试" :immediate-check="false">
+      <van-list class="pb-3" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" error-text="加载失败，请重试" :immediate-check="false">
         <div class="row j-sb">
           <common-list v-for="(item,index) in list" :key="index" :item="item" :index="index" type="redirectTo" />
         </div>
@@ -91,7 +91,7 @@
       </div>
       <van-list v-model="coupon.loading" :finished="coupon.finished" finished-text="没有更多了" @load="onCouponLoad" error-text="加载失败，请重试"
                 :immediate-check="true" style="height: 420px;overflow: auto">
-        <coupon v-for="(item,index) in coupon.list" :item="item" :index="index" @draw="onDrawCoupon" />
+        <coupon v-for="(item,index) in coupon.list" :key="index" :item="item" :index="index" @draw="onDrawCoupon" />
       </van-list>
       <van-button class="w-100" color="#FD6801" @click="coupon.show = false">确定</van-button>
     </van-popup>

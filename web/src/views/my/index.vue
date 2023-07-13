@@ -19,7 +19,7 @@
       </div>
     </div>
     <!-- 图标分类 -->
-    <card class="bg-white">
+    <card class="bg-white pt-2">
       <div slot="title" class="d-flex a-center j-sb w-100">
         <span class="font-md font-weight">我的订单</span>
         <div class="text-secondary font ml-auto" @click="open('/order')">

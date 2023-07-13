@@ -2,24 +2,24 @@
   <div class="d-flex flex-column">
     <van-search show-action placeholder="请输入搜索关键词" @click="openSearch">
       <template #action>
-        <span class="iconfont icon-xiaoxi" @click="openNotice"></span>
+        <span class="iconfont icon-xiaoxi font" @click="openNotice"></span>
       </template>
     </van-search>
 
-    <div class="d-flex" style="height:560px;overflow:auto;">
+    <div class="d-flex" style="height:720px;overflow:auto;">
       <van-sidebar v-model="activeIndex" @change="onChange">
-        <van-sidebar-item v-for="(item,index) in cats" :title="item.name" />
+        <van-sidebar-item v-for="(item,index) in cats" :key="index" :title="item.name" />
       </van-sidebar>
       <div style="width:80%;overflow:auto;" id="cat-list">
         <template v-for="(item,index) in cats">
-          <div :id="'child-'+item.id">
-            <template v-if="item.child.length > 0" v-for="(item2,index2) in item.child">
-              <div class="m-1">
+          <div :id="'child-'+item.id" :key="index" v-if="item.child.length > 0">
+            <template  v-for="(item2,index2) in item.child">
+              <div class="m-1" :key="index2">
                 <span class="d-block font-sm main-text-color">{{item2.name}}</span>
               </div>
-              <div class="row">
-                <template v-if="item2.child.length > 0" v-for="(item3,index3) in item2.child">
-                  <span class="d-block m-1" @click="openGoodsList(item3.id,item3.name)">{{item3.name}}</span>
+              <div class="row" :key="index2" v-if="item2.child.length > 0">
+                <template v-for="(item3,index3) in item2.child">
+                  <span class="d-block m-1" :key="index3" @click="openGoodsList(item3.id,item3.name)">{{item3.name}}</span>
                 </template>
               </div>
             </template>

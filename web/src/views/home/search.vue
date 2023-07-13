@@ -4,11 +4,11 @@
 
     <template v-for="(list,index) in data">
       <!-- 大图广告位 -->
-      <card v-if="list.type === 4" :headTitle="list.ads.title" :bodyCover="list.ads.cover" />
+      <card :key="index" v-if="list.type === 4" :headTitle="list.ads.title" :bodyCover="list.ads.cover" />
     </template>
     <!-- 多色按钮 -->
     <div class="px-1 mb-2">
-      <van-tag class="p-1" style="margin:5px;" :color="item.color" size="medium" v-for="(item,index) in hot" @click="quickSearch(item.name)">
+      <van-tag class="p-1" style="margin:5px;" :color="item.color" size="medium" v-for="(item,index) in hot" :key="index" @click="quickSearch(item.name)">
         {{item.name}}
       </van-tag>
     </div>
@@ -17,7 +17,7 @@
       <!-- 搜索记录 -->
       <card headTitle="搜索记录">
         <div slot="right" class="font text-primary" @click="clearHistory">清除搜索记录</div>
-        <van-cell :title="item" v-for="(item,index) in historyList" @click="quickSearch(item)" />
+        <van-cell :title="item" v-for="(item,index) in historyList" :key="index" @click="quickSearch(item)" />
       </card>
     </template>
 

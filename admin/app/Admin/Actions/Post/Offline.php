@@ -37,7 +37,7 @@ class Offline extends RowAction
             BaseModel::rollBack(BaseModel::CONN_PMS);
             return $this->response()->error('失败了,'.$e->getMessage())->refresh();
         }
-        return $this->response()->success('领取成功')->refresh();
+        return $this->response()->success('下架成功')->refresh();
     }
 
     public function dialog(): void

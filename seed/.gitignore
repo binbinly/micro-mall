@@ -5,5 +5,3 @@ __pycache__/
 .idea/
 .vscode/
 venv/
-main.py
-.idea

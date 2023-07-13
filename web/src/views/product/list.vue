@@ -4,7 +4,7 @@
 
     <!-- 排序|筛选 -->
     <div class="d-flex border-bottom a-center position-fixed left-0 right-0 bg-white" style="height: 45px;z-index: 100;">
-      <div class="flex-1 d-flex a-center j-center font-sm" v-for="(item,index) in screen.list" @click="changeScreen(index)">
+      <div class="flex-1 d-flex a-center j-center font-sm" v-for="(item,index) in screen.list" :key="index" @click="changeScreen(index)">
         <span :class="screen.currentIndex === index ? 'main-text-color' : 'text-muted'">{{item.name}}</span>
         <div>
           <div class="iconfont icon-paixu-shengxu line-h0" :class="item.status==='asc'?'main-text-color':'text-light-muted'">
@@ -21,7 +21,7 @@
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh" style="padding-top:60px;">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" error-text="加载失败，请重试">
         <div class="row j-sb bg-white">
-          <common-list v-for="(item,index) in list" :item="item" :index="index"></common-list>
+          <common-list v-for="(item,index) in list" :item="item" :key="index" :index="index"></common-list>
         </div>
       </van-list>
     </van-pull-refresh>
@@ -40,7 +40,7 @@
           <!-- 单选按钮组 -->
           <zcm-radio-group :label="brandList" :selected.sync='brandList.selected'></zcm-radio-group>
         </card>
-        <card v-for="(item,index) in attrs" :headTitle="item.name" :headBorderBottom="false" :headTitleWeight="false">
+        <card v-for="(item,index) in attrs" :key="index" :headTitle="item.name" :headBorderBottom="false" :headTitleWeight="false">
           <!-- 单选按钮组 -->
           <zcm-attr-group :label="item" :selected.sync='item.selected'>
           </zcm-attr-group>

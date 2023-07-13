@@ -1,11 +1,11 @@
 <template>
   <div>
     <div @click="show=true">
-      <div class="scroll-row-item" style="width: 24%;height: 55px;" v-for="(item,index) in attrs">
+      <div class="scroll-row-item" style="width: 24%;height: 55px;" v-for="(item,index) in attrs" :key="index">
         <div class="d-flex flex-column a-center j-center">
           <div class="iconfont line-h-sm icon-cpu"></div>
           <div class="line-h-sm">{{item.name}}</div>
-          <div class="text-light-muted line-h-sm">{{item.value}}</div>
+          <div class="text-light-muted font line-h-sm">{{item.value}}</div>
         </div>
       </div>
     </div>
@@ -15,7 +15,7 @@
         参数配置
       </div>
       <div style="height: 400px;overflow: auto;">
-        <van-cell :title="item.name" :value="item.value" v-for="(item,index) in baseAttrs" />
+        <van-cell :title="item.name" :value="item.value" v-for="(item,index) in baseAttrs" :key="index"/>
       </div>
       <van-button class="w-100" type="default" color="#FD6801" @click="show = false">确定</van-button>
     </van-popup>

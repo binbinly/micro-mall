@@ -3,7 +3,7 @@
     <!-- head -->
     <div v-if="showhead" class="p-1 main-border-color d-flex a-center j-sb" :class="getHeadClass">
       <slot name="title">
-        <span v-if="headTitle" class="font-sm" :class="headTitleWeight?'font-weight':''">{{headTitle}}</span>
+        <span v-if="headTitle" class="font" :class="headTitleWeight?'font-weight':''">{{headTitle}}</span>
       </slot>
       <slot name="right"></slot>
     </div>

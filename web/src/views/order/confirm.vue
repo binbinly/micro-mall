@@ -4,7 +4,7 @@
       <van-col span="3" class="text-center">
         <van-icon name="arrow-left" class="text-white my-1" size="20" @click="back" />
       </van-col>
-      <van-col span="18" class="text-center font-md text-white my-1">订单结算</van-col>
+      <van-col span="18" class="text-center text-white my-2" style="font-size:18px;">订单结算</van-col>
       <van-col span="3" />
     </van-row>
     <!-- 地址选择 -->

@@ -6,7 +6,7 @@
       </template>
     </van-nav-bar>
 
-    <div v-for="(item,index) in list">
+    <div v-for="(item,index) in list" :key="index">
       <van-swipe-cell>
         <van-cell value="内容" is-link center clickable value-class="none" @click.stop="onChoose(item)">
           <!-- 使用 title 插槽来自定义标题 -->

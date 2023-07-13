@@ -20,6 +20,6 @@ class BaseController extends \App\Admin\Controllers\BaseController
     }
 
     protected function gridCat(Grid $grid, $column = 'cat_id') {
-        $grid->column($column, '所属分类')->using(CategoryModel::getAll())->label();;
+        $grid->column($column, '所属分类')->using(CategoryModel::getAll())->default('默认')->label();;
     }
 }

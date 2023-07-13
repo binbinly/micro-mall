@@ -19,21 +19,19 @@
                      :rules="[{ required: true, validator: pwdValid, message: '密码长度6-20位' }]" />
           <van-field v-model="confirm_password" type="password" name="confirm_password" label="确认密码" placeholder="请确认密码"
                      :rules="[{ required: true, validator: confirmPwdValid, message: '密码长度6-20位' }]" />
-          <div class="d-flex a-stretch mr-1">
-            <van-field v-model="code" name="code" label="短信验证码" placeholder="请输入短信验证码" :rules="[{ required: true }]" />
-            <div class="van-field__button" style="margin-top:5px;">
-              <van-button size="small" type="primary" native-type="button" @click="getCode">{{ codeTime === 0 ? '发送验证码' : codeTime }}</van-button>
-            </div>
-          </div>
+          <van-field v-model="code" name="code" center clearable label="短信验证码" placeholder="请输入短信验证码" :rules="[{ required: true }]">
+              <template #button>
+                <van-button size="small" type="primary" @click="getCode">{{ codeTime === 0 ? '发送验证码' : codeTime }}</van-button>
+              </template>
+          </van-field>
         </template>
         <template v-else>
           <van-field v-model="phone" name="phone" label="手机号" placeholder="请输入手机号" :rules="[{ required: true, validator: phoneValid }]" />
-          <div class="d-flex a-stretch mr-1">
-            <van-field v-model="code" name="code" label="短信验证码" placeholder="请输入短信验证码" :rules="[{ required: true }]" />
-            <div class="van-field__button" style="margin-top:5px;">
-              <van-button size="small" type="primary" native-type="button" @click="getCode">{{ codeTime === 0 ? '发送验证码' : codeTime }}</van-button>
-            </div>
-          </div>
+          <van-field v-model="code" name="code" center clearable label="短信验证码" placeholder="请输入短信验证码" :rules="[{ required: true }]">
+              <template #button>
+                <van-button size="small" type="primary" @click="getCode">{{ codeTime === 0 ? '发送验证码' : codeTime }}</van-button>
+              </template>
+          </van-field>
         </template>
         <div style="margin: 16px;">
           <van-button class="text-white" :class="disabled ? 'main-bg-hover-color':'main-bg-color'" block native-type="submit">
@@ -50,7 +48,7 @@
       <div class="text-primary font-sm" @click="changeStatus(2)">还没有账号？</div>
     </div>
     <van-divider>社交账号登录</van-divider>
-    <div class="d-flex a-center j-center text-muted mt-2">
+    <div class="d-flex a-center j-center text-muted mt-2 font">
       注册即代表同意<span class="text-primary">《社区协议》</span>
     </div>
 

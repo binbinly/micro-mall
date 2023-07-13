@@ -73,7 +73,7 @@
 - 使用 make 来管理 Go 工程
 
 ### 前端技术 - vue
-- [入口](./web1111)
+- [入口](./web)
 - 移动端 Vue 组件库 [vant](https://youzan.github.io/vant/#/zh-CN/)
 - 脚手架 [vue-cli4 vant rem 移动端框架方案](https://github.com/sunniejs/vue-h5-template)
 

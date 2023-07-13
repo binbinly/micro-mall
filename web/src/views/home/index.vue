@@ -6,32 +6,32 @@
           <van-icon name="gift-o" size="24" color="#ee0a24" @click="open('/seckill')" />
         </template>
         <template #left>
-          <span class="iconfont icon-xiaoxi font-lg" @click="openNotice"></span>
+          <span class="iconfont icon-xiaoxi" @click="openNotice"></span>
         </template>
       </van-search>
     </van-sticky>
     <van-tabs v-model="active" @change="onChangeTab" color="#FD6801" title-active-color="#FD6801" offset-top="45" sticky animated swipeable>
-      <van-tab v-for="(item,index) in tabBars" :title="item.name">
+      <van-tab v-for="(item,index) in tabBars" :key="index" :title="item.name">
         <template v-if="item.list.length > 0">
           <template v-for="(list,listIndex) in item.list">
             <!-- 轮播图组件 -->
-            <swiper-image v-if="list.type === 1" :images="list.images.list" />
+            <swiper-image v-if="list.type === 1" :key="listIndex" :images="list.images.list" />
 
             <!-- 首页图标 -->
-            <index-nav v-else-if="list.type === 2" :resdata="list.navs.list" />
+            <index-nav v-else-if="list.type === 2" :key="listIndex" :resdata="list.navs.list" />
 
             <!-- 三图广告 -->
-            <three-adv v-else-if="list.type === 3" :resdata="list.images.list" />
+            <three-adv v-else-if="list.type === 3" :key="listIndex" :resdata="list.images.list" />
 
             <!-- 大图广告位 -->
-            <card v-else-if="list.type === 4" :headTitle="list.ads.title" :bodyCover="list.ads.cover" />
+            <card v-else-if="list.type === 4" :key="listIndex" :headTitle="list.ads.title" :bodyCover="list.ads.cover" />
 
             <!-- 公共列表组件-->
             <template v-else-if="list.type === 5">
-              <van-list v-model="goodsList[index].loading" :finished="goodsList[index].finished" finished-text="没有更多了"
+              <van-list class="pb-3" v-model="goodsList[index].loading" :key="listIndex" :finished="goodsList[index].finished" finished-text="没有更多了"
                         @load="onLoad(list.product.router)" error-text="加载失败，请重试">
                 <div class="row j-sb">
-                  <common-list v-for="(item2,index2) in goodsList[index].list" :item="item2" :index="index2" />
+                  <common-list v-for="(item2,index2) in goodsList[index].list" :key="index2" :item="item2" :index="index2" />
                 </div>
               </van-list>
             </template>
