@@ -20,7 +20,7 @@ func (r *Repo) GetBrandByID(ctx context.Context, id int64) (brand *model.Brand, 
 
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.brand] query cache")
+		return nil, errors.Wrapf(err, "[r.brand] query cache")
 	}
 
 	return
@@ -37,7 +37,7 @@ func (r *Repo) GetBrandsByIds(ctx context.Context, ids []int64) (brands map[int6
 	if err = r.Cache.MultiGet(ctx, keys, cacheMap, func() any {
 		return &model.Brand{}
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.brand] multi get brand cache data err")
+		return nil, errors.Wrapf(err, "[r.brand] multi get brand cache data err")
 	}
 
 	brands = make(map[int64]*model.Brand, len(ids))
@@ -47,7 +47,7 @@ func (r *Repo) GetBrandsByIds(ctx context.Context, ids []int64) (brands map[int6
 		if !ok {
 			brand, err = r.GetBrandByID(ctx, id)
 			if err != nil {
-				logger.Warnf("[repo.brand] get brand model err: %v", err)
+				logger.Warnf("[r.brand] get brand model err: %v", err)
 				continue
 			}
 			if brand.ID == 0 {

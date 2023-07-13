@@ -32,7 +32,7 @@ func TestRepo_GetAttrGroupByCatID(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotList, err := repo.GetAttrGroupByCatID(tt.args.ctx, tt.args.catID)
+			gotList, err := r.GetAttrGroupByCatID(tt.args.ctx, tt.args.catID)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetAttrGroupByCatID() error = %v, wantErr %v", err, tt.wantErr)
 				return

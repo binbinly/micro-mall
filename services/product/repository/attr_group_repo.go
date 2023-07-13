@@ -21,7 +21,7 @@ func (r *Repo) GetAttrGroupByCatID(ctx context.Context, catID int64) (list []*mo
 		}
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.attrGroup] query cache")
+		return nil, errors.Wrapf(err, "[r.attrGroup] query cache")
 	}
 	return
 }

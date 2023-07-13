@@ -3,8 +3,6 @@ package repository
 import (
 	"context"
 	"fmt"
-	"reflect"
-
 	"github.com/pkg/errors"
 	"go-micro.dev/v4/logger"
 	"gorm.io/gorm"
@@ -15,19 +13,19 @@ import (
 
 // GetCategoryNameByID 获取分类名
 func (r *Repo) GetCategoryNameByID(ctx context.Context, id int64) (name string, err error) {
-	if err = r.QueryCache(ctx, buildCategoryCacheKey(id), &name, 0, func(data interface{}) error {
+	var cat *model.CategoryModel
+	if err = r.QueryCache(ctx, buildCategoryCacheKey(id), &cat, 0, func(data any) error {
 		// 从数据库中获取
-		var cat model.CategoryModel
-		if err := r.DB.WithContext(ctx).First(&cat, id).Error; err != nil && err != gorm.ErrRecordNotFound {
-			return errors.Wrapf(err, "[repo.category] query db")
+		if err = r.DB.WithContext(ctx).First(data, id).Error; err != nil && err != gorm.ErrRecordNotFound {
+			return errors.Wrapf(err, "[r.category] query db")
 		}
-		reflect.ValueOf(data).Elem().Set(reflect.ValueOf(cat.Name))
+
 		return nil
 	}); err != nil {
-		return "", errors.Wrapf(err, "[repo.category] query cache")
+		return "", errors.Wrapf(err, "[r.category] query cache")
 	}
 
-	return
+	return cat.Name, nil
 }
 
 // GetCategoryNamesByIds 批量获取分类名
@@ -37,19 +35,22 @@ func (r *Repo) GetCategoryNamesByIds(ctx context.Context, ids []int64) (names ma
 		keys = append(keys, buildCategoryCacheKey(id))
 	}
 	// 从cache批量获取
-	cacheMap := make(map[string]string)
-	if err = r.Cache.MultiGet(ctx, keys, cacheMap, nil); err != nil {
-		return nil, errors.Wrapf(err, "[repo.category] multi get catName cache data err")
+	cacheMap := make(map[string]*model.CategoryModel)
+	if err = r.Cache.MultiGet(ctx, keys, cacheMap, func() any {
+		return &model.CategoryModel{}
+	}); err != nil {
+		return nil, errors.Wrapf(err, "[r.category] multi get catName cache data err")
 	}
 
 	names = make(map[int64]string, len(ids))
 	// 查询未命中
 	for _, id := range ids {
-		name, ok := cacheMap[buildCategoryCacheKey(id)]
+		cat, ok := cacheMap[buildCategoryCacheKey(id)]
+		name := cat.Name
 		if !ok {
 			name, err = r.GetCategoryNameByID(ctx, id)
 			if err != nil {
-				logger.Warnf("[repo.sku] get catName model err: %v", err)
+				logger.Warnf("[r.sku] get catName model err: %v", err)
 				continue
 			}
 			if name == "" {
@@ -72,7 +73,7 @@ func (r *Repo) GetCategoryChild(ctx context.Context, id int64) ([]int64, error) 
 
 // CategoryAll 获取全部分裂
 func (r *Repo) CategoryAll(ctx context.Context) (list []*model.CategoryModel, err error) {
-	if err = r.QueryCache(ctx, "category_all", &list, 0, func(data interface{}) error {
+	if err = r.QueryCache(ctx, "category_all", &list, 0, func(data any) error {
 		// 从数据库中获取
 		if err := r.DB.WithContext(ctx).Model(&model.CategoryModel{}).Order(dbs.DefaultOrderSort).Find(&list).Error; err != nil {
 			return err
@@ -82,7 +83,7 @@ func (r *Repo) CategoryAll(ctx context.Context) (list []*model.CategoryModel, er
 		}
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.category] query cache")
+		return nil, errors.Wrapf(err, "[r.category] query cache")
 	}
 	return
 }

@@ -145,7 +145,7 @@ func file_common_req_proto_rawDescGZIP() []byte {
 }
 
 var file_common_req_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_common_req_proto_goTypes = []interface{}{
+var file_common_req_proto_goTypes = []any{
 	(*SkuIDReq)(nil), // 0: common.SkuIDReq
 	(*PageReq)(nil),  // 1: common.PageReq
 }
@@ -163,7 +163,7 @@ func file_common_req_proto_init() {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_common_req_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_common_req_proto_msgTypes[0].Exporter = func(v any, i int) interface{} {
 			switch v := v.(*SkuIDReq); i {
 			case 0:
 				return &v.state

@@ -29,7 +29,7 @@ func (q *Query) FilterBrandIds(brandIds []int64) *Query {
 	if len(brandIds) == 0 {
 		return q
 	}
-	var ids []interface{}
+	var ids []any
 	for _, id := range brandIds {
 		ids = append(ids, id)
 	}
@@ -42,7 +42,7 @@ func (q *Query) FilterAttrs(attrID int64, attrValues []string) *Query {
 	if len(attrValues) == 0 {
 		return q
 	}
-	var values []interface{}
+	var values []any
 	for _, value := range attrValues {
 		values = append(values, value)
 	}

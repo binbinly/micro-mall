@@ -34,7 +34,7 @@ func (r *Repo) AppPageData(ctx context.Context, page int) (list []*model.AppSett
 // AppHomePageData app首页配置数据
 func (r *Repo) AppHomePageData(ctx context.Context, catID int) (list []*model.AppSettingModel, err error) {
 	doKey := fmt.Sprintf("app_page:%d_%d", model.AppPageHome, catID)
-	if err = r.QueryCache(ctx, doKey, &list, 0, func(data interface{}) error {
+	if err = r.QueryCache(ctx, doKey, &list, 0, func(data any) error {
 		// 从数据库中获取
 		if err = r.DB.WithContext(ctx).Model(&model.AppSettingModel{}).
 			Where("page=? and cat_id=?", model.AppPageHome, catID).

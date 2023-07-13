@@ -8,14 +8,13 @@ import (
 	"github.com/binbinly/pkg/storage/orm"
 	"github.com/binbinly/pkg/storage/redis"
 	"pkg/app"
-	"pkg/constvar"
 	"warehouse/config"
 )
 
 var repo IRepo
 
 func TestMain(m *testing.M) {
-	if err := app.LoadEnv(constvar.ServiceWarehouse, config.Cfg); err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		panic(err)
 	}
 	repo = New(orm.NewDB(&config.Cfg.MySQL), cache.NewRedisCache(redis.InitTestRedis()))

@@ -55,7 +55,7 @@ func (r *Repo) MemberAddressSave(ctx context.Context, addr *model.MemberAddressM
 // GetMemberAddressList 用户收货地址列表
 func (r *Repo) GetMemberAddressList(ctx context.Context, memberID int64) (list []*model.MemberAddressModel, err error) {
 	doKey := fmt.Sprintf("member_address_all:%d", memberID)
-	if err = r.QueryCache(ctx, doKey, &list, 0, func(data interface{}) error {
+	if err = r.QueryCache(ctx, doKey, &list, 0, func(data any) error {
 		// 从数据库中获取
 		if err = r.DB.WithContext(ctx).Where("member_id=?", memberID).Order(dbs.DefaultOrder).Find(&list).Error; err != nil {
 			return err
@@ -74,7 +74,7 @@ func (r *Repo) GetMemberAddressList(ctx context.Context, memberID int64) (list [
 // GetMemberAddressByID 用户收货地址详情
 func (r *Repo) GetMemberAddressByID(ctx context.Context, id int64) (address *model.MemberAddressModel, err error) {
 	doKey := fmt.Sprintf("member_address:%d", id)
-	if err = r.QueryCache(ctx, doKey, &address, 0, func(data interface{}) error {
+	if err = r.QueryCache(ctx, doKey, &address, 0, func(data any) error {
 		// 从数据库中获取
 		if err := r.DB.WithContext(ctx).First(data, id).Error; err != nil {
 			return err

@@ -32,7 +32,7 @@ func TestRepo_GetSpuByID(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotSpu, err := repo.GetSpuByID(tt.args.ctx, tt.args.id)
+			gotSpu, err := r.GetSpuByID(tt.args.ctx, tt.args.id)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetSpuByID() error = %v, wantErr %v", err, tt.wantErr)
 				return

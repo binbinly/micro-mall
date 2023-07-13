@@ -37,7 +37,7 @@ func (r *Repo) GetCouponMemberByID(ctx context.Context, id int64) (coupon *model
 func (r *Repo) SetCouponMemberUsed(ctx context.Context, id, memberID, orderID int64) error {
 	result := r.DB.WithContext(ctx).Model(&model.CouponMemberModel{}).
 		Where("id=? and member_id=? and status=?", id, memberID, model.CouponStatusInit).
-		Updates(map[string]interface{}{
+		Updates(map[string]any{
 			"status":   model.CouponStatusUsed,
 			"used_at":  time.Now().Unix(),
 			"order_id": orderID,

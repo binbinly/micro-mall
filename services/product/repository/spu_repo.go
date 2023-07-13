@@ -19,7 +19,7 @@ func (r *Repo) GetSpuByID(ctx context.Context, id int64) (spu *model.SpuModel, e
 		}
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.spu] query cache")
+		return nil, errors.Wrapf(err, "[r.spu] query cache")
 	}
 
 	return

@@ -101,13 +101,13 @@ def parse_detail_spu(response):
     for quote in response.xpath('//div[@class="theme-signin-left"]//ul/a'):
         url_a = quote.xpath('@href').get()
         # 过滤当前的url
-        if url_a == current_url:
+        if url_a is None or url_a == current_url:
             continue
         data['sku_sale_other_attrs'].append(url_a)
     for quote in response.xpath('//div[@class="theme-signin-left"]//ul/li'):
         url_li = quote.xpath('@data-reload').get()
         # 过滤当前的url
-        if url_li == current_url:
+        if url_li is None or url_li == current_url:
             continue
         data['sku_sale_other_attrs'].append(url_li)
 
@@ -140,6 +140,7 @@ def build_brand_item(data):
     brand['id'] = data['brand_id']
     brand['name'] = data['brand_name']
     brand['logo'] = data['brand_logo']
+    brand['cover'] = ''
     return brand
 
 

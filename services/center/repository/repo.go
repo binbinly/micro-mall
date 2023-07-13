@@ -17,7 +17,7 @@ type IRepo interface {
 	// UserCreate 创建用户
 	UserCreate(ctx context.Context, user *model.UserModel) (id int64, err error)
 	// UserUpdate 修改用户信息
-	UserUpdate(ctx context.Context, id int64, userMap map[string]interface{}) error
+	UserUpdate(ctx context.Context, id int64, userMap map[string]any) error
 	// UserUpdatePwd 修改用户密码
 	UserUpdatePwd(ctx context.Context, user *model.UserModel) error
 	// GetUserByID id获取用户信息

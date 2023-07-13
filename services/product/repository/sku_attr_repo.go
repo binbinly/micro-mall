@@ -29,7 +29,7 @@ func (r *Repo) GetSkuAttrsBySpuID(ctx context.Context, spuID int64) (list []*mod
 		}
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.skuAttr] query cache")
+		return nil, errors.Wrapf(err, "[r.skuAttr] query cache")
 	}
 	return
 }

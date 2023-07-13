@@ -12,7 +12,7 @@ import (
 func (r *Repo) CreateSpuComment(ctx context.Context, comments []*model.SpuCommentModel) error {
 	err := r.DB.WithContext(ctx).Create(&comments).Error
 	if err != nil {
-		return errors.Wrapf(err, "[repo.spuComment] batch create")
+		return errors.Wrapf(err, "[r.spuComment] batch create")
 	}
 	return nil
 }

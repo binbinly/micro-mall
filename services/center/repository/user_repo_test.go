@@ -12,14 +12,13 @@ import (
 	"center/config"
 	"center/model"
 	"pkg/app"
-	"pkg/constvar"
 	"pkg/dbs"
 )
 
 var r IRepo
 
 func TestMain(m *testing.M) {
-	if err := app.LoadEnv(constvar.ServiceCenter, config.Cfg); err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		panic(err)
 	}
 	r = New(orm.NewDB(&config.Cfg.MySQL), cache.NewRedisCache(redis.InitTestRedis()))
@@ -68,7 +67,7 @@ func TestRepo_UserCreate(t *testing.T) {
 }
 
 func TestRepo_UserUpdate(t *testing.T) {
-	err := r.UserUpdate(context.Background(), 1, map[string]interface{}{
+	err := r.UserUpdate(context.Background(), 1, map[string]any{
 		"nickname": "张三",
 	})
 	assert.NoError(t, err)

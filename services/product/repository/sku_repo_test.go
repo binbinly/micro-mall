@@ -32,7 +32,7 @@ func TestRepo_GetSkuByID(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotSku, err := repo.GetSkuByID(tt.args.ctx, tt.args.id)
+			gotSku, err := r.GetSkuByID(tt.args.ctx, tt.args.id)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetSkuByID() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -47,7 +47,7 @@ func TestRepo_GetSkuByID(t *testing.T) {
 }
 
 func TestRepo_GetSkusBySpuID(t *testing.T) {
-	list, err := repo.GetSkusBySpuID(context.Background(), 129)
+	list, err := r.GetSkusBySpuID(context.Background(), 129)
 	if err != nil {
 		t.Errorf("GetSkusBySpuID() error = %v", err)
 		return
@@ -56,7 +56,7 @@ func TestRepo_GetSkusBySpuID(t *testing.T) {
 }
 
 func TestRepo_GetSkusByIds(t *testing.T) {
-	list, err := repo.GetSkusByIds(context.Background(), []int64{12900, 12901, 3})
+	list, err := r.GetSkusByIds(context.Background(), []int64{12900, 12901, 3})
 	if err != nil {
 		t.Errorf("GetSkusByIds() error = %v", err)
 		return

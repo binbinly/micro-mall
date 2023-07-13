@@ -182,6 +182,7 @@ export default {
   },
   mounted() {
     const id = parseInt(this.$route.query.id)
+    console.log('id', id)
     if (!id) {
       return this.back()
     }

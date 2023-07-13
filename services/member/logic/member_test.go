@@ -9,14 +9,13 @@ import (
 
 	"member/config"
 	"pkg/app"
-	"pkg/constvar"
 )
 
 var srv Logic
 
 func TestMain(m *testing.M) {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceMember, config.Cfg); err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		panic(err)
 	}
 
@@ -30,7 +29,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestService_MemberEdit(t *testing.T) {
-	err := srv.MemberEdit(context.Background(), 3, map[string]interface{}{"nickname": "测试"})
+	err := srv.MemberEdit(context.Background(), 3, map[string]any{"nickname": "测试"})
 	if err != nil {
 		t.Errorf("MemberEdit() error = %v", err)
 		return

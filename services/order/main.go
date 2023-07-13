@@ -91,7 +91,7 @@ func initDelay(b broker.Broker) {
 	s, err := b.Subscribe(constvar.KeyOrderCreate, nil,
 		broker.Queue(constvar.QueueDelayOrder),
 		rabbitmq.DurableQueue(),
-		rabbitmq.QueueArguments(map[string]interface{}{
+		rabbitmq.QueueArguments(map[string]any{
 			"x-dead-letter-exchange":    constvar.ExchangeOrder,   // 设置死信交换器
 			"x-dead-letter-routing-key": constvar.KeyOrderRelease, // 设置死信路由键
 			"x-message-ttl":             60000,                    // 设置过期时间

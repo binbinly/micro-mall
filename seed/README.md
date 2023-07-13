@@ -20,6 +20,7 @@ db_port=os.environ.get("CHAT_DB_PORT", "3306"),
 db_user=os.environ.get("CHAT_DB_USER", "root")
 ```
 ```bash
+cd spider
 # 测试详情页数据获取
 scrapy crawl example
 # 启动

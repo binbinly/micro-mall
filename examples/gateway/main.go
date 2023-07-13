@@ -78,19 +78,19 @@ type CustomMarshaler struct {
 }
 
 type Response struct {
-	Code    uint        `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
+	Code    uint   `json:"code"`
+	Message string `json:"message"`
+	Data    any    `json:"data"`
 }
 
-func (c *CustomMarshaler) Marshal(v interface{}) ([]byte, error) {
+func (c *CustomMarshaler) Marshal(v any) ([]byte, error) {
 	return c.m.Marshal(&Response{
 		Code:    200,
 		Message: "successful",
 		Data:    v,
 	})
 }
-func (c *CustomMarshaler) Unmarshal(data []byte, v interface{}) error {
+func (c *CustomMarshaler) Unmarshal(data []byte, v any) error {
 	return c.m.Unmarshal(data, v)
 }
 
@@ -100,6 +100,6 @@ func (c *CustomMarshaler) NewDecoder(r io.Reader) runtime.Decoder {
 func (c *CustomMarshaler) NewEncoder(w io.Writer) runtime.Encoder {
 	return c.m.NewEncoder(w)
 }
-func (c *CustomMarshaler) ContentType(v interface{}) string {
+func (c *CustomMarshaler) ContentType(v any) string {
 	return "application/json"
 }

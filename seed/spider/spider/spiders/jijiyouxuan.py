@@ -74,7 +74,6 @@ class JijiyouxuanSpider(scrapy.Spider):
                         formdata={"category_id": str(cid_child)},
                         headers={"X-Requested-With": "XMLHttpRequest"},  # 此header头必须，否则获取不到数据
                         callback=self.product_list)
-                    # break
 
     def product_list(self, response):
         res = json.loads(response.body)

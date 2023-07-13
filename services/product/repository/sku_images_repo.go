@@ -6,7 +6,7 @@ import (
 
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
-	
+
 	"pkg/dbs"
 	"product/model"
 )
@@ -18,14 +18,14 @@ func (r *Repo) GetImagesBySkuID(ctx context.Context, skuID int64) (list []*model
 		// 从数据库中获取
 		if err := r.DB.WithContext(ctx).Model(&model.SkuImageModel{}).Where("sku_id=?", skuID).
 			Order(dbs.DefaultOrderSort).Find(data).Error; err != nil {
-			return errors.Wrap(err, "[repo.skuImage] query db")
+			return errors.Wrap(err, "[r.skuImage] query db")
 		}
 		if len(list) == 0 {
 			return gorm.ErrEmptySlice
 		}
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.skuImage] query cache")
+		return nil, errors.Wrapf(err, "[r.skuImage] query cache")
 	}
 	return
 }

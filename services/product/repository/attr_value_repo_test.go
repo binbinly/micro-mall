@@ -32,7 +32,7 @@ func TestRepo_GetAttrsBySpuID(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotList, err := repo.GetAttrsBySpuID(tt.args.ctx, tt.args.spuID)
+			gotList, err := r.GetAttrsBySpuID(tt.args.ctx, tt.args.spuID)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetAttrsBySpuID() error = %v, wantErr %v", err, tt.wantErr)
 				return

@@ -11,13 +11,12 @@ import (
 	"market/config"
 	"market/model"
 	"pkg/app"
-	"pkg/constvar"
 )
 
 var repo IRepo
 
 func TestMain(m *testing.M) {
-	if err := app.LoadEnv(constvar.ServiceMarket, config.Cfg); err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		panic(err)
 	}
 	repo = New(orm.NewDB(&config.Cfg.MySQL), cache.NewRedisCache(redis.InitTestRedis()))
@@ -33,7 +32,7 @@ func TestRepo_GetConfigByName(t *testing.T) {
 	type args struct {
 		ctx  context.Context
 		name string
-		v    interface{}
+		v    any
 	}
 
 	fs := fields{Repo: repo}

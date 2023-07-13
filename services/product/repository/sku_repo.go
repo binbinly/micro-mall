@@ -20,7 +20,7 @@ func (r *Repo) GetSkuByID(ctx context.Context, id int64) (sku *model.SkuModel, e
 		}
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.sku] query cache")
+		return nil, errors.Wrapf(err, "[r.sku] query cache")
 	}
 
 	return
@@ -34,10 +34,10 @@ func (r *Repo) GetSkusByIds(ctx context.Context, ids []int64) (list []*model.Sku
 	}
 	// 从cache批量获取
 	cacheMap := make(map[string]*model.SkuModel)
-	if err = r.Cache.MultiGet(ctx, keys, cacheMap, func() interface{} {
+	if err = r.Cache.MultiGet(ctx, keys, cacheMap, func() any {
 		return &model.SkuModel{}
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.sku] multi get sku cache data err")
+		return nil, errors.Wrapf(err, "[r.sku] multi get sku cache data err")
 	}
 
 	// 查询未命中
@@ -46,7 +46,7 @@ func (r *Repo) GetSkusByIds(ctx context.Context, ids []int64) (list []*model.Sku
 		if !ok {
 			sku, err = r.GetSkuByID(ctx, id)
 			if err != nil {
-				logger.Warnf("[repo.sku] get sku model err: %v", err)
+				logger.Warnf("[r.sku] get sku model err: %v", err)
 				continue
 			}
 			if sku.ID == 0 {
@@ -71,7 +71,7 @@ func (r *Repo) GetSkusBySpuID(ctx context.Context, spuID int64) (list []*model.S
 		}
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.skuImage] query cache")
+		return nil, errors.Wrapf(err, "[r.skuImage] query cache")
 	}
 	return
 }

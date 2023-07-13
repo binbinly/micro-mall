@@ -4,7 +4,7 @@
       <div class="scroll-row-item" style="width: 24%;height: 55px;" v-for="(item,index) in attrs" :key="index">
         <div class="d-flex flex-column a-center j-center">
           <div class="iconfont line-h-sm icon-cpu"></div>
-          <div class="line-h-sm">{{item.name}}</div>
+          <div class="line-h-sm font">{{item.name}}</div>
           <div class="text-light-muted font line-h-sm">{{item.value}}</div>
         </div>
       </div>

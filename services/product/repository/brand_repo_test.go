@@ -6,7 +6,7 @@ import (
 )
 
 func TestRepo_GetBrandByID(t *testing.T) {
-	got, err := repo.GetBrandByID(context.Background(), 271)
+	got, err := r.GetBrandByID(context.Background(), 271)
 	if err != nil {
 		t.Errorf("GetBrandByID() error = %v", err)
 		return
@@ -15,7 +15,7 @@ func TestRepo_GetBrandByID(t *testing.T) {
 }
 
 func TestRepo_GetBrandsByIds(t *testing.T) {
-	got, err := repo.GetBrandsByIds(context.Background(), []int64{271, 274, 276})
+	got, err := r.GetBrandsByIds(context.Background(), []int64{271, 274, 276})
 	if err != nil {
 		t.Errorf("GetBrandsByIds() error = %v", err)
 		return

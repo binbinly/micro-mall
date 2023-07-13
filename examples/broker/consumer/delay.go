@@ -33,7 +33,7 @@ func delaySub(b broker.Broker) {
 
 	s, err := b.Subscribe(KeyOrderCreate, nil, broker.Queue(delayQueue),
 		rabbitmq.DurableQueue(),
-		rabbitmq.QueueArguments(map[string]interface{}{
+		rabbitmq.QueueArguments(map[string]any{
 			"x-dead-letter-exchange":    exchangeName,    // 设置死信交换器
 			"x-dead-letter-routing-key": KeyOrderRelease, // 设置死信路由键
 			"x-message-ttl":             5000,            //设置过期时间

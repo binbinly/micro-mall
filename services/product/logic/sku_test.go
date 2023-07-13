@@ -8,7 +8,6 @@ import (
 	"github.com/binbinly/pkg/storage/redis"
 
 	"pkg/app"
-	"pkg/constvar"
 	"product/config"
 )
 
@@ -16,7 +15,7 @@ var srv Logic
 
 func TestMain(m *testing.M) {
 	// load config
-	if err := app.LoadEnv(constvar.ServiceProduct, config.Cfg); err != nil {
+	if err := app.LoadEnv(config.Cfg); err != nil {
 		panic(err)
 	}
 

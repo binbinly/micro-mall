@@ -8,7 +8,7 @@
         <span class="text-muted">满意</span>
       </div>
       <div class="d-flex flex-wrap pt-1">
-        <div class="px-1 py border rounded mr-1 mb-1 cate-item" v-for="(item,index) in cateList" :key="index"
+        <div class="px-1 py border rounded mr-1 mb-1 cate-item font" v-for="(item,index) in cateList" :key="index"
              :class="cateIndex === index ? 'active' : ''" @click="cateChange(index)">
           {{item.name}}
         </div>
@@ -126,16 +126,7 @@ export default {
     },
     cateChange(index) {
       this.cateIndex = index
-      uni.showLoading({
-        title: "加载中..."
-      })
-      this.getData((res) => {
-        uni.hideLoading()
-        uni.showToast({
-          title: '加载成功',
-          icon: "none"
-        });
-      }, true)
+      this.getData(false, true)
     }
   }
 }

@@ -5,12 +5,12 @@ from spider.util import *
 class ExampleSpider(scrapy.Spider):
     name = "example"
     allowed_domains = ["jijiyouxuan.com"]
-    start_urls = ["http://jijiyouxuan.com/index.php?s=/index/goods/index/id/159324.html"]
+    start_urls = ["https://www.jijiyouxuan.com/index.php?s=/index/goods/index/id/170848.html"]
 
     def parse(self, response):
         data = parse_detail_spu(response)
-        print('data', data)
-        return
+        # print('data', data)
+        # return
 
         yield build_brand_item(data)
         yield build_spu_item(data)

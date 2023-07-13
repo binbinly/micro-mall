@@ -19,7 +19,7 @@ func (r *Repo) GetSpuDescBySpuID(ctx context.Context, spuID int64) (desc *model.
 		}
 		return nil
 	}); err != nil {
-		return nil, errors.Wrapf(err, "[repo.spuDesc] query cache")
+		return nil, errors.Wrapf(err, "[r.spuDesc] query cache")
 	}
 
 	return
