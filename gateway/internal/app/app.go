@@ -150,7 +150,7 @@ func (a *App) Register() error {
 // RegisterHandlers 注册代理的全部服务处理器
 func (a *App) RegisterHandlers() {
 	for _, service := range a.opts.services {
-		conn := newRPCClientConn(a.ctx, service.Name)
+		conn := newRPCClientConn(a.ctx, service)
 		if err := service.Handler(a.ctx, a.opts.mux, conn); err != nil {
 			log.Fatalf("register %v handler err: %v", service.Name, err)
 		}

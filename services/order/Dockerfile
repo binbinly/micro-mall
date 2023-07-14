@@ -1,28 +1,44 @@
-FROM golang:alpine AS builder
+FROM golang:1.20-alpine as builder
 
-# Set Go env
-ENV CGO_ENABLED=0 GOOS=linux
-WORKDIR /go/src/order
+# 作者
+LABEL maintainer="mall"
 
-# Install dependencies
-RUN apk --update --no-cache add ca-certificates gcc libtool make musl-dev protoc git
+# 镜像设置必要的环境变量
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    GOPROXY="https://goproxy.cn,direct" \
+    TZ=Asia/Shanghai \
+    MICRO_SERVER_ADDRESS=:54000 \
+    MICRO_REGISTRY=consul \
+    MICRO_REGISTRY_ADDRESS="127.0.0.1:8500" \
+    MICRO_TRACER_ADDRESS="http://127.0.0.1:14268/api/traces"
 
-# Download grpc_health_probe
-RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
-wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
-chmod +x /bin/grpc_health_probe
+# 执行镜像的工作目录
+WORKDIR /go/src/mall
 
-# Build Go binary
-COPY Makefile go.mod go.sum ./
-RUN make init && go mod download 
-COPY . .
-RUN make proto tidy build
+# 将目录拷贝到镜像里
+COPY services/order/ ./services/order
+COPY pkg/ ./pkg
 
-# Deployment container
-FROM scratch
+RUN cd services/order && go build -o order .
 
-COPY --from=builder /etc/ssl/certs /etc/ssl/certs
-COPY --from=builder /bin/grpc_health_probe /bin/
-COPY --from=builder /go/src/order/order /order
-ENTRYPOINT ["/order"]
-CMD []
+# 引入alphine最小linux镜像
+FROM alpine
+
+# 解决时区问题: unknown time zone Asia/Shanghai
+RUN apk update && apk add tzdata
+
+WORKDIR /app
+# 复制生成的可执行命令和一些配置文件
+COPY --from=builder /go/src/mall/services/order/order .
+
+EXPOSE 54000
+
+# 启动执行命令
+ENTRYPOINT ["/app/order"]
+
+# 1. build image: docker build -t mall/order:latest -f Dockerfile .
+# 2. start: docker run --rm -it mall/order:latest
+# 启动时设置 --rm 选项，这样在容器退出时就能够自动清理容器内部的文件系统

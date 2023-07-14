@@ -3,24 +3,29 @@ package app
 import (
 	"context"
 	"log"
-	"time"
 
-	"github.com/binbinly/pkg/logger"
+	"gateway/internal/interceptor/sentinel"
 	grpcprom "github.com/grpc-ecosystem/go-grpc-middleware/providers/prometheus"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
-	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/timeout"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
-	"go.opentelemetry.io/otel"
-	stdout "go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
-	"go.opentelemetry.io/otel/propagation"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/keepalive"
+
+	"gateway/internal/interceptor"
 )
 
-func newRPCClientConn(ctx context.Context, serviceName string) *grpc.ClientConn {
+const (
+	// grpc options
+	grpcInitialWindowSize     = 1 << 24
+	grpcInitialConnWindowSize = 1 << 24
+	grpcMaxSendMsgSize        = 1 << 24
+	grpcMaxCallMsgSize        = 1 << 24
+)
+
+func newRPCClientConn(ctx context.Context, service Service) *grpc.ClientConn {
 	logTraceID := func(ctx context.Context) logging.Fields {
 		if span := trace.SpanContextFromContext(ctx); span.IsSampled() {
 			return logging.Fields{"traceID", span.TraceID().String()}
@@ -36,62 +41,36 @@ func newRPCClientConn(ctx context.Context, serviceName string) *grpc.ClientConn 
 		),
 	)
 	reg.MustRegister(clMetrics)
-	exemplarFromContext := func(ctx context.Context) prometheus.Labels {
+	fromContext := func(ctx context.Context) prometheus.Labels {
 		if span := trace.SpanContextFromContext(ctx); span.IsSampled() {
 			return prometheus.Labels{"traceID": span.TraceID().String()}
 		}
 		return nil
 	}
 
-	// Set up OTLP tracing (stdout for debug).
-	exporter, err := stdout.New(stdout.WithPrettyPrint())
-	if err != nil {
-		log.Fatalf("stdout new err: %v", err)
-	}
-	tp := sdktrace.NewTracerProvider(
-		sdktrace.WithSampler(sdktrace.AlwaysSample()),
-		sdktrace.WithBatcher(exporter),
-	)
-	otel.SetTracerProvider(tp)
-	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
-	defer func() { _ = exporter.Shutdown(context.Background()) }()
-
-	target := "consul:///" + serviceName
+	target := "consul:///" + service.Name
 	conn, err := grpc.DialContext(ctx, target,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithChainUnaryInterceptor(
-			timeout.UnaryClientInterceptor(500*time.Millisecond),
+			interceptor.TimeoutClientInterceptor(service.Timeout),
+			interceptor.ValidatorClientInterceptor(),
 			otelgrpc.UnaryClientInterceptor(),
-			clMetrics.UnaryClientInterceptor(grpcprom.WithExemplarFromContext(exemplarFromContext)),
-			logging.UnaryClientInterceptor(interceptorLogger(), logging.WithFieldsFromContext(logTraceID))),
-		grpc.WithChainStreamInterceptor(
-			otelgrpc.StreamClientInterceptor(),
-			clMetrics.StreamClientInterceptor(grpcprom.WithExemplarFromContext(exemplarFromContext)),
-			logging.StreamClientInterceptor(interceptorLogger(), logging.WithFieldsFromContext(logTraceID))),
+			clMetrics.UnaryClientInterceptor(grpcprom.WithExemplarFromContext(fromContext)),
+			sentinel.FlowClientInterceptor(
+				sentinel.WithResource(service.Name),
+				sentinel.WithThreshold(service.QPSLimit)),
+			sentinel.CircuitBreakerClientInterceptor(sentinel.WithBreakerResource(service.Name)),
+			logging.UnaryClientInterceptor(interceptor.Logger(), logging.WithFieldsFromContext(logTraceID))),
+		grpc.WithInitialWindowSize(grpcInitialWindowSize),
+		grpc.WithInitialConnWindowSize(grpcInitialConnWindowSize),
+		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(grpcMaxCallMsgSize), grpc.MaxCallSendMsgSize(grpcMaxSendMsgSize)),
+		grpc.WithKeepaliveParams(keepalive.ClientParameters{
+			PermitWithoutStream: true, // 即使没有活跃的流也发送ping
+		}),
 	)
 	if err != nil {
 		log.Fatalf("failed new grpc client err: %v by target: %v", err, target)
 	}
 
 	return conn
-}
-
-// interceptorLogger adapts go-kit logger to interceptor logger.
-// This code is simple enough to be copied and not imported.
-func interceptorLogger() logging.Logger {
-	return logging.LoggerFunc(func(_ context.Context, lvl logging.Level, msg string, fields ...any) {
-		largs := append([]any{"msg", msg}, fields...)
-		switch lvl {
-		case logging.LevelDebug:
-			logger.Debug(largs...)
-		case logging.LevelInfo:
-			logger.Info(largs...)
-		case logging.LevelWarn:
-			logger.Warn(largs...)
-		case logging.LevelError:
-			logger.Error(largs...)
-		default:
-			logger.Fatal(largs...)
-		}
-	})
 }

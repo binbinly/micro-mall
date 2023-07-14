@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"gateway/internal/app"
 	"gateway/internal/router"
@@ -16,12 +17,11 @@ import (
 )
 
 var (
-	cfgDir   string
-	env      string
+	file     string
 	StartCmd = &cobra.Command{
 		Use:          "server",
 		Short:        "Start API Gateway Server",
-		Example:      "gateway server -c configs",
+		Example:      "gateway server -c configs/default.yaml",
 		SilenceUsage: true,
 		PreRun: func(cmd *cobra.Command, args []string) {
 			setup()
@@ -33,16 +33,14 @@ var (
 )
 
 func init() {
-	StartCmd.PersistentFlags().StringVarP(&cfgDir, "config", "c", "configs", "config path")
-	StartCmd.PersistentFlags().StringVarP(&env, "env", "e", "", "Configure Runtime Environment")
+	StartCmd.PersistentFlags().StringVarP(&file, "config", "c", "configs/default.yaml", "config path")
 }
 
 func setup() {
-	// init config
-	c := config.New(cfgDir, config.WithEnv(env))
-	if err := c.Load("app", app.Conf); err != nil {
-		panic(err)
-	}
+	// load config
+	config.Load(file, app.Conf, func(v *viper.Viper) {
+		app.SetDefaultConf(v)
+	})
 
 	// init tracer
 	_, err := trace.InitTracerProvider(

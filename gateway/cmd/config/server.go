@@ -1,21 +1,19 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"gateway/internal/app"
 	"gateway/pkg/config"
 )
 
 var (
-	cfgDir   string
-	env      string
+	file     string
 	StartCmd = &cobra.Command{
 		Use:     "config",
 		Short:   "Get Application config info",
-		Example: "mall config -c default.yaml",
+		Example: "gateway config -c configs/default.yaml",
 		Run: func(cmd *cobra.Command, args []string) {
 			run()
 		},
@@ -23,15 +21,11 @@ var (
 )
 
 func init() {
-	StartCmd.PersistentFlags().StringVarP(&cfgDir, "config", "c", "configs", "config path")
-	StartCmd.PersistentFlags().StringVarP(&env, "env", "e", "", "Configure Runtime Environment")
+	StartCmd.PersistentFlags().StringVarP(&file, "config", "c", "configs/default.yaml", "config path")
 }
 
 func run() {
-	// init config
-	c := config.New(cfgDir, config.WithEnv(env))
-	if err := c.Load("app", app.Conf); err != nil {
-		panic(err)
-	}
-	fmt.Printf("config:%+v\n", app.Conf)
+	config.Load(file, app.Conf, func(v *viper.Viper) {
+		app.SetDefaultConf(v)
+	})
 }

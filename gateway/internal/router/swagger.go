@@ -118,7 +118,7 @@ const (
 	StandaloneLayout SwaggerLayout = "StandaloneLayout"
 )
 
-// Define Layout options are BaseLayout or StandaloneLayout
+// Layout options are BaseLayout or StandaloneLayout
 func Layout(layout SwaggerLayout) func(*Config) {
 	return func(c *Config) {
 		c.Layout = layout

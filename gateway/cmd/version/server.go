@@ -12,8 +12,8 @@ import (
 // StartCmd version cmd
 var StartCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Print the version number of mall",
-	Long:  `All software has versions. This is mall`,
+	Short: "Print the version number of mall gateway",
+	Long:  `All software has versions. This is mall gateway`,
 	Run: func(cmd *cobra.Command, args []string) {
 		output, err := ExecuteCommand("git", "describe", "--tags")
 		if err != nil {

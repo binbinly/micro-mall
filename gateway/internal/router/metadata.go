@@ -42,10 +42,10 @@ func addMetadata(ctx context.Context, r *http.Request) metadata.MD {
 		payload, err := auth.Parse(token, app.Conf.App.JwtSecret)
 		if err != nil {
 			md["User-Id"] = ""
-			logger.Infof("JWT Parse err: %v", err)
+			logger.Debugf("JWT Parse err: %v", err)
 			return metadata.New(md)
 		}
-		logger.Infof("Context UserID: %v", payload.UserID)
+		logger.Debugf("Context UserID: %v", payload.UserID)
 		md["User-Id"] = strconv.Itoa(payload.UserID)
 	}
 	return metadata.New(md)

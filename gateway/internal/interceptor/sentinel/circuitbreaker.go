@@ -35,7 +35,7 @@ func CircuitBreakerClientInterceptor(opts ...Breaker) grpc.UnaryClientIntercepto
 	}
 }
 
-//defaultBreaker 默认错误比例规则
+// defaultBreaker 默认错误比例规则
 func defaultBreaker() *circuitbreaker.Rule {
 	return &circuitbreaker.Rule{
 		Resource:                     "breaker",

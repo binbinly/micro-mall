@@ -16,6 +16,6 @@ tidy:
 test:
 	@go test -v ./... -cover
 
-.PHONY: docker
-docker:
-	@docker build -t market:latest .
+.PHONY: doc
+doc:
+	protoc -I ../../pkg/proto --doc_out=. --doc_opt=markdown,README.md ../../pkg/proto/warehouse/*.proto

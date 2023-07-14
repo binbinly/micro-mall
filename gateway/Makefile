@@ -1,7 +1,7 @@
 # Go parameters
 PROJECT_NAME := "gateway"
 PKG := "$(PROJECT_NAME)"
-PKG_LIST := $(shell go list ${PKG}/... | grep -v /example)
+PKG_LIST := $(shell go list ${PKG}/... | grep -v /proto)
 
 GOPATH:=$(shell go env GOPATH)
 .PHONY: init
@@ -15,7 +15,7 @@ init:
 
 .PHONY: dev
 dev:
-	go run main.go server -c configs
+	go run main.go server -c configs/default.yaml
 
 .PHONY: proto
 proto:
@@ -44,7 +44,7 @@ docker:
 #检查代码规范
 .PHONY: lint
 lint:
-	@go get -u golang.org/x/lint/golint
+	@go install golang.org/x/lint/golint
 	@golint -set_exit_status ${PKG_LIST}
 
 .PHONY: common

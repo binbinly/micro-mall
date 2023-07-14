@@ -1,0 +1,14 @@
+#app:
+#  Name: gateway
+#  Version: latest
+#  JwtSecret: u33A7ss43e89bbNtjtfkARnpi96zKWVv11MHOiHHdl89rLjKsIe15oNPpOuRkslG
+#  Debug: true
+#http:
+#  Addr: :9520
+#  ReadTimeout: 5s
+#  WriteTimeout: 5s
+#registry:
+#  Name: consul
+#  Addr: 127.0.0.1:8500
+#trace:
+#  Endpoint: http://127.0.0.1:14268/api/traces

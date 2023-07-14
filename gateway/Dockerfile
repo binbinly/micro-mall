@@ -25,7 +25,7 @@ FROM alpine
 WORKDIR /app
 # 复制生成的可执行命令和一些配置文件
 COPY --from=builder /go/src/gateway/gateway .
-COPY --from=builder /go/src/gateway/configs/docker.yaml .
+COPY --from=builder /go/src/gateway/configs/default.yaml .
 
 EXPOSE 9520
 

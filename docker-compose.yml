@@ -11,7 +11,7 @@ services:
     volumes:
       - /var/log/nginx:/var/log/nginx
     ports:
-      - 80:80
+      - "80:80"
     command: nginx -g 'daemon off';
 
   admin:
@@ -20,7 +20,7 @@ services:
     image: mall/admin:latest
     restart: on-failure
     ports:
-      - 8000:8000
+      - "8000:8000"
     networks:
       - mall
     command: --host 0.0.0.0 -q
@@ -33,7 +33,7 @@ services:
     image: mall/gateway:latest
     restart: on-failure
     ports:
-      - 9520:9520
+      - "9520:9520"
     networks:
       - mall
     command: server -c ./gateway/docker.yaml
@@ -46,7 +46,7 @@ services:
     image: mall/market:latest
     restart: on-failure
     ports:
-      - 52000:52000
+      - "52000:52000"
     networks:
       - mall
     environment:
@@ -62,7 +62,7 @@ services:
     image: mall/member:latest
     restart: on-failure
     ports:
-      - 53000:53000
+      - "53000:53000"
     networks:
       - mall
     environment:
@@ -78,7 +78,7 @@ services:
     image: mall/order:latest
     restart: on-failure
     ports:
-      - 54000:54000
+      - "54000:54000"
     networks:
       - mall
     environment:
@@ -94,7 +94,7 @@ services:
     image: mall/product:latest
     restart: on-failure
     ports:
-      - 55000:55000
+      - "55000:55000"
     networks:
       - mall
     environment:
@@ -110,7 +110,7 @@ services:
     image: mall/seckill:latest
     restart: on-failure
     ports:
-      - 56000:56000
+      - "56000:56000"
     networks:
       - mall
     environment:
@@ -126,7 +126,7 @@ services:
     image: mall/cart:latest
     restart: on-failure
     ports:
-      - 51000:51000
+      - "51000:51000"
     networks:
       - mall
     environment:
@@ -142,7 +142,7 @@ services:
     image: mall/center:latest
     restart: on-failure
     ports:
-      - 50200:50200
+      - "50200:50200"
     networks:
       - mall
     environment:
@@ -157,7 +157,7 @@ services:
     image: mall/third:latest
     restart: on-failure
     ports:
-      - 50100:50100
+      - "50100:50100"
     networks:
       - mall
     environment:
@@ -172,7 +172,7 @@ services:
     image: mall/warehouse:latest
     restart: on-failure
     ports:
-      - 50000:50000
+      - "50000:50000"
     networks:
       - mall
     environment:

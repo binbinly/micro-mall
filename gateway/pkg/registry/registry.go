@@ -12,6 +12,8 @@ var (
 	ErrWatcherStopped = errors.New("watcher stopped")
 )
 
+// nolint: golint
+
 // Registry The registry provides an interface for service discovery
 // and an abstraction over varying implementations
 // {consul, etcd, zookeeper, ...}

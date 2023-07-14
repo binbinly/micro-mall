@@ -193,7 +193,7 @@ func (cw *consulWatcher) handle(idx uint64, data any) {
 	}
 
 	// add new watchers
-	for service, _ := range services {
+	for service := range services {
 		// Filter on watch options
 		// wo.Service: Only watch services we care about
 		if len(cw.wo.Service) > 0 && service != cw.wo.Service {
@@ -227,7 +227,7 @@ func (cw *consulWatcher) handle(idx uint64, data any) {
 	// save the things we want to delete
 	deleted := make(map[string][]*registry.Service)
 
-	for service, _ := range rservices {
+	for service := range rservices {
 		if _, ok := services[service]; !ok {
 			cw.Lock()
 			// save this before deleting

@@ -62,9 +62,12 @@ var services = []Service{
 	},
 }
 
+// Service micro service
 type Service struct {
-	Name    string
-	Handler func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error
+	Name     string
+	Timeout  time.Duration
+	QPSLimit float64
+	Handler  func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error
 }
 
 // Option is func for application

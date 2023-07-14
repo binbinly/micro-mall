@@ -1,34 +1,44 @@
 FROM golang:1.20-alpine as builder
 
+# 作者
+LABEL maintainer="mall"
+
 # 镜像设置必要的环境变量
 ENV GO111MODULE=on \
     CGO_ENABLED=0 \
     GOOS=linux \
     GOARCH=amd64 \
     GOPROXY="https://goproxy.cn,direct" \
-    TZ=Asia/Shanghai
+    TZ=Asia/Shanghai \
+    MICRO_SERVER_ADDRESS=:50000 \
+    MICRO_REGISTRY=consul \
+    MICRO_REGISTRY_ADDRESS="127.0.0.1:8500" \
+    MICRO_TRACER_ADDRESS="http://127.0.0.1:14268/api/traces"
 
-WORKDIR /go/src/warehouse
+# 执行镜像的工作目录
+WORKDIR /go/src/mall
 
-# Install dependencies
-RUN apk --update --no-cache add ca-certificates gcc libtool make musl-dev protoc git
+# 将目录拷贝到镜像里
+COPY services/warehouse/ ./services/warehouse
+COPY pkg/ ./pkg
 
-# Download grpc_health_probe
-RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
-wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
-chmod +x /bin/grpc_health_probe
+RUN cd services/warehouse && go build -o warehouse .
 
-# Build Go binary
-COPY Makefile go.mod go.sum ./
-RUN make init && go mod download 
-COPY . .
-RUN make proto tidy build
+# 引入alphine最小linux镜像
+FROM alpine
 
-# Deployment container
-FROM scratch
+# 解决时区问题: unknown time zone Asia/Shanghai
+RUN apk update && apk add tzdata
 
-COPY --from=builder /etc/ssl/certs /etc/ssl/certs
-COPY --from=builder /bin/grpc_health_probe /bin/
-COPY --from=builder /go/src/warehouse/warehouse /warehouse
-ENTRYPOINT ["/warehouse"]
-CMD []
+WORKDIR /app
+# 复制生成的可执行命令和一些配置文件
+COPY --from=builder /go/src/mall/services/warehouse/warehouse .
+
+EXPOSE 50000
+
+# 启动执行命令
+ENTRYPOINT ["/app/warehouse"]
+
+# 1. build image: docker build -t mall/warehouse:latest -f Dockerfile .
+# 2. start: docker run --rm -it mall/warehouse:latest
+# 启动时设置 --rm 选项，这样在容器退出时就能够自动清理容器内部的文件系统

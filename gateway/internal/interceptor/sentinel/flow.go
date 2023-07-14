@@ -32,7 +32,7 @@ func FlowClientInterceptor(opts ...Flow) grpc.UnaryClientInterceptor {
 	}
 }
 
-//defaultFlowRule 默认流控规则
+// defaultFlowRule 默认流控规则
 func defaultFlowRule() *flow.Rule {
 	return &flow.Rule{
 		Resource:               "flow",

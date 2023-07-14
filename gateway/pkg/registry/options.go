@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+// nolint: golint
+
 type Options struct {
 	Addrs     []string
 	Timeout   time.Duration

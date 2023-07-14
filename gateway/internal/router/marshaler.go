@@ -7,6 +7,8 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
+// nolint: golint
+
 type CustomMarshaler struct {
 	m *runtime.JSONPb
 }
