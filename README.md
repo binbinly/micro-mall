@@ -120,23 +120,6 @@
 
 ### 项目部署
 
-### 手动编译部署
-
->TIPS: 需要本地安装MySQL数据库和 Redis Consul minio rabbitmq elasticsearch
-
-```bash
-# 下载安装
-git clone https://github.com/binbinly/micro-mall
-
-# 数据库sql文件 deploys/sql.zip
-
-# 进入项目目录
-cd micro-mall
-
-# 进入单个子服务目录
-make dev 
-```
-
 ### docker部署 - 推荐
 - [docker安装文档](https://docs.docker.com/engine/install/)
 - [docker-compose安装文档](https://docs.docker.com/compose/install/)
@@ -148,7 +131,7 @@ cd micro-mall
 docker-compose -f docker-compose-tool.yml up -d
 
 # 安装所有服务
-# 前端项目默认api host：127.0.0.1，如需修改，请 vim frontend/Dockerfile
+# 前端项目默认api host：127.0.0.1，如需修改，请 vim web/Dockerfile
 # minio 默认 host 127.0.0.1 可通过环境变量 MICRO_DFS_ENDPOINT 自定义
 docker-compose up -d
 ```
